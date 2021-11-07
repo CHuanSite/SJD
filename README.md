@@ -8,7 +8,7 @@ To install this package in R, run the following commands:
 
 ```R
 library(devtools)
-install_github("CHuanSite/PJD")
+install_github("CHuanSite/SJD")
 ```
 
 This package implements four categories of algorithms to decompose multiple datasets, (1) Separately, (2) Concatenately, (3) Jointly, (4) Two Stage Sequentially. 
@@ -20,7 +20,7 @@ For the last category, there is one algorithm, called two-staged linked componen
 ## Example usage:
 
 ```R
-library(PJD)
+library(SJD)
 # Simulation the dataset
 dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
                matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
@@ -62,7 +62,7 @@ concatPCA_res$score_list
 
 ## Weighting data sets by different weights
 
-Sometimes it is interesting to weigh data sets differently, to incorporate user's different views on it. The PJD package also has this option.
+Sometimes it is interesting to weigh data sets differently, to incorporate user's different views on it. The SJD package also has this option.
 
 ```R
 # Simulation the dataset
@@ -168,7 +168,7 @@ inVivo_sc_exp = read.table("4_inVivo_SingleCell_CtxDevoSC4kTopoTypoTempo.pd.txt"
 Conduct Two-stage linked component analysis
 
 ```R
-library(PJD)
+library(SJD)
 ## List of datasets and group assignment and number of components
 dataset = list(inVitro_bulk_scale, inVitro_sc_scale, inVivo_bulk_scale, inVivo_sc_scale)
 group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
