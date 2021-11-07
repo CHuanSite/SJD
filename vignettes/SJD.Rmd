@@ -1,6 +1,8 @@
 ---
 title: "Introduction to SJD (Structured Joint Decomposition)"
-author: Huan Chen
+author: 
+- Huan Chen
+- Jinrui Liu
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,7 +18,17 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction 
+
 SJD (Structured Joint Decomposiiton) is a R package for visualizing biologically structured gene expression matrix environment based on low rank models. Currently, it provides user 4 different styles of decomposition: (1) Separately, (2) Concatenately, (3) Jointly, (4) Sequentially.
+
+This package implements four categories of algorithms to decompose multiple datasets, (1) Separately, (2) Concatenately, (3) Jointly, (4) Two Stage Sequentially. 
+
+For the first three categories, there are three available algorithms: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). For each method, the algorithm takes three arguments, `dataset`, `group` and `comp_num`, specifying which datasets to be used, what is the structure among the datasets and what's the dimension for each component.
+
+For the last category, there is one algorithm, called two-staged linked component analysis, which is a PCA based statistical model.
+
+# Install and load `SJD` package
 
 To install this package in R, run the following commands:
 
@@ -25,26 +37,35 @@ library(devtools)
 install_github("CHuanSite/SJD")
 ```
 
-This package implements four categories of algorithms to decompose multiple datasets, (1) Separately, (2) Concatenately, (3) Jointly, (4) Two Stage Sequentially. 
-
-For the first three categories, there are three available algorithms: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). For each method, the algorithm takes three arguments, `dataset`, `group` and `comp_num`, specifying which datasets to be used, what is the structure among the datasets and what's the dimension for each component.
-
-For the last category, there is one algorithm, called two-staged linked component analysis, which is a PCA based statistical model.
-
 ```{r setup}
 library(SJD)
 ```
 
-# Example Usage
+# Jointly decompose 4 NeuroGenesis genomics data with `SJD` package
 
 ## Laod data
+
+We load the structured neuro genesis data `NeuroGenesis4` and its information data `NeuroGenesis.info` contained in the package `SJD` into the environment.
+
+There are four separate data sets in the `NeuroGenesis4` list:
+
+- Meissner.inVitro.bulk.Hs
+- LIBD.AZ.inVitro.bulk.Hs
+- Geschwind.inVivo.sc.Hs
+- Jabaudon.inVivo.sc.Mm
+
 ```{r}
 lbb1="NeuroGenesis4"
 data("NeuroGenesis4", package = "SJD")
 data("NeuroGenesis4.info", package = "SJD")
+
+str(NeuroGenesis4)
 ```
 
 ## Transform data
+
+The four data sets contained in the `SJD` package are not necessarily from the same species and with same geneType, so that the `pjd_wrap` function provides an interface for user to align the input data sets to align with each other.
+
 ```{r}
 PJDdataIN = pjd_wrap(
   data.list = NeuroGenesis4,
@@ -53,22 +74,70 @@ PJDdataIN = pjd_wrap(
   geneType.out = "symbol",
   species.out = "human")
 
-data.nms=names(NeuroGenesis4)
-type.nms=c('Yaxis','Yaxis','2Dscatter','2Dscatter')
-XaxisColumn.nms=c("X","DAYx","tSNE_1","tsne1:ch1")
-YaxisColumn.nms=c("PJDscores","PJDscores","tSNE_2","tsne2:ch1")
-COLaxisColumn.nms=c("color","colorBYlabelsX","PJDscores","PJDscores")
-PCHColumn.nms=c("","","","")
-SampleMetaNamesTable=data.frame(row.names=data.nms,Type=type.nms,XaxisColumn=XaxisColumn.nms,YaxisColumn=YaxisColumn.nms,COLaxisColumn=COLaxisColumn.nms,PCHColumn=PCHColumn.nms)
-
 ```
 
-## Apply two stage LCA
+## Apply the decomposition method
+
+After the transformation and alignment among the data sets, the next step is to apply the decomposition method, we give examples on different methods to illustrate the process
+
 ```{r}
-grp=list(Shared.All.4=c(1:4),Shared.bulk.2=c(1,2),Shared.sc.2=c(3,4),Hs.Meisnr.1=c(1),Hs.AZ.1=c(2),Gesch.1=c(3),Telley.1=c(4))
-dims=c(2,2,2,2,2,2,2)# must have same length as "grp"
-lbb2=paste(lbb1,".p",dims[1],sep="")
+grp=list(Shared.All.4 = c(1:4),Shared.bulk.2=c(1,2),Shared.sc.2=c(3,4),Hs.Meisnr.1=c(1),Hs.AZ.1=c(2),Gesch.1=c(3),Telley.1=c(4))
+dims=c(2,2,2,2,2,2,2) # must have same length as "grp"
+lbb2 = paste(lbb1,".p",dims[1],sep="")
 
-twoStageLCA.out=twoStageLCA(dataset=PJDdataIN,group=grp,comp_num=dims)
+# sep
+sepPCA.out = sepPCA(PJDdataIN, dims)
+sepICA.out = sepICA(PJDdataIN, dims)
+sepNMF.out = sepNMF(PJDdataIN, dims)
+
+# concat
+concatPCA.out = concatPCA(PJDdataIN, grp, dims)
+concatICA.out = concatICA(PJDdataIN, grp, dims)
+concatNMF.out = concatNMF(PJDdataIN, grp, dims)
+
+# joint 
+jointPCA.out = jointPCA(PJDdataIN, grp, dims)
+jointICA.out = jointICA(PJDdataIN, grp, dims)
+jointNMF.out = jointNMF(PJDdataIN, grp, dims)
+
+# sequential
+twoStageLCA.out = twoStageLCA(dataset = PJDdataIN, group = grp, comp_num = dims)
+twoStageiLCA.out = twoStageiLCA(dataset = PJDdataIN, group = grp, comp_num = dims)
+
 ```
+
+## Plot
+
+### Plot each dim in each dataset individually - into png files 
+
+```{r}
+# data.nms=names(NeuroGenesis4)
+# type.nms=c('Yaxis','Yaxis','2Dscatter','2Dscatter')
+# XaxisColumn.nms=c("X","DAYx","tSNE_1","tsne1:ch1")
+# YaxisColumn.nms=c("PJDscores","PJDscores","tSNE_2","tsne2:ch1")
+# COLaxisColumn.nms=c("color","colorBYlabelsX","PJDscores","PJDscores")
+# PCHColumn.nms=c("","","","")
+# SampleMetaNamesTable=data.frame(row.names=data.nms,Type=type.nms,XaxisColumn=XaxisColumn.nms,YaxisColumn=YaxisColumn.nms,COLaxisColumn=COLaxisColumn.nms,PCHColumn=PCHColumn.nms)
+```
+
+```{r}
+PJDalgS = c("sepNMF","concatNMF","jointNMF","sepPCA","concatPCA","jointPCA","sepICA","concatICA","jointICA","twoStageLCA","twoStageiLCA")
+PJDscoreS = list(
+  sepNMF = sepNMF.out$score_list,
+  concatNMF = concatNMF.out$score_list,
+  jointNMF = jointNMF.out$score_list,
+  sepPCA = sepPCA.out$score_list,
+  concatPCA = concatPCA.out$score_list,
+  jointPCA = jointPCA.out$score_list,
+  sepICA = sepICA.out$score_list,
+  concatICA = concatICA.out$score_list,
+  jointICA = jointICA.out$score_list,
+  twoStageLCA = twoStageLCA.out$score_list,
+  twoStageiLCA = twoStageiLCA.out$score_list
+  )
+```
+
+# Reference 
+
+- Chen, H., Caffo, B., Stein-O'Brien, G., Liu, J., Langmead, B., Colantuoni, C., & Xiao, L. (2021). Two-stage Linked Component Analysis for Joint Decomposition of Multiple Biologically Related Data Sets. bioRxiv.
 

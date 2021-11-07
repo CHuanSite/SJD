@@ -43,3 +43,26 @@
 #'
 
 "NeuroGenesis4.info"
+
+#' NeuroGenesis4.afterWrap
+#'
+#' A list of 4 neuro data sets sampled after wrapper, containing: Meissner.inVitro.bulk.Hs, LIBD.AZ.inVitro.bulk.Hs, Geschwind.inVivo.sc.Hs, Jabaudon.inVivo.sc.Mm
+#'
+#' @docType data
+#'
+#' @usage data(NeuroGenesis4.afterWrap)
+#'
+#' @format A list containing 4 dataframes
+#'
+#' @keywords datasets
+#'
+#' @examples
+#'
+#' data(NeuroGenesis4.afterWrap)
+#' head(NeuroGenesis4.afterWrap$Meissner.inVitro.bulk.Hs)
+#' head(NeuroGenesis4.afterWrap$LIBD.AZ.inVitro.bulk.Hs)
+#' head(NeuroGenesis4.afterWrap$Geschwind.inVivo.sc.Hs)
+#' head(NeuroGenesis4.afterWrap$Jabaudon.inVivo.sc.Mm)
+#'
+
+"NeuroGenesis4.afterWrap"
