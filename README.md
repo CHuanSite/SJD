@@ -1,5 +1,10 @@
 # SJD: R package for Structured Joint Decomposition
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.com/CHuanSite/SJD.svg?branch=main)](https://travis-ci.com/CHuanSite/SJD)
+[![R-CMD-check](https://github.com/CHuanSite/SJD/workflows/R-CMD-check/badge.svg)](https://github.com/CHuanSite/SJD/actions)
+<!-- badges: end -->
+
 ## Overview:
 
 Structured Joint Decomposiiton (SJD) is a R package for visualizing biologically structured gene expression matrix environment based on low rank models. Currently, it provides user 4 different styles of decomposition: (1) Separately, (2) Concatenately, (3) Jointly, (4) Sequentially.
@@ -215,8 +220,4 @@ The latest developer version is available in the [Github repository](https://git
 
 For any improvements and issues that need to be addressed, please contact [Huan Chen](hchen130@jhu.edu).
 
-<!-- badges: start -->
-[![Travis build status](https://travis-ci.com/CHuanSite/SJD.svg?branch=main)](https://travis-ci.com/CHuanSite/SJD)
-[![R-CMD-check](https://github.com/CHuanSite/SJD/workflows/R-CMD-check/badge.svg)](https://github.com/CHuanSite/SJD/actions)
-<!-- badges: end -->
 
