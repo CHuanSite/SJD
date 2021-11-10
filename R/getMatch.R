@@ -9,7 +9,7 @@
 #' @param moreAttrIn character of other gene attributes i.e 'species latin'
 #' @param moreAttrNew character of other gene attributes i.e 'ensembl.nms'
 #'
-#' @import biomaRt
+#' @importFrom biomaRt useMart getLDS
 #'
 #' @return vector of matched genes from the target species
 #'

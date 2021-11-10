@@ -39,6 +39,7 @@ A list contains the component and the score of each dataset on every component a
 Two-staged Independent Linked Component Analysis, a generalization based on the Two-staged Independent Linked Component Analysis
 }
 \examples{
+
 dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),

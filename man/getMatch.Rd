@@ -33,6 +33,7 @@ vector of matched genes from the target species
 matching genes from one species (i.e human) to another species (i.e mouse) and output genes
 }
 \examples{
+
 data(NeuroGenesis4)
 out = getMatch(
 rownames(NeuroGenesis4$Meissner.inVitro.bulk.Hs),

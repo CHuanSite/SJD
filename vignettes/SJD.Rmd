@@ -44,7 +44,7 @@ library(SJD)
 
 # Jointly decompose 4 NeuroGenesis genomics data with `SJD` package
 
-## Laod data
+## Load data
 
 We load the structured neuro genesis data `NeuroGenesis4` and its information data `NeuroGenesis.info` contained in the package `SJD` into the environment.
 

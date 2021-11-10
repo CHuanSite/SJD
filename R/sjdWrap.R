@@ -8,7 +8,6 @@
 #' @param geneType.out character of output gene/rowname type of each matrix i.e "symbol"
 #' @param species.out character of output species type for gene/rowname
 #'
-#' @import biomaRt
 #' @importFrom dplyr inner_join
 #'
 #' @return a list of expression matrices (of different species) with only shared genes and
