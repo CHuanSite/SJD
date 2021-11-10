@@ -2,7 +2,7 @@
 % Please edit documentation in R/getMatch.R
 \name{getMatch}
 \alias{getMatch}
-\title{Get Gene Match}
+\title{Species matching function}
 \usage{
 getMatch(
   genes,
@@ -14,23 +14,32 @@ getMatch(
 )
 }
 \arguments{
-\item{genes}{A vector of gene}
+\item{genes}{vector of gene names in either ensembl or symbol format}
 
-\item{inSpecies}{Kind of species}
+\item{inSpecies}{character of species name of input genes i.e 'human'}
 
-\item{inType}{Kind of gene type}
+\item{inType}{character of type of input genes i.e 'ensembl'}
 
-\item{newSpecies}{Output species}
+\item{newSpecies}{character of target species for the new vector of genes i.e 'mouse'}
 
-\item{moreAttrIn}{More attributes input}
+\item{moreAttrIn}{character of other gene attributes i.e 'species latin'}
 
-\item{moreAttrNew}{More attributes output}
+\item{moreAttrNew}{character of other gene attributes i.e 'ensembl.nms'}
 }
 \value{
-A vector of genes
+vector of matched genes from the target species
 }
 \description{
-Get genes match for a single input data set
+matching genes from one species (i.e human) to another species (i.e mouse) and output genes
 }
-\keyword{gene,}
-\keyword{match}
+\examples{
+data(NeuroGenesis4)
+out = getMatch(
+rownames(NeuroGenesis4$Meissner.inVitro.bulk.Hs),
+inSpecies = 'human',
+inType = 'symbol',
+newSpecies = 'mouse')
+
+}
+\keyword{genes}
+\keyword{shared}

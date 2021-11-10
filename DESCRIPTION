@@ -14,7 +14,9 @@ Imports: tidyverse,
     RMTstat,
     dplyr,
     biomaRt,
-    biomaRt
+    plotrix,
+    ggplot2,
+    stringr,
 Description: This is a R Package for Visualizing Biologically StructuredGene Expression Matrix Environment Based on Low Rank Models, (1) separately, (2) concatenately, (3) jointly, and (4) sequentially.
 Depends: R (>= 3.5.0)
 License: GPL-3

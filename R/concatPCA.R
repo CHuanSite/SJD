@@ -24,7 +24,13 @@
 #' comp_num = c(2,2,2,2,2,2,2,2,2)
 #' proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
 #' proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
-#' res_concatPCA = concatPCA(dataset, group, comp_num, weighting = NULL, proj_dataset = proj_dataset, proj_group = proj_group)
+#' res_concatPCA = concatPCA(
+#' dataset,
+#' group,
+#' comp_num,
+#' weighting = NULL,
+#' proj_dataset = proj_dataset,
+#' proj_group = proj_group)
 #'
 #' @export
 

@@ -1,34 +1,33 @@
-#' Wrapper function for PJD package
+#' SJD Wrap
 #'
-#' A wrapper function to align multiple datasets from different species
+#' wrapping up expression matrices (of different species) with only shared genes as SJD input
 #'
-#' @param data.list Input list of data sets
-#' @param species.vector A vector of species types
-#' @param geneType.vector A vector of gene types,
-#' @param geneType.out Type of genes
-#' @param species.out Kind of species output
+#' @param data.list input list of expression matrices from different species i.e human and mouse datasets
+#' @param species.vector character of species type of each matrix i.e c('human', 'mouse', 'mouse')
+#' @param geneType.vector character of gene/rowname type of each matrix i.e c("symbol","ensembl","symbol")
+#' @param geneType.out character of output gene/rowname type of each matrix i.e "symbol"
+#' @param species.out character of output species type for gene/rowname
 #'
 #' @import biomaRt
 #' @importFrom dplyr inner_join
 #'
-#' @return A list of data sets, after alignment
+#' @return a list of expression matrices (of different species) with only shared genes and
 #'
-#' @keywords Wrapper, PJD
+#' @keywords shared gene expression
 #'
 #' @examples
 #'
-#' data(mtx)
-#'
-#' PJD_example = pjd_wrap(data.list = mtx,
-#' species.vector = c("human", "mouse"),
-#' geneType.vector = c("symbol", "symbol"),
-#' geneType.out = "symbol",
-#' species.out = "human")
+#' data(NeuroGenesis4)
+#' SJDdataIN = sjdWrap(
+#' data.list = NeuroGenesis4,
+#' species.vector=c("human","human","human","mouse"),
+#' geneType.vector=c("symbol","ensembl","symbol","symbol"),
+#' geneType.out="symbol",
+#' species.out="human")
 #'
 #' @export
 
-
-pjd_wrap <- function(data.list, species.vector, geneType.vector, geneType.out="symbol", species.out){
+sjdWrap <- function(data.list, species.vector, geneType.vector, geneType.out="symbol", species.out){
     N = length(data.list) #number of datasets
 
     if(N != length(species.vector)){

@@ -1,19 +1,28 @@
-#' Get Gene Match
+#' Species matching function
 #'
-#' Get genes match for a single input data set
+#' matching genes from one species (i.e human) to another species (i.e mouse) and output genes
 #'
-#' @param genes A vector of gene
-#' @param inSpecies Kind of species
-#' @param inType Kind of gene type
-#' @param newSpecies Output species
-#' @param moreAttrIn More attributes input
-#' @param moreAttrNew More attributes output
+#' @param genes vector of gene names in either ensembl or symbol format
+#' @param inSpecies character of species name of input genes i.e 'human'
+#' @param inType character of type of input genes i.e 'ensembl'
+#' @param newSpecies character of target species for the new vector of genes i.e 'mouse'
+#' @param moreAttrIn character of other gene attributes i.e 'species latin'
+#' @param moreAttrNew character of other gene attributes i.e 'ensembl.nms'
 #'
 #' @import biomaRt
 #'
-#' @return A vector of genes
+#' @return vector of matched genes from the target species
 #'
-#' @keywords gene, match
+#' @keywords shared genes
+#'
+#' @examples
+#'
+#' data(NeuroGenesis4)
+#' out = getMatch(
+#' rownames(NeuroGenesis4$Meissner.inVitro.bulk.Hs),
+#' inSpecies = 'human',
+#' inType = 'symbol',
+#' newSpecies = 'mouse')
 #'
 #' @export
 

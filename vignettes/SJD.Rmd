@@ -3,6 +3,7 @@ title: "Introduction to SJD (Structured Joint Decomposition)"
 author: 
 - Huan Chen
 - Jinrui Liu
+- Carlo Colantuoni
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -64,10 +65,10 @@ str(NeuroGenesis4)
 
 ## Transform data
 
-The four data sets contained in the `SJD` package are not necessarily from the same species and with same geneType, so that the `pjd_wrap` function provides an interface for user to align the input data sets to align with each other.
+The four data sets contained in the `SJD` package are not necessarily from the same species and with same geneType, so that the `sjdWrap` function provides an interface for user to align the input data sets to align with each other.
 
 ```{r}
-PJDdataIN = pjd_wrap(
+SJDdataIN = sjdWrap(
   data.list = NeuroGenesis4,
   species.vector = c("human", "human", "human", "mouse"),
   geneType.vector = c("symbol","ensembl","symbol","symbol"),
@@ -81,60 +82,97 @@ PJDdataIN = pjd_wrap(
 After the transformation and alignment among the data sets, the next step is to apply the decomposition method, we give examples on different methods to illustrate the process
 
 ```{r}
-grp=list(Shared.All.4 = c(1:4),Shared.bulk.2=c(1,2),Shared.sc.2=c(3,4),Hs.Meisnr.1=c(1),Hs.AZ.1=c(2),Gesch.1=c(3),Telley.1=c(4))
-dims=c(2,2,2,2,2,2,2) # must have same length as "grp"
-lbb2 = paste(lbb1,".p",dims[1],sep="")
+grp = list(
+  Shared.All.4 = c(1 : 4), 
+  Shared.bulk.2 = c(1,2),
+  Shared.sc.2 = c(3, 4),
+  Hs.Meisnr.1 = c(1),
+  Hs.AZ.1 = c(2),
+  Gesch.1 = c(3),
+  Telley.1 = c(4))
+
+dims = c(2, 2, 2, 2, 2, 2, 2) # must have same length as "grp"
 
 # sep
-sepPCA.out = sepPCA(PJDdataIN, dims)
-sepICA.out = sepICA(PJDdataIN, dims)
-sepNMF.out = sepNMF(PJDdataIN, dims)
+sepPCA.out = sepPCA(SJDdataIN, dims)
+sepICA.out = sepICA(SJDdataIN, dims)
+sepNMF.out = sepNMF(SJDdataIN, dims)
 
 # concat
-concatPCA.out = concatPCA(PJDdataIN, grp, dims)
-concatICA.out = concatICA(PJDdataIN, grp, dims)
-concatNMF.out = concatNMF(PJDdataIN, grp, dims)
+concatPCA.out = concatPCA(SJDdataIN, grp, dims)
+concatICA.out = concatICA(SJDdataIN, grp, dims)
+concatNMF.out = concatNMF(SJDdataIN, grp, dims)
 
-# joint 
-jointPCA.out = jointPCA(PJDdataIN, grp, dims)
-jointICA.out = jointICA(PJDdataIN, grp, dims)
-jointNMF.out = jointNMF(PJDdataIN, grp, dims)
+# joint
+jointPCA.out = jointPCA(SJDdataIN, grp, dims)
+jointICA.out = jointICA(SJDdataIN, grp, dims)
+jointNMF.out = jointNMF(SJDdataIN, grp, dims)
 
 # sequential
-twoStageLCA.out = twoStageLCA(dataset = PJDdataIN, group = grp, comp_num = dims)
-twoStageiLCA.out = twoStageiLCA(dataset = PJDdataIN, group = grp, comp_num = dims)
+twoStageLCA.out = twoStageLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
+twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
 
 ```
 
 ## Plot
 
-### Plot each dim in each dataset individually - into png files 
+### Plot each dim in each dataset individually 
 
+Here we need to call the `SJDScorePlotter` function to generate the `SJDScorePlotter.obj`, a list of ggplot objects that can be used
 ```{r}
-# data.nms=names(NeuroGenesis4)
-# type.nms=c('Yaxis','Yaxis','2Dscatter','2Dscatter')
-# XaxisColumn.nms=c("X","DAYx","tSNE_1","tsne1:ch1")
-# YaxisColumn.nms=c("PJDscores","PJDscores","tSNE_2","tsne2:ch1")
-# COLaxisColumn.nms=c("color","colorBYlabelsX","PJDscores","PJDscores")
-# PCHColumn.nms=c("","","","")
-# SampleMetaNamesTable=data.frame(row.names=data.nms,Type=type.nms,XaxisColumn=XaxisColumn.nms,YaxisColumn=YaxisColumn.nms,COLaxisColumn=COLaxisColumn.nms,PCHColumn=PCHColumn.nms)
+SampleMetaNamesTable = data.frame(
+    row.names = names(NeuroGenesis4),
+    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
+    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
+    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
+    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
+    PCHColumn = c("","","","")
+)
 ```
 
 ```{r}
-PJDalgS = c("sepNMF","concatNMF","jointNMF","sepPCA","concatPCA","jointPCA","sepICA","concatICA","jointICA","twoStageLCA","twoStageiLCA")
-PJDscoreS = list(
-  sepNMF = sepNMF.out$score_list,
-  concatNMF = concatNMF.out$score_list,
-  jointNMF = jointNMF.out$score_list,
-  sepPCA = sepPCA.out$score_list,
-  concatPCA = concatPCA.out$score_list,
-  jointPCA = jointPCA.out$score_list,
-  sepICA = sepICA.out$score_list,
-  concatICA = concatICA.out$score_list,
-  jointICA = jointICA.out$score_list,
-  twoStageLCA = twoStageLCA.out$score_list,
-  twoStageiLCA = twoStageiLCA.out$score_list
-  )
+SJDScorePlotter.obj = SJDScorePlotter(
+     SJDalg = "twoStageLCA",
+     scores = twoStageLCA.out$score_list,
+     lbb = "NeuroGenesis4.p2",
+     info = NeuroGenesis4.info,
+     SampleMetaNamesTable = SampleMetaNamesTable
+)
+```
+
+```{r}
+print(names(SJDScorePlotter.obj))
+```
+
+Plot the corresponding image
+```{r}
+plot(SJDScorePlotter.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
+```
+
+### Assemble the images based on dataset
+```{r}
+assemble.byDataset.obj = assemble.byDataset(SJDScorePlotter.obj = SJDScorePlotter.obj, dataset_name = "Meissner.inVitro.bulk.Hs", SJD_algorithm = "twoStageLCA", group = NA)
+```
+
+```{r}
+print(names(assemble.byDataset.obj))
+```
+
+```{r}
+plot(assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
+```
+
+### Assemble the images based on component
+```{r}
+assemble.byComponent.obj = assemblePNG.byComponent(SJDScorePlotter.obj = SJDScorePlotter.obj, component = c(1, 2), SJD_algorithm = "twoStageLCA", group = 'Shared.All.4')
+```
+
+```{r}
+print(names(assemble.byComponent.obj))
+```
+
+```{r}
+plot(assemble.byComponent.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
 ```
 
 # Reference 

@@ -1,0 +1,344 @@
+#' Plot SJD score
+#'
+#' plot dimensionality reduction weight components for each SJD algorithm for dataset analyzed by SJD
+#'
+#' @param SJDalg SJD algorithm to plot i.e 'twoStageLCA'
+#' @param scores score list of the SJD algorithm i.e twoStageLCA$score_list
+#' @param lbb dataset label i.e 'NeuroGenesis4'
+#' @param info names of sample meta data matrices
+#' @param SampleMetaNamesTable dataframe containing column information of each sample meta data matrices
+#' @param clrs2end color scale for result scores from other algorithms. Default: c("plum","purple","blue","blue4","black","darkred","red","orange","yellow")
+#' @param clrs1end color scale for result scores from sepNMF, concatNMF and jointNMF algorithms. Default: c("black","black","black","darkred","red","orange","yellow")
+#'
+#' @import plotrix ggplot2 dplyr
+#'
+#' @return A list containing ggplot object
+#'
+#' @keywords images
+#'
+#' @examples
+#'
+#' library(ggplot2)
+#'
+#' data(NeuroGenesis4.afterWrap)
+#' data(NeuroGenesis4.info)
+#'    SampleMetaNamesTable = data.frame(
+#'    row.names = names(NeuroGenesis4),
+#'    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
+#'    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
+#'    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
+#'    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
+#'    PCHColumn = c("","","","")
+#' )
+#' grp = list(
+#' Shared.All.4 = c(1 : 4),
+#' Shared.bulk.2 = c(1, 2),
+#' Shared.sc.2 = c(3, 4),
+#' Hs.Meisnr.1 = c(1),
+#' Hs.AZ.1 = c(2),
+#' Gesch.1 = c(3),
+#' Telley.1 = c(4)
+#' )
+#' dims = c(2, 2, 2, 2, 2, 2, 2)
+#'
+#' twoStageLCA.out = twoStageLCA(dataset = NeuroGenesis4.afterWrap, group = grp, comp_num = dims)
+#'
+#' SJDScorePlotter.obj = SJDScorePlotter(
+#'     SJDalg = "twoStageLCA",
+#'     scores = twoStageLCA.out$score_list,
+#'     lbb = "NeuroGenesis4.p2",
+#'     info = NeuroGenesis4.info,
+#'     SampleMetaNamesTable = SampleMetaNamesTable
+#' )
+#'
+#' @export
+
+SJDScorePlotter <- function(
+    SJDalg,
+    scores,
+    lbb,
+    info,
+    SampleMetaNamesTable,
+    clrs2end = c("plum","purple","blue","blue4","black","darkred","red","orange","yellow"),
+    clrs1end = c("black","black","black","darkred","red","orange","yellow")
+    ){
+
+    ######################################
+    ##
+    ## Precheck the input parameters
+    ##
+    #######################################
+
+
+    ## Start function
+
+    print("**********************************************************")
+    print(paste("plotting scores for ",SJDalg," anaysis.",sep=""))
+
+    if(!SJDalg%in%c("sepNMF","concatNMF","jointNMF","sepPCA","concatPCA","jointPCA","sepICA","concatICA","jointICA","twoStageLCA","twoStageiLCA")){
+        print("SJDalg must be one of:")
+        print("sepNMF, concatNMF, jointNMF, sepPCA, concatPCA, jointPCA, sepICA, concatICA, jointICA, twoStageLCA, twoStageiLCA")
+        return()
+    }
+
+    if(SJDalg %in% c("sepNMF","sepPCA","sepICA")){
+        SJDsep = TRUE
+    }
+
+    if(SJDalg %in% c("concatNMF","jointNMF","concatPCA","jointPCA","concatICA","jointICA","twoStageLCA","twoStageiLCA")){
+        SJDsep = FALSE
+    }
+
+    if(!identical(names(info), names(scores))){
+        print("dataset names in info and scores are not equivalent (or are not in the same order)")
+        print("names(info):")
+        print(names(info))
+        print("names(scores):")
+        print(names(scores))
+        return()
+    }
+
+    ################################
+    ##
+    ## Compute and plot images
+    ##
+    ###############################
+
+    dataset_names = names(info)
+
+    ## List to output all images
+    image_out_list = list()
+
+    # "separate" SJD analyses have differently structured output from other SJD algorithms:
+    if(SJDsep){# BEGIN if(SJDsep)loop
+
+        for(i in 1:length(dataset_names)){
+
+            dataset_name=dataset_names[i]
+            print("*******************************")
+            print(paste("dataset : ",dataset_name,sep=""))
+
+            # sepICA, sepPCA，sepNMF different structures happens below here
+            score_dimension = dim(scores[[dataset_name]])[1] # dim(sepPCA$score_list[['Hs.AZ']])=2
+
+            ### PREPARE SJD SCORE
+            for(k in 1:score_dimension){#rank loop
+                print(k)
+                SJDscores = scores[[dataset_name]][k,]
+                cpntNM = rownames(scores[[dataset_name]])[k]
+
+                ### PREPARE X Y AXIS
+                if(SampleMetaNamesTable[dataset_name,"Type"] == "Yaxis")
+                {
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"] == "" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                        pchh = 19
+                    }
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"] != "" & !is.na(SampleMetaNamesTable[dataset_name, "PCHColumn"])){
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))<=5 & length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))!=1){pchh0=info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])];pchh=c(21:25)[as.numeric(as.factor(pchh0))]}
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))==1){pchh=19}
+                    }
+
+                    ## generate image
+                    image_out_name = paste("SJDout_", lbb, ".SJDalg_", SJDalg, ".data_", dataset_name, ".comp", k, "of", dim(scores[[dataset_name]])[1], sep="")
+
+                    image_out_list[[image_out_name]] = data.frame(
+                        x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])],
+                        y_axis_value = SJDscores,
+                        point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
+                    ) %>%
+                        ggplot(aes(x = x_axis_value, y = y_axis_value)) +
+                        geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 1, pch = pchh) +
+                        xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                        ylab(rownames(scores[[dataset_name]])[k]) +
+                        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                              panel.background = element_blank(), axis.line = element_line(colour = "black"))
+
+                }
+                ### PREPARE X Y AXIS
+                if(SampleMetaNamesTable[dataset_name,"Type"]=="2Dscatter")
+                {
+                    ord = order(SJDscores,decreasing=FALSE)
+                    if(SJDalg == "sepNMF" | SJDalg == "concatNMF" | SJDalg == "jointNMF"){
+                        clr = color.scale(SJDscores,extremes=clrs1end)[ord];
+                        CLRfold = FALSE
+                    }
+                    if(SJDalg!="sepNMF"&SJDalg!="concatNMF"&SJDalg!="jointNMF"){
+                        clr = color.scale(SJDscores,extremes=clrs2end)[ord];
+                        CLRfold = TRUE
+                    }
+                    if(CLRfold){
+                        range(SJDscores)#
+                        prb = .5#.7#.5#.8
+                        mid = quantile(SJDscores,probs=prb)
+                        SJDscores00 = SJDscores-mid
+                        ord = order(abs(SJDscores00),decreasing=FALSE)
+                    }
+
+                    if(length(clr) <= 100){
+                        cexx = 1
+                    }
+                    if(length(clr) > 100 & length(clr) <= 1000){
+                        cexx = .5
+                    }
+                    if(length(clr) > 1000 & length(clr) <= 10000){
+                        cexx = .25
+                    }
+                    if(length(clr) > 10000){
+                        cexx = .2
+                    }
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                        pchh = 19
+                    }
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"]!="" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))<=5 & length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) != 1){
+                            pchh0 = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])];
+                            pchh = c(21:25)[as.numeric(as.factor(pchh0))][ord]
+                        }
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
+                            pchh = 19
+                        }
+                    }
+
+                    ## Save plotted images
+                    image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".data_",dataset_name,".comp",k,"of",dim(scores[[dataset_name]])[1],sep="")
+
+                    image_out_list[[image_out_name]] = data.frame(
+                        x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord],
+                        y_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord],
+                        point_clr = clr
+                    ) %>%
+                        ggplot(aes(x = x_axis_value, y = y_axis_value)) +
+                        geom_point(color = clr, cex = cexx, pch = pchh) +
+                        xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                        ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
+                        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                              panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                }
+            }
+        }
+    }# END if(SJDsep)loop
+
+    if(!SJDsep){# BEGIN if(!SJDsep) loop
+
+        for(i in 1 : length(dataset_names)){
+            dataset_name = dataset_names[i]
+            print("*******************************")
+            print(paste("dataset: ",dataset_name, sep=""))
+
+            for (j in 1 : length(scores[[dataset_name]])) {
+
+                print(paste("grouping: ", names(scores[[dataset_name]])[j], sep=""))
+
+                if (is.na(scores[[dataset_name]][[j]][1])) {
+                    print(paste("No SJD scores for grouping : ",names(scores[[dataset_name]])[j],", moving to the next SJD output for ",dataset_name,sep=""))
+                    next
+                }
+
+                score_dimension=dim(scores[[dataset_name]][[j]])[1] # dim(twoStageLCA$score_list[['Hs.AZ']])=2
+
+                ### PREPARE SJD SCORE
+                for(k in 1:score_dimension) {#rank loop
+                    print(k)
+                    SJDscores = scores[[dataset_name]][[j]][k,]
+                    cpntNM = rownames(scores[[dataset_name]][[j]])[k]
+
+                    ### PREPARE X Y AXIS
+                    if(SampleMetaNamesTable[dataset_name,"Type"] == "Yaxis")
+                    {
+                        ## change the size of points
+                        pchh = 19
+                        if(SampleMetaNamesTable[dataset_name,"PCHColumn"] != "" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                            if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) <= 5 & length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) != 1){
+                                pchh0 = info[[dataset_name]][, as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]
+                                pchh = c(21 : 25)[as.numeric(as.factor(pchh0))]
+                            }
+                        }
+
+                        ## generate image
+                        image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".grp_",names(scores[[dataset_name]])[j], ".data_", dataset_name, ".comp", k, "of", dim(scores[[dataset_name]][[j]])[1], sep="")
+
+                        image_out_list[[image_out_name]] = data.frame(
+                            x_axis_value = info[[dataset_name]][, as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])],
+                            y_axis_value = scores[[dataset_name]][[j]][k, ],
+                            point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
+                            ) %>%
+                            ggplot(aes(x = x_axis_value, y = y_axis_value)) +
+                            geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 3, pch = pchh) +
+                            xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                            ylab(rownames(scores[[dataset_name]][[j]])[k]) +
+                            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                  panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                    }
+
+                    ### PREPARE X Y AXIS
+                    if(SampleMetaNamesTable[dataset_name,"Type"] == "2Dscatter")
+                    {
+                        ord = order(SJDscores,decreasing=FALSE)
+                        if(SJDalg == "sepNMF" | SJDalg == "concatNMF" | SJDalg == "jointNMF"){
+                            clr = color.scale(SJDscores,extremes=clrs1end)[ord]
+                            CLRfold = FALSE
+                        }
+
+                        if(SJDalg!="sepNMF" & SJDalg != "concatNMF" & SJDalg!="jointNMF")
+                        {
+                            clr = color.scale(SJDscores,extremes = clrs2end)[ord];
+                            CLRfold = TRUE
+                        }
+                        if(CLRfold){
+                            range(SJDscores)#
+                            prb = .5#.7#.5#.8
+                            mid = quantile(SJDscores,probs=prb)
+                            SJDscores00 = SJDscores-mid
+                            ord = order(abs(SJDscores00),decreasing=FALSE)
+                        }
+
+                        ## Edit size of points
+                        if(length(clr) <= 100){
+                            cexx = 1
+                        }
+                        if(length(clr) > 100 & length(clr) <= 1000){
+                            cexx = .5
+                        }
+                        if(length(clr) > 1000 & length(clr) <= 10000){
+                            cexx = .25
+                        }
+                        if(length(clr) > 10000){
+                            cexx=.2
+                        }
+
+                        ## Edit point type
+                        if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                            pchh = 19
+                        }
+                        if(SampleMetaNamesTable[dataset_name,"PCHColumn"]!="" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                            if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))<=5 & length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) != 1){
+                                pchh0 = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]
+                                pchh = c(21:25)[as.numeric(as.factor(pchh0))][ord]}
+
+                            if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
+                                pchh = 19
+                            }
+                        }
+
+                        ## Save plotted images
+                        image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".grp_",names(scores[[dataset_name]])[j],".data_",dataset_name,".comp",k,"of",dim(scores[[dataset_name]][[j]])[1],sep="")
+
+                        image_out_list[[image_out_name]] = data.frame(
+                            x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord],
+                            y_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord],
+                            point_clr = clr
+                        ) %>%
+                            ggplot(aes(x = x_axis_value, y = y_axis_value)) +
+                            geom_point(color = clr, cex = cexx, pch = pchh) +
+                            xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                            ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
+                            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                                  panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                    }
+                }
+            }
+        }
+        return(image_out_list)
+    }# END if(!SJDsep) loop
+}
+
