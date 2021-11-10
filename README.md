@@ -215,4 +215,8 @@ The latest developer version is available in the [Github repository](https://git
 
 For any improvements and issues that need to be addressed, please contact [Huan Chen](hchen130@jhu.edu).
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.com/CHuanSite/SJD.svg?branch=main)](https://travis-ci.com/CHuanSite/SJD)
+[![R-CMD-check](https://github.com/CHuanSite/SJD/workflows/R-CMD-check/badge.svg)](https://github.com/CHuanSite/SJD/actions)
+<!-- badges: end -->
 
