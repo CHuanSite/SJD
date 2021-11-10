@@ -73,7 +73,8 @@ SJDdataIN = sjdWrap(
   species.vector = c("human", "human", "human", "mouse"),
   geneType.vector = c("symbol","ensembl","symbol","symbol"),
   geneType.out = "symbol",
-  species.out = "human")
+  species.out = "human"
+  )
 
 ```
 
