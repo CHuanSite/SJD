@@ -55,8 +55,9 @@ There are four separate data sets in the `NeuroGenesis4` list:
 - Geschwind.inVivo.sc.Hs
 - Jabaudon.inVivo.sc.Mm
 
+Note that the four data sets in `NeuroGenesis4` are sampled from the original large dataset, which is a very samll subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at 
+
 ```{r}
-lbb1="NeuroGenesis4"
 data("NeuroGenesis4", package = "SJD")
 data("NeuroGenesis4.info", package = "SJD")
 
@@ -117,6 +118,11 @@ twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dim
 
 ## Plot
 
+```{r}
+library(ggplot2)
+library(gridExtra)
+```
+
 ### Plot each dim in each dataset individually 
 
 Here we need to call the `SJDScorePlotter` function to generate the `SJDScorePlotter.obj`, a list of ggplot objects that can be used
@@ -145,9 +151,9 @@ SJDScorePlotter.obj = SJDScorePlotter(
 print(names(SJDScorePlotter.obj))
 ```
 
-Plot the corresponding image
+Save the whole list to a .RData file
 ```{r}
-plot(SJDScorePlotter.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
+# save(SJDScorePlotter.obj, file = "./SJDScorePlotter.obj.RData")
 ```
 
 ### Assemble the images based on dataset
@@ -159,8 +165,14 @@ assemble.byDataset.obj = assemble.byDataset(SJDScorePlotter.obj = SJDScorePlotte
 print(names(assemble.byDataset.obj))
 ```
 
+Plot all images corresponding from the `assemble.byDataset.obj`. We can construct them into a whole big image through the `grid.arrange` from the `grid.Extra` package.
+
 ```{r}
-plot(assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
+g = grid.arrange(
+  assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2,
+  assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp2of2,
+  nrow = 1, ncol = 2
+)
 ```
 
 ### Assemble the images based on component
@@ -173,7 +185,11 @@ print(names(assemble.byComponent.obj))
 ```
 
 ```{r}
-plot(assemble.byComponent.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2)
+g = grid.arrange(
+  assemble.byComponent.obj[[1]],
+  assemble.byComponent.obj[[2]],
+  nrow = 1, ncol = 2
+)
 ```
 
 # Reference 

@@ -150,9 +150,10 @@ SJDScorePlotter <- function(
                         geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 1, pch = pchh) +
                         xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                         ylab(rownames(scores[[dataset_name]])[k]) +
-                        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                              panel.background = element_blank(), axis.line = element_line(colour = "black"))
-
+                        theme_bw() +
+                        theme(axis.text=element_text(size = 15),
+                              axis.title=element_text(size = 15, face="bold")
+                        )
                 }
                 ### PREPARE X Y AXIS
                 if(SampleMetaNamesTable[dataset_name,"Type"]=="2Dscatter")
@@ -211,8 +212,10 @@ SJDScorePlotter <- function(
                         geom_point(color = clr, cex = cexx, pch = pchh) +
                         xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                         ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
-                        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                              panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                        theme_bw() +
+                        theme(axis.text=element_text(size = 15),
+                              axis.title=element_text(size = 15, face="bold")
+                        )
                 }
             }
         }
@@ -266,8 +269,10 @@ SJDScorePlotter <- function(
                             geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 3, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                             ylab(rownames(scores[[dataset_name]][[j]])[k]) +
-                            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                                  panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                            theme_bw() +
+                            theme(axis.text=element_text(size = 15),
+                                  axis.title=element_text(size = 15, face="bold")
+                            )
                     }
 
                     ### PREPARE X Y AXIS
@@ -332,8 +337,10 @@ SJDScorePlotter <- function(
                             geom_point(color = clr, cex = cexx, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                             ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
-                            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                                  panel.background = element_blank(), axis.line = element_line(colour = "black"))
+                            theme_bw() +
+                            theme(axis.text=element_text(size = 15),
+                                  axis.title=element_text(size = 15, face="bold")
+                            )
                     }
                 }
             }

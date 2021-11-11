@@ -91,18 +91,16 @@
 <p>To install this package in R, run the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
-<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CHuanSite/SJD"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CHuanSite/SJD"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SJD</span><span class="op">)</span>
-<span class="co">#&gt; Warning: replacing previous import 'biomaRt::select' by 'dplyr::select' when</span>
-<span class="co">#&gt; loading 'SJD'</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SJD</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="jointly-decompose-4-neurogenesis-genomics-data-with-sjd-package" class="section level1">
 <h1 class="hasAnchor">
 <a href="#jointly-decompose-4-neurogenesis-genomics-data-with-sjd-package" class="anchor"></a>Jointly decompose 4 NeuroGenesis genomics data with <code>SJD</code> package</h1>
-<div id="laod-data" class="section level2">
+<div id="load-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#laod-data" class="anchor"></a>Laod data</h2>
+<a href="#load-data" class="anchor"></a>Load data</h2>
 <p>We load the structured neuro genesis data <code>NeuroGenesis4</code> and its information data <code>NeuroGenesis.info</code> contained in the package <code>SJD</code> into the environment.</p>
 <p>There are four separate data sets in the <code>NeuroGenesis4</code> list:</p>
 <ul>
@@ -111,9 +109,9 @@
 <li>Geschwind.inVivo.sc.Hs</li>
 <li>Jabaudon.inVivo.sc.Mm</li>
 </ul>
+<p>Note that the four data sets in <code>NeuroGenesis4</code> are sampled from the original large dataset, which is a very samll subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lbb1</span><span class="op">=</span><span class="st">"NeuroGenesis4"</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"NeuroGenesis4"</span>, package <span class="op">=</span> <span class="st">"SJD"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"NeuroGenesis4"</span>, package <span class="op">=</span> <span class="st">"SJD"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"NeuroGenesis4.info"</span>, package <span class="op">=</span> <span class="st">"SJD"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">NeuroGenesis4</span><span class="op">)</span>
@@ -145,9 +143,11 @@
   species.vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"human"</span>, <span class="st">"human"</span>, <span class="st">"human"</span>, <span class="st">"mouse"</span><span class="op">)</span>,
   geneType.vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"symbol"</span>,<span class="st">"ensembl"</span>,<span class="st">"symbol"</span>,<span class="st">"symbol"</span><span class="op">)</span>,
   geneType.out <span class="op">=</span> <span class="st">"symbol"</span>,
-  species.out <span class="op">=</span> <span class="st">"human"</span><span class="op">)</span>
+  species.out <span class="op">=</span> <span class="st">"human"</span>
+  <span class="op">)</span>
 <span class="co">#&gt; Using biomaRt to connect gene IDs across 4 datasets:</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 1 </span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 1</span>
+<span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
 <span class="co">#&gt; You have input  40  genes</span>
 <span class="co">#&gt; We found  40  matches</span>
 <span class="co">#&gt; 1  of those are duplicates and only keeping the 1st of each</span>
@@ -159,8 +159,7 @@
 <span class="co">#&gt; You have input  40  genes</span>
 <span class="co">#&gt; We found  39  matches</span>
 <span class="co">#&gt; 0  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 4</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 4 </span>
 <span class="co">#&gt; You have input  40  genes</span>
 <span class="co">#&gt; We found  34  matches</span>
 <span class="co">#&gt; 0  of those are duplicates and only keeping the 1st of each</span>
@@ -206,11 +205,22 @@
 <div id="plot" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plot" class="anchor"></a>Plot</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gridExtra</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'gridExtra'</span>
+<span class="co">#&gt; The following object is masked from 'package:Biobase':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     combine</span>
+<span class="co">#&gt; The following object is masked from 'package:BiocGenerics':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     combine</span></code></pre></div>
 <div id="plot-each-dim-in-each-dataset-individually" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-each-dim-in-each-dataset-individually" class="anchor"></a>Plot each dim in each dataset individually</h3>
 <p>Here we need to call the <code>SJDScorePlotter</code> function to generate the <code>SJDScorePlotter.obj</code>, a list of ggplot objects that can be used</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SampleMetaNamesTable</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
     row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">NeuroGenesis4</span><span class="op">)</span>,
     Type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Yaxis'</span>,<span class="st">'Yaxis'</span>,<span class="st">'2Dscatter'</span>,<span class="st">'2Dscatter'</span><span class="op">)</span>,
@@ -219,7 +229,7 @@
     COLaxisColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>,<span class="st">"colorBYlabelsX"</span>,<span class="st">"PJDscores"</span>,<span class="st">"PJDscores"</span><span class="op">)</span>,
     PCHColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SJDScorePlotter.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/SJDScorePlotter.html">SJDScorePlotter</a></span><span class="op">(</span>
      SJDalg <span class="op">=</span> <span class="st">"twoStageLCA"</span>,
      scores <span class="op">=</span> <span class="va">twoStageLCA.out</span><span class="op">$</span><span class="va">score_list</span>,
@@ -305,7 +315,7 @@
 <span class="co">#&gt; [1] "grouping: Telley.1"</span>
 <span class="co">#&gt; [1] 1</span>
 <span class="co">#&gt; [1] 2</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">SJDScorePlotter.obj</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2" </span>
 <span class="co">#&gt;  [2] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp2of2" </span>
@@ -331,17 +341,16 @@
 <span class="co">#&gt; [22] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.sc.2.data_Jabaudon.inVivo.sc.Mm.comp2of2"     </span>
 <span class="co">#&gt; [23] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Telley.1.data_Jabaudon.inVivo.sc.Mm.comp1of2"        </span>
 <span class="co">#&gt; [24] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Telley.1.data_Jabaudon.inVivo.sc.Mm.comp2of2"</span></code></pre></div>
-<p>Plot the corresponding image</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">SJDScorePlotter.obj</span><span class="op">$</span><span class="va">SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2</span><span class="op">)</span></code></pre></div>
-<p><img src="SJD_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p>Save the whole list to a .RData file</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># save(SJDScorePlotter.obj, file = "./SJDScorePlotter.obj.RData")</span></code></pre></div>
 </div>
 <div id="assemble-the-images-based-on-dataset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#assemble-the-images-based-on-dataset" class="anchor"></a>Assemble the images based on dataset</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">assemble.byDataset.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemble.byDataset.html">assemble.byDataset</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, dataset_name <span class="op">=</span> <span class="st">"Meissner.inVitro.bulk.Hs"</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byDataset.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemble.byDataset.html">assemble.byDataset</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, dataset_name <span class="op">=</span> <span class="st">"Meissner.inVitro.bulk.Hs"</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">assemble.byDataset.obj</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2" </span>
 <span class="co">#&gt; [2] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp2of2" </span>
@@ -349,16 +358,21 @@
 <span class="co">#&gt; [4] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.bulk.2.data_Meissner.inVitro.bulk.Hs.comp2of2"</span>
 <span class="co">#&gt; [5] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Hs.Meisnr.1.data_Meissner.inVitro.bulk.Hs.comp1of2"  </span>
 <span class="co">#&gt; [6] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Hs.Meisnr.1.data_Meissner.inVitro.bulk.Hs.comp2of2"</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">assemble.byDataset.obj</span><span class="op">$</span><span class="va">SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2</span><span class="op">)</span></code></pre></div>
-<p><img src="SJD_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p>Plot all images corresponding from the <code>assemble.byDataset.obj</code>. We can construct them into a whole big image through the <code>grid.arrange</code> from the <code>grid.Extra</code> package.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
+  <span class="va">assemble.byDataset.obj</span><span class="op">$</span><span class="va">SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2</span>,
+  <span class="va">assemble.byDataset.obj</span><span class="op">$</span><span class="va">SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp2of2</span>,
+  nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SJD_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="assemble-the-images-based-on-component" class="section level3">
 <h3 class="hasAnchor">
 <a href="#assemble-the-images-based-on-component" class="anchor"></a>Assemble the images based on component</h3>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemblePNG.byComponent.html">assemblePNG.byComponent</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="st">'Shared.All.4'</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemblePNG.byComponent.html">assemblePNG.byComponent</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="st">'Shared.All.4'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">assemble.byComponent.obj</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2"</span>
 <span class="co">#&gt; [2] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_LIBD.AZ.inVitro.bulk.Hs.comp1of2" </span>
@@ -368,9 +382,13 @@
 <span class="co">#&gt; [6] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_LIBD.AZ.inVitro.bulk.Hs.comp2of2" </span>
 <span class="co">#&gt; [7] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Geschwind.inVivo.sc.Hs.comp2of2"  </span>
 <span class="co">#&gt; [8] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Jabaudon.inVivo.sc.Mm.comp2of2"</span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">assemble.byComponent.obj</span><span class="op">$</span><span class="va">SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2</span><span class="op">)</span></code></pre></div>
-<p><img src="SJD_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
+  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,
+  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,
+  nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SJD_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 </div>
 </div>
