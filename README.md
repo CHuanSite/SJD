@@ -26,9 +26,9 @@ For the last category, there is one algorithm, called two-staged linked componen
 
 Please visit the vignette page [here](https://chuansite.github.io/SJD/)
 
-[Structral Joint Decomposition (SJD)](https://chuansite.github.io/StructralJointDecomposition/)
+[Structral Joint Decomposition (SJD)](https://chuansite.github.io/SJD/articles/StructralJointDecomposition.html)
 
-[Two Stage Linked Component Analysis (2s-LCA)](https://chuansite.github.io/twoStageLCA/)
+[Two Stage Linked Component Analysis (2s-LCA)](https://chuansite.github.io/SJD/articles/twoStageLCA.html)
 
 ## Source
 
