@@ -55,7 +55,25 @@ There are four separate data sets in the `NeuroGenesis4` list:
 - Geschwind.inVivo.sc.Hs
 - Jabaudon.inVivo.sc.Mm
 
-Note that the four data sets in `NeuroGenesis4` are sampled from the original large dataset, which is a very samll subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at 
+Note that the four data sets in `NeuroGenesis4` are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing)
+
+This part of code is to use the full data sets and not evaluted in this vignette
+```{r}
+# install.packages("googledrive")
+# 
+# library(googledrive)
+# 
+# ## Download NeuroGenesis4
+# drive_download(file = "https://drive.google.com/u/0/uc?export=download&id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)
+# 
+# ## Download NeruGenesis4.info
+# drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)
+# 
+# load(file = "./NeuroGenesis4.RData")
+# load(file = "./NeuroGenesis4.info.RData")
+```
+
+In this vignette, we use the small sampled data sets instead, note that the whole procedure can be implemented without chaning anything by just using the full data sets and info.
 
 ```{r}
 data("NeuroGenesis4", package = "SJD")
@@ -64,9 +82,9 @@ data("NeuroGenesis4.info", package = "SJD")
 str(NeuroGenesis4)
 ```
 
-## Transform data
+## Preprocess data
 
-The four data sets contained in the `SJD` package are not necessarily from the same species and with same geneType, so that the `sjdWrap` function provides an interface for user to align the input data sets to align with each other.
+The four data sets contained in this demo are from either human or mouse species annotated with either gene symbol or ensembl IDs, we provide a wrapper function sjdwrap to help users preprocess and align datasets to be ready for decomposition.
 
 ```{r}
 SJDdataIN = sjdWrap(
@@ -76,7 +94,6 @@ SJDdataIN = sjdWrap(
   geneType.out = "symbol",
   species.out = "human"
   )
-
 ```
 
 ## Apply the decomposition method
