@@ -1,9 +1,13 @@
 Package: SJD
 Type: Package
 Title: Structured Joint Decomposition (SJD)
-Version: 0.1.0
-Date: 2020-05-24
-Author: Huan Chen
+Version: 1.0
+Date: 2021-11-16
+Authors@R: c(
+  person("Huan", "Chen", email = "hchen130@jhu.edu", role = c("aut", "cre")),
+  person("Jinrui", "Liu", role = c("aut")),
+  person("Carlo", "Colantuoni", role = c("aut"))
+  )
 Maintainer: Huan Chen <hchen130@jhu.edu>
 Imports: tidyverse,
     RSpectra,

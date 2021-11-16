@@ -3,5 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   SJD: SJD.html
-last_built: 2021-11-16T02:42Z
+  StructralJointDecomposition: StructralJointDecomposition.html
+  twoStageLCA: twoStageLCA.html
+last_built: 2021-11-16T21:54Z
 

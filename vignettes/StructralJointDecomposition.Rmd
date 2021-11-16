@@ -1,0 +1,218 @@
+---
+title: "Introduction to SJD (Structured Joint Decomposition)"
+author: 
+- Huan Chen
+- Jinrui Liu
+- Carlo Colantuoni
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to SJD (Structured Joint Decomposition)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Install and load `SJD` package
+
+To install this package in R, run the following commands:
+
+```R
+library(devtools)
+install_github("CHuanSite/SJD")
+```
+
+```{r setup}
+library(SJD)
+```
+
+# Jointly decompose 4 NeuroGenesis genomics data with `SJD` package
+
+## Load data
+
+We load the structured neuro genesis data `NeuroGenesis4` and its information data `NeuroGenesis.info` contained in the package `SJD` into the environment.
+
+There are four separate data sets in the `NeuroGenesis4` list:
+
+- Meissner.inVitro.bulk.Hs
+- LIBD.AZ.inVitro.bulk.Hs
+- Geschwind.inVivo.sc.Hs
+- Jabaudon.inVivo.sc.Mm
+
+Note that the four data sets in `NeuroGenesis4` are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing)
+
+This part of code is to use the full data sets and not evaluted in this vignette
+```{r}
+# install.packages("googledrive")
+# 
+# library(googledrive)
+# 
+# ## Download NeuroGenesis4
+# drive_download(file = "https://drive.google.com/u/0/uc?export=download&id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)
+# 
+# ## Download NeruGenesis4.info
+# drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)
+# 
+# load(file = "./NeuroGenesis4.RData")
+# load(file = "./NeuroGenesis4.info.RData")
+```
+
+In this vignette, we use the small sampled data sets instead, note that the whole procedure can be implemented without chaning anything by just using the full data sets and info.
+
+```{r}
+data("NeuroGenesis4", package = "SJD")
+data("NeuroGenesis4.info", package = "SJD")
+
+str(NeuroGenesis4)
+```
+
+## Preprocess data
+
+The four data sets contained in this demo are from either human or mouse species annotated with either gene symbol or ensembl IDs, we provide a wrapper function sjdwrap to help users preprocess and align datasets to be ready for decomposition.
+
+```{r}
+SJDdataIN = sjdWrap(
+  data.list = NeuroGenesis4,
+  species.vector = c("human", "human", "human", "mouse"),
+  geneType.vector = c("symbol","ensembl","symbol","symbol"),
+  geneType.out = "symbol",
+  species.out = "human"
+  )
+```
+
+## Apply the decomposition method
+
+After the transformation and alignment among the data sets, the next step is to apply the decomposition method, we give examples on different methods to illustrate the process
+
+```{r}
+grp = list(
+  Shared.All.4 = c(1 : 4), 
+  Shared.bulk.2 = c(1,2),
+  Shared.sc.2 = c(3, 4),
+  Hs.Meisnr.1 = c(1),
+  Hs.AZ.1 = c(2),
+  Gesch.1 = c(3),
+  Telley.1 = c(4))
+
+dims = c(2, 2, 2, 2, 2, 2, 2) # must have same length as "grp"
+
+# sep
+sepPCA.out = sepPCA(SJDdataIN, dims)
+sepICA.out = sepICA(SJDdataIN, dims)
+sepNMF.out = sepNMF(SJDdataIN, dims)
+
+# concat
+concatPCA.out = concatPCA(SJDdataIN, grp, dims)
+concatICA.out = concatICA(SJDdataIN, grp, dims)
+concatNMF.out = concatNMF(SJDdataIN, grp, dims)
+
+# joint
+jointPCA.out = jointPCA(SJDdataIN, grp, dims)
+jointICA.out = jointICA(SJDdataIN, grp, dims)
+jointNMF.out = jointNMF(SJDdataIN, grp, dims)
+
+# sequential
+twoStageLCA.out = twoStageLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
+twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
+
+```
+
+## Plot
+
+```{r}
+library(ggplot2)
+library(gridExtra)
+```
+
+### Plot each dim in each dataset individually 
+
+Here we need to call the `SJDScorePlotter` function to generate the `SJDScorePlotter.obj`, a list of ggplot objects that can be used
+```{r}
+SampleMetaNamesTable = data.frame(
+    row.names = names(NeuroGenesis4),
+    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
+    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
+    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
+    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
+    PCHColumn = c("","","","")
+)
+```
+
+```{r}
+SJDScorePlotter.obj = SJDScorePlotter(
+     SJDalg = "twoStageLCA",
+     scores = twoStageLCA.out$score_list,
+     lbb = "NeuroGenesis4.p2",
+     info = NeuroGenesis4.info,
+     SampleMetaNamesTable = SampleMetaNamesTable
+)
+```
+
+```{r}
+print(names(SJDScorePlotter.obj))
+```
+
+Save the whole list to a .RData file
+```{r}
+# save(SJDScorePlotter.obj, file = "./SJDScorePlotter.obj.RData")
+```
+
+### Assemble the images based on dataset
+```{r}
+assemble.byDataset.obj = assemble.byDataset(SJDScorePlotter.obj = SJDScorePlotter.obj, dataset_name = "Meissner.inVitro.bulk.Hs", SJD_algorithm = "twoStageLCA", group = NA)
+```
+
+```{r}
+print(names(assemble.byDataset.obj))
+```
+
+Plot all images corresponding from the `assemble.byDataset.obj`. We can construct them into a whole big image through the `grid.arrange` from the `grid.Extra` package.
+
+```{r}
+g1 = grid.arrange(
+  assemble.byDataset.obj[[1]],
+  assemble.byDataset.obj[[2]],
+  nrow = 1, ncol = 2
+)
+```
+
+```{r}
+g2 = grid.arrange(
+  assemble.byDataset.obj[[3]],
+  assemble.byDataset.obj[[4]],
+  nrow = 1, ncol = 2
+)
+```
+
+
+### Assemble the images based on component
+```{r}
+assemble.byComponent.obj = assemblePNG.byComponent(SJDScorePlotter.obj = SJDScorePlotter.obj, component = c(1, 2), SJD_algorithm = "twoStageLCA", group = 'Shared.All.4')
+```
+
+```{r}
+print(names(assemble.byComponent.obj))
+```
+
+```{r}
+g = grid.arrange(
+  assemble.byComponent.obj[[1]],
+  assemble.byComponent.obj[[2]],
+  nrow = 1, ncol = 2
+)
+```
+
+```{r}
+g = grid.arrange(
+  assemble.byComponent.obj[[3]],
+  assemble.byComponent.obj[[4]],
+  nrow = 1, ncol = 2
+)
+```
+

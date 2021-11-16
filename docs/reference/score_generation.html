@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SJD</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0</span>
       </span>
     </div>
 
@@ -89,6 +89,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/StructralJointDecomposition.html">Introduction to SJD (Structured Joint Decomposition)</a>
+    </li>
+    <li>
+      <a href="../articles/twoStageLCA.html">Introduction to twoStageLCA (Two Stage Linked Component Analysis)</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -140,12 +155,12 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='fu'>score_generation</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>          [,1]       [,2]       [,3]       [,4]      [,5]     [,6]       [,7]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] 1.081691  2.2037522 -0.4766709  2.5529336  1.457365 0.779053 -0.5329625</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] 2.272514 -0.9762308  1.0225958 -0.7964057 -1.093504 2.355487 -0.2755211</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,8]       [,9]      [,10]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]  1.3820080 -0.5229781  0.9029928</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] -0.1192125 -0.7089744 -1.7198640</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,1]      [,2]        [,3]      [,4]        [,5]      [,6]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] -2.1338160 0.8138661  0.08988711  1.830652 -1.52305079 0.1064782</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] -0.5030632 3.2176859 -0.89533513 -1.604619 -0.01598623 2.1138957</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,7]       [,8]       [,9]     [,10]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] -0.0684506  0.2031061 -0.2858078 0.2661192</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]  3.0702402 -2.0387274 -2.0818520 3.1077046</span>
 <span class='r-in'></span>
 </pre>
   </div>
@@ -159,7 +174,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Huan Chen.</p>
+  <p>Developed by Huan Chen, Jinrui Liu, Carlo Colantuoni.</p>
 </div>
 
 <div class="pkgdown">

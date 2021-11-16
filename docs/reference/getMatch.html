@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SJD</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0</span>
       </span>
     </div>
 
@@ -89,6 +89,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/StructralJointDecomposition.html">Introduction to SJD (Structured Joint Decomposition)</a>
+    </li>
+    <li>
+      <a href="../articles/twoStageLCA.html">Introduction to twoStageLCA (Two Stage Linked Component Analysis)</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -161,11 +176,10 @@
     <pre class="examples"><span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>NeuroGenesis4</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>out</span> <span class='op'>=</span> <span class='fu'>getMatch</span><span class='op'>(</span></span>
-<span class='r-in'><span class='fu'><a href='https://tibble.tidyverse.org/reference/rownames.html'>rownames</a></span><span class='op'>(</span><span class='va'>NeuroGenesis4</span><span class='op'>$</span><span class='va'>Meissner.inVitro.bulk.Hs</span><span class='op'>)</span>,</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>NeuroGenesis4</span><span class='op'>$</span><span class='va'>Meissner.inVitro.bulk.Hs</span><span class='op'>)</span>,</span>
 <span class='r-in'>inSpecies <span class='op'>=</span> <span class='st'>'human'</span>,</span>
 <span class='r-in'>inType <span class='op'>=</span> <span class='st'>'symbol'</span>,</span>
 <span class='r-in'>newSpecies <span class='op'>=</span> <span class='st'>'mouse'</span><span class='op'>)</span></span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Ensembl site unresponsive, trying asia mirror</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> You have input  40  genes</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> We found  38  matches</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 6  of those are duplicates and only keeping the 1st of each</span>
@@ -182,7 +196,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Huan Chen.</p>
+  <p>Developed by Huan Chen, Jinrui Liu, Carlo Colantuoni.</p>
 </div>
 
 <div class="pkgdown">

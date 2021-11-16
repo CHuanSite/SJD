@@ -1,5 +1,5 @@
 ---
-title: "Introduction to SJD (Structured Joint Decomposition)"
+title: "Get start on the SJD package"
 author: 
 - Huan Chen
 - Jinrui Liu
@@ -7,7 +7,7 @@ author:
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to SJD (Structured Joint Decomposition)}
+  %\VignetteIndexEntry{Get start on the SJD package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,16 +18,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-# Introduction 
-
-SJD (Structured Joint Decomposiiton) is a R package for visualizing biologically structured gene expression matrix environment based on low rank models. Currently, it provides user 4 different styles of decomposition: (1) Separately, (2) Concatenately, (3) Jointly, (4) Sequentially.
-
-This package implements four categories of algorithms to decompose multiple datasets, (1) Separately, (2) Concatenately, (3) Jointly, (4) Two Stage Sequentially. 
-
-For the first three categories, there are three available algorithms: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). For each method, the algorithm takes three arguments, `dataset`, `group` and `comp_num`, specifying which datasets to be used, what is the structure among the datasets and what's the dimension for each component.
-
-For the last category, there is one algorithm, called two-staged linked component analysis, which is a PCA based statistical model.
 
 # Install and load `SJD` package
 
@@ -42,174 +32,100 @@ install_github("CHuanSite/SJD")
 library(SJD)
 ```
 
-# Jointly decompose 4 NeuroGenesis genomics data with `SJD` package
 
-## Load data
-
-We load the structured neuro genesis data `NeuroGenesis4` and its information data `NeuroGenesis.info` contained in the package `SJD` into the environment.
-
-There are four separate data sets in the `NeuroGenesis4` list:
-
-- Meissner.inVitro.bulk.Hs
-- LIBD.AZ.inVitro.bulk.Hs
-- Geschwind.inVivo.sc.Hs
-- Jabaudon.inVivo.sc.Mm
-
-Note that the four data sets in `NeuroGenesis4` are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing)
-
-This part of code is to use the full data sets and not evaluted in this vignette
+# Simple example
 ```{r}
-# install.packages("googledrive")
-# 
-# library(googledrive)
-# 
-# ## Download NeuroGenesis4
-# drive_download(file = "https://drive.google.com/u/0/uc?export=download&id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)
-# 
-# ## Download NeruGenesis4.info
-# drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)
-# 
-# load(file = "./NeuroGenesis4.RData")
-# load(file = "./NeuroGenesis4.info.RData")
+# Simulation the dataset
+dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+               
+## Specify the structure among the datasets
+group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+comp_num = c(2,2,2,2,2,2,2,2,2)
+
+## Separate PCA, ICA, NMF
+sepPCA_res = sepPCA(dataset, comp_num)
+sepICA_res = sepICA(dataset, comp_num)
+sepNMF_res = sepNMF(dataset, comp_num)
+
+## Concatenated PCA, ICA, NMF
+concatPCA_res = concatPCA(dataset, group, comp_num)
+concatICA_res = concatICA(dataset, group, comp_num)
+concatNMF_res = concatNMF(dataset, group, comp_num)
+
+## Joint PCA, ICA, NMF
+jointPCA_res = jointPCA(dataset, group, comp_num)
+jointICA_res = jointICA(dataset, group, comp_num)
+jointNMF_res = jointNMF(dataset, group, comp_num)
+
+## twoStageLCA
+twoStageLCA_res = twoStageLCA(dataset, group, comp_num)
 ```
 
-In this vignette, we use the small sampled data sets instead, note that the whole procedure can be implemented without chaning anything by just using the full data sets and info.
-
+To access the component
 ```{r}
-data("NeuroGenesis4", package = "SJD")
-data("NeuroGenesis4.info", package = "SJD")
-
-str(NeuroGenesis4)
+str(concatPCA_res$linked_component_list)
 ```
 
-## Preprocess data
-
-The four data sets contained in this demo are from either human or mouse species annotated with either gene symbol or ensembl IDs, we provide a wrapper function sjdwrap to help users preprocess and align datasets to be ready for decomposition.
-
+To access the score
 ```{r}
-SJDdataIN = sjdWrap(
-  data.list = NeuroGenesis4,
-  species.vector = c("human", "human", "human", "mouse"),
-  geneType.vector = c("symbol","ensembl","symbol","symbol"),
-  geneType.out = "symbol",
-  species.out = "human"
-  )
+str(concatPCA_res$score_list)
 ```
 
-## Apply the decomposition method
+# Weighting data sets by different weights
 
-After the transformation and alignment among the data sets, the next step is to apply the decomposition method, we give examples on different methods to illustrate the process
-
-```{r}
-grp = list(
-  Shared.All.4 = c(1 : 4), 
-  Shared.bulk.2 = c(1,2),
-  Shared.sc.2 = c(3, 4),
-  Hs.Meisnr.1 = c(1),
-  Hs.AZ.1 = c(2),
-  Gesch.1 = c(3),
-  Telley.1 = c(4))
-
-dims = c(2, 2, 2, 2, 2, 2, 2) # must have same length as "grp"
-
-# sep
-sepPCA.out = sepPCA(SJDdataIN, dims)
-sepICA.out = sepICA(SJDdataIN, dims)
-sepNMF.out = sepNMF(SJDdataIN, dims)
-
-# concat
-concatPCA.out = concatPCA(SJDdataIN, grp, dims)
-concatICA.out = concatICA(SJDdataIN, grp, dims)
-concatNMF.out = concatNMF(SJDdataIN, grp, dims)
-
-# joint
-jointPCA.out = jointPCA(SJDdataIN, grp, dims)
-jointICA.out = jointICA(SJDdataIN, grp, dims)
-jointNMF.out = jointNMF(SJDdataIN, grp, dims)
-
-# sequential
-twoStageLCA.out = twoStageLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
-twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
-
-```
-
-## Plot
+Sometimes it is interesting to weigh data sets differently, to incorporate user's different views on it. The SJD package also has this option.
 
 ```{r}
-library(ggplot2)
-library(gridExtra)
+# Simulation the dataset
+dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+               
+## Specify the structure among the datasets
+group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+comp_num = c(2,2,2,2,2,2,2,2,2)
+weighting = c(2, 1, 4, 3)
+
+## Separate PCA, ICA, NMF
+sepPCA_res = sepPCA(dataset, comp_num, weighting)
+sepICA_res = sepICA(dataset, comp_num, weighting)
+sepNMF_res = sepNMF(dataset, comp_num, weighting)
+
+## Concatenated PCA, ICA, NMF
+concatPCA_res = concatPCA(dataset, group, comp_num, weighting)
+concatICA_res = concatICA(dataset, group, comp_num, weighting)
+concatNMF_res = concatNMF(dataset, group, comp_num, weighting)
+
+## Joint PCA, ICA, NMF
+jointPCA_res = jointPCA(dataset, group, comp_num, weighting)
+jointICA_res = jointICA(dataset, group, comp_num, weighting)
+jointNMF_res = jointNMF(dataset, group, comp_num, weighting)
+
+## twoStageLCA
+twoStageLCA_res = twoStageLCA(dataset, group, comp_num, weighting)
 ```
 
-### Plot each dim in each dataset individually 
-
-Here we need to call the `SJDScorePlotter` function to generate the `SJDScorePlotter.obj`, a list of ggplot objects that can be used
-```{r}
-SampleMetaNamesTable = data.frame(
-    row.names = names(NeuroGenesis4),
-    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
-    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
-    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
-    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
-    PCHColumn = c("","","","")
-)
-```
-
-```{r}
-SJDScorePlotter.obj = SJDScorePlotter(
-     SJDalg = "twoStageLCA",
-     scores = twoStageLCA.out$score_list,
-     lbb = "NeuroGenesis4.p2",
-     info = NeuroGenesis4.info,
-     SampleMetaNamesTable = SampleMetaNamesTable
-)
-```
-
-```{r}
-print(names(SJDScorePlotter.obj))
-```
-
-Save the whole list to a .RData file
-```{r}
-# save(SJDScorePlotter.obj, file = "./SJDScorePlotter.obj.RData")
-```
-
-### Assemble the images based on dataset
-```{r}
-assemble.byDataset.obj = assemble.byDataset(SJDScorePlotter.obj = SJDScorePlotter.obj, dataset_name = "Meissner.inVitro.bulk.Hs", SJD_algorithm = "twoStageLCA", group = NA)
-```
+# Projecting new data sets to extracted components
 
 ```{r}
-print(names(assemble.byDataset.obj))
+# Simulation the dataset
+dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+               matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+               
+## Specify the structure among the datasets
+group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+comp_num = c(2,2,2,2,2,2,2,2,2)
+
+## Projected new data sets
+proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
+
+## concatenate PCA with projection functionality on
+res_concatPCA = concatPCA(dataset, group, comp_num, weighting = NULL, proj_dataset = proj_dataset, proj_group = proj_group)
 ```
-
-Plot all images corresponding from the `assemble.byDataset.obj`. We can construct them into a whole big image through the `grid.arrange` from the `grid.Extra` package.
-
-```{r}
-g = grid.arrange(
-  assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2,
-  assemble.byDataset.obj$SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp2of2,
-  nrow = 1, ncol = 2
-)
-```
-
-### Assemble the images based on component
-```{r}
-assemble.byComponent.obj = assemblePNG.byComponent(SJDScorePlotter.obj = SJDScorePlotter.obj, component = c(1, 2), SJD_algorithm = "twoStageLCA", group = 'Shared.All.4')
-```
-
-```{r}
-print(names(assemble.byComponent.obj))
-```
-
-```{r}
-g = grid.arrange(
-  assemble.byComponent.obj[[1]],
-  assemble.byComponent.obj[[2]],
-  nrow = 1, ncol = 2
-)
-```
-
-# Reference 
-
-- Chen, H., Caffo, B., Stein-O'Brien, G., Liu, J., Langmead, B., Colantuoni, C., & Xiao, L. (2021). Two-stage Linked Component Analysis for Joint Decomposition of Multiple Biologically Related Data Sets. bioRxiv.
-
