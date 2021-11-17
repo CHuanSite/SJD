@@ -142,8 +142,8 @@ SJDScorePlotter <- function(
                     image_out_name = paste("SJDout_", lbb, ".SJDalg_", SJDalg, ".data_", dataset_name, ".comp", k, "of", dim(scores[[dataset_name]])[1], sep="")
 
                     image_out_list[[image_out_name]] = data.frame(
-                        x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])],
-                        y_axis_value = SJDscores,
+                        x_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])]),
+                        y_axis_value = as.numeric(SJDscores),
                         point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
                     ) %>%
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
@@ -204,8 +204,8 @@ SJDScorePlotter <- function(
                     image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".data_",dataset_name,".comp",k,"of",dim(scores[[dataset_name]])[1],sep="")
 
                     image_out_list[[image_out_name]] = data.frame(
-                        x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord],
-                        y_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord],
+                        x_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]),
+                        y_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]),
                         point_clr = clr
                     ) %>%
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
@@ -261,8 +261,8 @@ SJDScorePlotter <- function(
                         image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".grp_",names(scores[[dataset_name]])[j], ".data_", dataset_name, ".comp", k, "of", dim(scores[[dataset_name]][[j]])[1], sep="")
 
                         image_out_list[[image_out_name]] = data.frame(
-                            x_axis_value = info[[dataset_name]][, as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])],
-                            y_axis_value = scores[[dataset_name]][[j]][k, ],
+                            x_axis_value = as.numeric(info[[dataset_name]][, as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])]),
+                            y_axis_value = as.numeric(scores[[dataset_name]][[j]][k, ]),
                             point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
                             ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
@@ -329,8 +329,8 @@ SJDScorePlotter <- function(
                         image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".grp_",names(scores[[dataset_name]])[j],".data_",dataset_name,".comp",k,"of",dim(scores[[dataset_name]][[j]])[1],sep="")
 
                         image_out_list[[image_out_name]] = data.frame(
-                            x_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord],
-                            y_axis_value = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord],
+                            x_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]),
+                            y_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]),
                             point_clr = clr
                         ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
