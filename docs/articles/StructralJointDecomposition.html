@@ -120,11 +120,11 @@
 <p>We download the full data sets from the google drive, and load it into <code>R</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"googledrive"</span><span class="op">)</span>
-<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpyTdi8F/temp_libpath16d5c195ead98'</span>
+<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpyTdi8F/temp_libpath16d5c6d1b2275'</span>
 <span class="co">#&gt; (as 'lib' is unspecified)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmpi6xlaE/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//RtmpvRpUC8/downloaded_packages</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org">googledrive</a></span><span class="op">)</span>
 
@@ -136,6 +136,7 @@
 <span class="co">#&gt;   See gargle's "Non-interactive auth" vignette for more details:</span>
 <span class="co">#&gt;   &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</span>
 <span class="co">#&gt; ℹ The googledrive package is using a cached token for 'hzchenhuan@gmail.com'.</span>
+<span class="co">#&gt; Auto-refreshing stale OAuth token.</span>
 <span class="co">#&gt; File downloaded:</span>
 <span class="co">#&gt; • 'NeuroGenesis4_full_data.RData' &lt;id: 1jf4f_dxps47yT89m8Tkpviyci_XoOtGk&gt;</span>
 <span class="co">#&gt; Saved locally as:</span>
@@ -170,20 +171,17 @@
   species.out <span class="op">=</span> <span class="st">"human"</span>
   <span class="op">)</span>
 <span class="co">#&gt; Using biomaRt to connect gene IDs across 4 datasets:</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 1 </span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 1</span>
+<span class="co">#&gt; Ensembl site unresponsive, trying useast mirror</span>
+<span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
 <span class="co">#&gt; You have input  23368  genes</span>
 <span class="co">#&gt; We found  22473  matches</span>
 <span class="co">#&gt; 2674  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 2</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 2 </span>
 <span class="co">#&gt; You have input  63677  genes</span>
 <span class="co">#&gt; We found  54502  matches</span>
 <span class="co">#&gt; 17111  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 3</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying useast mirror</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 3 </span>
 <span class="co">#&gt; You have input  35543  genes</span>
 <span class="co">#&gt; We found  25683  matches</span>
 <span class="co">#&gt; 2288  of those are duplicates and only keeping the 1st of each</span>
