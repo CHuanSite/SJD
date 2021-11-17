@@ -83,7 +83,7 @@
                         <h4 class="author">Jinrui Liu</h4>
                         <h4 class="author">Carlo Colantuoni</h4>
             
-            <h4 class="date">16 November, 2021</h4>
+            <h4 class="date">17 November, 2021</h4>
       
       
       <div class="hidden name"><code>StructralJointDecomposition.Rmd</code></div>
@@ -117,43 +117,45 @@
 <li>Jabaudon.inVivo.sc.Mm</li>
 </ul>
 <p>Note that the four data sets in <code>NeuroGenesis4</code> are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at <a href="https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing">data</a> and <a href="https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing">info</a></p>
-<p>This part of code is to use the full data sets and not evaluted in this vignette</p>
+<p>We download the full data sets from the google drive, and load it into <code>R</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("googledrive")</span>
-<span class="co"># </span>
-<span class="co"># library(googledrive)</span>
-<span class="co"># </span>
-<span class="co"># ## Download NeuroGenesis4</span>
-<span class="co"># drive_download(file = "https://drive.google.com/u/0/uc?export=download&amp;id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)</span>
-<span class="co"># </span>
-<span class="co"># ## Download NeruGenesis4.info</span>
-<span class="co"># drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)</span>
-<span class="co"># </span>
-<span class="co"># load(file = "./NeuroGenesis4.RData")</span>
-<span class="co"># load(file = "./NeuroGenesis4.info.RData")</span></code></pre></div>
-<p>In this vignette, we use the small sampled data sets instead, note that the whole procedure can be implemented without chaning anything by just using the full data sets and info.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"NeuroGenesis4"</span>, package <span class="op">=</span> <span class="st">"SJD"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"NeuroGenesis4.info"</span>, package <span class="op">=</span> <span class="st">"SJD"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"googledrive"</span><span class="op">)</span>
+<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpyTdi8F/temp_libpath16d5c195ead98'</span>
+<span class="co">#&gt; (as 'lib' is unspecified)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; The downloaded binary packages are in</span>
+<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmpi6xlaE/downloaded_packages</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">NeuroGenesis4</span><span class="op">)</span>
-<span class="co">#&gt; List of 4</span>
-<span class="co">#&gt;  $ Meissner.inVitro.bulk.Hs: num [1:40, 1:15] 11.9 11.4 11.5 11.4 11.7 ...</span>
-<span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span>
-<span class="co">#&gt;   .. ..$ : chr [1:40] "ACTB" "ACTG1" "RPS11" "RPS27" ...</span>
-<span class="co">#&gt;   .. ..$ : chr [1:15] "ESC.1" "ESC.2" "NE.1" "NE.2" ...</span>
-<span class="co">#&gt;  $ LIBD.AZ.inVitro.bulk.Hs : num [1:40, 1:15] 9.8 9.91 9.93 10.11 9.9 ...</span>
-<span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span>
-<span class="co">#&gt;   .. ..$ : chr [1:40] "ENSG00000075624" "ENSG00000184009" "ENSG00000142534" "ENSG00000177954" ...</span>
-<span class="co">#&gt;   .. ..$ : chr [1:15] "R16-191_H5TKNBBXX" "R16-287_H5TKNBBXX" "R16-197_H5TKNBBXX" "R16-850_H7V3TBBXX" ...</span>
-<span class="co">#&gt;  $ Geschwind.inVivo.sc.Hs  : num [1:40, 1:15] 9.52 11.32 9.52 10.51 8.52 ...</span>
-<span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span>
-<span class="co">#&gt;   .. ..$ : chr [1:40] "ACTB" "ACTG1" "RPS11" "RPS27" ...</span>
-<span class="co">#&gt;   .. ..$ : chr [1:15] "TGCTAATACTGA" "TTCACGATTTTT" "CTGTCAGAATAA" "CATAATATGTCA" ...</span>
-<span class="co">#&gt;  $ Jabaudon.inVivo.sc.Mm   : num [1:40, 1:15] 11.55 11.98 10.03 8.85 9.82 ...</span>
-<span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span>
-<span class="co">#&gt;   .. ..$ : chr [1:40] "Actb" "Actg1" "Rps11" "Rps27rt" ...</span>
-<span class="co">#&gt;   .. ..$ : chr [1:15] "E14.24H_LTHT7_1_1" "E14.24H_LTHT7_1_2" "E14.24H_LTHT7_1_5" "E14.24H_LTHT7_1_6" ...</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org">googledrive</a></span><span class="op">)</span>
+
+<span class="co">## Download NeuroGenesis4</span>
+<span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html">drive_download</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"https://drive.google.com/u/0/uc?export=download&amp;id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk"</span>, path <span class="op">=</span> <span class="st">"./NeuroGenesis4.RData"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; ! Using an auto-discovered, cached token.</span>
+<span class="co">#&gt;   To suppress this message, modify your code or options to clearly consent to</span>
+<span class="co">#&gt;   the use of a cached token.</span>
+<span class="co">#&gt;   See gargle's "Non-interactive auth" vignette for more details:</span>
+<span class="co">#&gt;   &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</span>
+<span class="co">#&gt; ℹ The googledrive package is using a cached token for 'hzchenhuan@gmail.com'.</span>
+<span class="co">#&gt; File downloaded:</span>
+<span class="co">#&gt; • 'NeuroGenesis4_full_data.RData' &lt;id: 1jf4f_dxps47yT89m8Tkpviyci_XoOtGk&gt;</span>
+<span class="co">#&gt; Saved locally as:</span>
+<span class="co">#&gt; • './NeuroGenesis4.RData'</span>
+
+<span class="co">## Download NeruGenesis4.info</span>
+<span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html">drive_download</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing"</span>, path <span class="op">=</span> <span class="st">"./NeuroGenesis4.info.RData"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; File downloaded:</span>
+<span class="co">#&gt; • 'NeuroGenesis4_full_info.RData' &lt;id: 1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ&gt;</span>
+<span class="co">#&gt; Saved locally as:</span>
+<span class="co">#&gt; • './NeuroGenesis4.info.RData'</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./NeuroGenesis4.RData"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"./NeuroGenesis4.info.RData"</span><span class="op">)</span></code></pre></div>
+<p>This block of codes containing the small sampled data, which is faster to compute than the full scale data,</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># data("NeuroGenesis4", package = "SJD")</span>
+<span class="co"># data("NeuroGenesis4.info", package = "SJD")</span>
+
+<span class="co"># str(NeuroGenesis4)</span></code></pre></div>
 </div>
 <div id="preprocess-data" class="section level2">
 <h2 class="hasAnchor">
@@ -169,27 +171,28 @@
   <span class="op">)</span>
 <span class="co">#&gt; Using biomaRt to connect gene IDs across 4 datasets:</span>
 <span class="co">#&gt; Getting biomaRt IDs for dataset 1 </span>
-<span class="co">#&gt; You have input  40  genes</span>
-<span class="co">#&gt; We found  40  matches</span>
-<span class="co">#&gt; 1  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 2 </span>
-<span class="co">#&gt; You have input  40  genes</span>
-<span class="co">#&gt; We found  37  matches</span>
-<span class="co">#&gt; 1  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 3</span>
+<span class="co">#&gt; You have input  23368  genes</span>
+<span class="co">#&gt; We found  22473  matches</span>
+<span class="co">#&gt; 2674  of those are duplicates and only keeping the 1st of each</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 2</span>
+<span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
 <span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying useast mirror</span>
+<span class="co">#&gt; You have input  63677  genes</span>
+<span class="co">#&gt; We found  54502  matches</span>
+<span class="co">#&gt; 17111  of those are duplicates and only keeping the 1st of each</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 3</span>
 <span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
 <span class="co">#&gt; Ensembl site unresponsive, trying useast mirror</span>
-<span class="co">#&gt; You have input  40  genes</span>
-<span class="co">#&gt; We found  39  matches</span>
-<span class="co">#&gt; 0  of those are duplicates and only keeping the 1st of each</span>
+<span class="co">#&gt; Ensembl site unresponsive, trying asia mirror</span>
+<span class="co">#&gt; You have input  35543  genes</span>
+<span class="co">#&gt; We found  25683  matches</span>
+<span class="co">#&gt; 2288  of those are duplicates and only keeping the 1st of each</span>
 <span class="co">#&gt; Getting biomaRt IDs for dataset 4 </span>
-<span class="co">#&gt; You have input  40  genes</span>
-<span class="co">#&gt; We found  34  matches</span>
-<span class="co">#&gt; 0  of those are duplicates and only keeping the 1st of each</span>
+<span class="co">#&gt; You have input  16441  genes</span>
+<span class="co">#&gt; We found  12301  matches</span>
+<span class="co">#&gt; 668  of those are duplicates and only keeping the 1st of each</span>
 <span class="co">#&gt; constructed 4 tables of cross-species matching genes</span>
-<span class="co">#&gt; we found 27 shared genes in 4 datasets</span>
+<span class="co">#&gt; we found 10537 shared genes in 4 datasets</span>
 <span class="co">#&gt; new data list of 4 datasets constructed</span></code></pre></div>
 </div>
 <div id="apply-the-decomposition-method" class="section level2">
@@ -209,23 +212,23 @@
 <span class="va">dims</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="co"># must have same length as "grp"</span>
 
 <span class="co"># sep</span>
-<span class="va">sepPCA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/sepPCA.html">sepPCA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">sepICA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/sepICA.html">sepICA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">sepNMF.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/sepNMF.html">sepNMF</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">dims</span><span class="op">)</span>
+<span class="co"># sepPCA.out = sepPCA(SJDdataIN, dims)</span>
+<span class="co"># sepICA.out = sepICA(SJDdataIN, dims)</span>
+<span class="co"># sepNMF.out = sepNMF(SJDdataIN, dims)</span>
 
 <span class="co"># concat</span>
-<span class="va">concatPCA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/concatPCA.html">concatPCA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">concatICA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/concatICA.html">concatICA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">concatNMF.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/concatNMF.html">concatNMF</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
+<span class="co"># concatPCA.out = concatPCA(SJDdataIN, grp, dims)</span>
+<span class="co"># concatICA.out = concatICA(SJDdataIN, grp, dims)</span>
+<span class="co"># concatNMF.out = concatNMF(SJDdataIN, grp, dims)</span>
 
 <span class="co"># joint</span>
-<span class="va">jointPCA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/jointPCA.html">jointPCA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">jointICA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/jointICA.html">jointICA</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
-<span class="va">jointNMF.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/jointNMF.html">jointNMF</a></span><span class="op">(</span><span class="va">SJDdataIN</span>, <span class="va">grp</span>, <span class="va">dims</span><span class="op">)</span>
+<span class="co"># jointPCA.out = jointPCA(SJDdataIN, grp, dims)</span>
+<span class="co"># jointICA.out = jointICA(SJDdataIN, grp, dims)</span>
+<span class="co"># jointNMF.out = jointNMF(SJDdataIN, grp, dims)</span>
 
 <span class="co"># sequential</span>
 <span class="va">twoStageLCA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/twoStageLCA.html">twoStageLCA</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">SJDdataIN</span>, group <span class="op">=</span> <span class="va">grp</span>, comp_num <span class="op">=</span> <span class="va">dims</span><span class="op">)</span>
-<span class="va">twoStageiLCA.out</span> <span class="op">=</span> <span class="fu"><a href="../reference/twoStageiLCA.html">twoStageiLCA</a></span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">SJDdataIN</span>, group <span class="op">=</span> <span class="va">grp</span>, comp_num <span class="op">=</span> <span class="va">dims</span><span class="op">)</span></code></pre></div>
+<span class="co"># twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)</span></code></pre></div>
 </div>
 <div id="plot" class="section level2">
 <h2 class="hasAnchor">
@@ -385,26 +388,25 @@
 <span class="co">#&gt; [6] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Hs.Meisnr.1.data_Meissner.inVitro.bulk.Hs.comp2of2"</span></code></pre></div>
 <p>Plot all images corresponding from the <code>assemble.byDataset.obj</code>. We can construct them into a whole big image through the <code>grid.arrange</code> from the <code>grid.Extra</code> package.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
-  <span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,
-  <span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,
-  nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
   <span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,
   <span class="va">assemble.byDataset.obj</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span>,
   nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
 <span class="op">)</span></code></pre></div>
-<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div id="assemble-the-images-based-on-component" class="section level3">
 <h3 class="hasAnchor">
 <a href="#assemble-the-images-based-on-component" class="anchor"></a>Assemble the images based on component</h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemblePNG.byComponent.html">assemblePNG.byComponent</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="st">'Shared.All.4'</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/assemblePNG.byComponent.html">assemblePNG.byComponent</a></span><span class="op">(</span>SJDScorePlotter.obj <span class="op">=</span> <span class="va">SJDScorePlotter.obj</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, SJD_algorithm <span class="op">=</span> <span class="st">"twoStageLCA"</span>, group <span class="op">=</span> <span class="st">'Shared.All.4'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">assemble.byComponent.obj</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Meissner.inVitro.bulk.Hs.comp1of2"</span>
 <span class="co">#&gt; [2] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_LIBD.AZ.inVitro.bulk.Hs.comp1of2" </span>
@@ -414,20 +416,18 @@
 <span class="co">#&gt; [6] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_LIBD.AZ.inVitro.bulk.Hs.comp2of2" </span>
 <span class="co">#&gt; [7] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Geschwind.inVivo.sc.Hs.comp2of2"  </span>
 <span class="co">#&gt; [8] "SJDout_NeuroGenesis4.p2.SJDalg_twoStageLCA.grp_Shared.All.4.data_Jabaudon.inVivo.sc.Mm.comp2of2"</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
-  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,
-  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,
-  nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>
-  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>,
-  <span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span>,
-  nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">assemble.byComponent.obj</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<p><img src="StructralJointDecomposition_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
 </div>
 </div>

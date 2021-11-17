@@ -47,29 +47,28 @@ There are four separate data sets in the `NeuroGenesis4` list:
 
 Note that the four data sets in `NeuroGenesis4` are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing)
 
-This part of code is to use the full data sets and not evaluted in this vignette
+We download the full data sets from the google drive, and load it into `R` 
 ```{r}
-# install.packages("googledrive")
-# 
-# library(googledrive)
-# 
-# ## Download NeuroGenesis4
-# drive_download(file = "https://drive.google.com/u/0/uc?export=download&id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)
-# 
-# ## Download NeruGenesis4.info
-# drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)
-# 
-# load(file = "./NeuroGenesis4.RData")
-# load(file = "./NeuroGenesis4.info.RData")
+install.packages("googledrive")
+
+library(googledrive)
+
+## Download NeuroGenesis4
+drive_download(file = "https://drive.google.com/u/0/uc?export=download&id=1jf4f_dxps47yT89m8Tkpviyci_XoOtGk", path = "./NeuroGenesis4.RData", overwrite = TRUE)
+
+## Download NeruGenesis4.info
+drive_download(file = "https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing", path = "./NeuroGenesis4.info.RData", overwrite = TRUE)
+
+load(file = "./NeuroGenesis4.RData")
+load(file = "./NeuroGenesis4.info.RData")
 ```
 
-In this vignette, we use the small sampled data sets instead, note that the whole procedure can be implemented without chaning anything by just using the full data sets and info.
-
+This block of codes containing the small sampled data, which is faster to compute than the full scale data,
 ```{r}
-data("NeuroGenesis4", package = "SJD")
-data("NeuroGenesis4.info", package = "SJD")
+# data("NeuroGenesis4", package = "SJD")
+# data("NeuroGenesis4.info", package = "SJD")
 
-str(NeuroGenesis4)
+# str(NeuroGenesis4)
 ```
 
 ## Preprocess data
@@ -103,23 +102,23 @@ grp = list(
 dims = c(2, 2, 2, 2, 2, 2, 2) # must have same length as "grp"
 
 # sep
-sepPCA.out = sepPCA(SJDdataIN, dims)
-sepICA.out = sepICA(SJDdataIN, dims)
-sepNMF.out = sepNMF(SJDdataIN, dims)
+# sepPCA.out = sepPCA(SJDdataIN, dims)
+# sepICA.out = sepICA(SJDdataIN, dims)
+# sepNMF.out = sepNMF(SJDdataIN, dims)
 
 # concat
-concatPCA.out = concatPCA(SJDdataIN, grp, dims)
-concatICA.out = concatICA(SJDdataIN, grp, dims)
-concatNMF.out = concatNMF(SJDdataIN, grp, dims)
+# concatPCA.out = concatPCA(SJDdataIN, grp, dims)
+# concatICA.out = concatICA(SJDdataIN, grp, dims)
+# concatNMF.out = concatNMF(SJDdataIN, grp, dims)
 
 # joint
-jointPCA.out = jointPCA(SJDdataIN, grp, dims)
-jointICA.out = jointICA(SJDdataIN, grp, dims)
-jointNMF.out = jointNMF(SJDdataIN, grp, dims)
+# jointPCA.out = jointPCA(SJDdataIN, grp, dims)
+# jointICA.out = jointICA(SJDdataIN, grp, dims)
+# jointNMF.out = jointNMF(SJDdataIN, grp, dims)
 
 # sequential
 twoStageLCA.out = twoStageLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
-twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
+# twoStageiLCA.out = twoStageiLCA(dataset = SJDdataIN, group = grp, comp_num = dims)
 
 ```
 
@@ -175,15 +174,15 @@ print(names(assemble.byDataset.obj))
 Plot all images corresponding from the `assemble.byDataset.obj`. We can construct them into a whole big image through the `grid.arrange` from the `grid.Extra` package.
 
 ```{r}
-g1 = grid.arrange(
-  assemble.byDataset.obj[[1]],
-  assemble.byDataset.obj[[2]],
-  nrow = 1, ncol = 2
-)
+assemble.byDataset.obj[[1]]
 ```
 
 ```{r}
-g2 = grid.arrange(
+assemble.byDataset.obj[[2]]
+```
+
+```{r}
+g = grid.arrange(
   assemble.byDataset.obj[[3]],
   assemble.byDataset.obj[[4]],
   nrow = 1, ncol = 2
@@ -201,18 +200,18 @@ print(names(assemble.byComponent.obj))
 ```
 
 ```{r}
-g = grid.arrange(
-  assemble.byComponent.obj[[1]],
-  assemble.byComponent.obj[[2]],
-  nrow = 1, ncol = 2
-)
+assemble.byComponent.obj[[1]]
 ```
 
 ```{r}
-g = grid.arrange(
-  assemble.byComponent.obj[[3]],
-  assemble.byComponent.obj[[4]],
-  nrow = 1, ncol = 2
-)
+assemble.byComponent.obj[[2]]
+```
+
+```{r}
+assemble.byComponent.obj[[3]]
+```
+
+```{r}
+assemble.byComponent.obj[[4]]
 ```
 
