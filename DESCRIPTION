@@ -32,3 +32,4 @@ Suggests:
     rmarkdown,
     knitr
 VignetteBuilder: knitr
+URL:https://github.com/CHuanSite/SJD
