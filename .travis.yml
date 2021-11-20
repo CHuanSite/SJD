@@ -3,16 +3,16 @@
 language: R
 cache: packages
 r:
-    - tidyverse
-    - RSpectra
-    - fastICA
-    - NMF
-    - Biobase
-    - MASS
-    - RMTstat
-    - dplyr
-    - biomaRt
-    - plotrix
-    - ggplot2
-    - stringr
-    - gridExtra
+ - tidyverse
+ - RSpectra
+ - fastICA
+ - NMF
+ - Biobase-devel
+ - MASS
+ - RMTstat
+ - dplyr
+ - biomaRt-devel
+ - plotrix
+ - ggplot2
+ - stringr
+ - gridExtra
