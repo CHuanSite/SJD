@@ -2,3 +2,17 @@
 
 language: R
 cache: packages
+r:
+    - tidyverse
+    - RSpectra
+    - fastICA
+    - NMF
+    - Biobase
+    - MASS
+    - RMTstat
+    - dplyr
+    - biomaRt
+    - plotrix
+    - ggplot2
+    - stringr
+    - gridExtra
