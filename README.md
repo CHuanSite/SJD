@@ -7,7 +7,19 @@
 
 ## Overview:
 
-Structured Joint Decomposiiton (SJD) is a R package for visualizing biologically structured gene expression matrix environment based on low rank models. Currently, it provides user 4 different styles of decomposition: (1) separately, (2) concatenately, (3) jointly, (4) sequentially.
+Structured Joint Decomposiiton (SJD) is a robust R package based on low rank models that provides novel decomposition methods for gene expression datasets that share similar biological progresses. It allows integrated dimensionality reduction for multiple datasets regardless of species, such as human and mouse datasets studying brain neuronal development. 
+
+SJD provides four decomposition algorithms: 1) separate decomposition; 2) concatenate decomposition; 3) joint decomposition; 4) two-stage sequential decomposition. 
+
+The first three algorithms allow three options of statistical computing process: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). 
+The last algorithm two-stage sequential decomposition is solely based on Principal Component Analysis (PCA).
+
+All SJD algorithms require the same input data format: dataset_list, group and comp_num
+
+- dataset_list: expression matrices to be analyzed
+- group: the structure information of datasets to be analyzed
+- comp_num: desired number of dimensionality components after decomposition
+- weighting(optional): parameter specifying weights of dataset(s) 
 
 To install this package in R, run the following commands:
 
@@ -15,12 +27,6 @@ To install this package in R, run the following commands:
 library(devtools)
 install_github("CHuanSite/SJD")
 ```
-
-This package implements four categories of algorithms to decompose multiple datasets, (1) Separately, (2) Concatenately, (3) Jointly, (4) Two Stage Sequentially. 
-
-For the first three categories, there are three available algorithms: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). For each method, the algorithm takes three arguments, `dataset`, `group` and `comp_num`, specifying which datasets to be used, what is the structure among the datasets and what's the dimension for each component.
-
-For the last category, there is one algorithm, called two-staged linked component analysis, which is a PCA based statistical model.
 
 ## Example Use
 

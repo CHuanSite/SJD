@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+We are using a list of neurogenesis datasets of both human and mouse model from different studies to demonstrate the use of SJD package. Here we have a list of datasets NeuroGenesis4, and one dataframe NeuroGenesis.info containing meta informationtot helps visualize the results. Users are suggested to make the dataframe including information prior to visualization.
+
 # Install and load `SJD` package
 
 To install this package in R, run the following commands:
@@ -36,16 +38,7 @@ library(SJD)
 
 ## Load data
 
-We load the structured neuro genesis data `NeuroGenesis4` and its information data `NeuroGenesis.info` contained in the package `SJD` into the environment.
-
-There are four separate data sets in the `NeuroGenesis4` list:
-
-- Meissner.inVitro.bulk.Hs
-- LIBD.AZ.inVitro.bulk.Hs
-- Geschwind.inVivo.sc.Hs
-- Jabaudon.inVivo.sc.Mm
-
-Note that the four data sets in `NeuroGenesis4` are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing)
+The whole structured NeuroGenesis4 and its meta information NeuroGenesis.info are deposited to googledrive and the downsized subsets are built in the SJD package. Please follow the below commands to download the real [data](https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing) and [info](https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing) For users who wants to save time by using the subset data, please skip downloading from google drive and follow the commands below.
 
 We download the full data sets from the google drive, and load it into `R` 
 ```{r}
@@ -73,7 +66,13 @@ This block of codes containing the small sampled data, which is faster to comput
 
 ## Preprocess data
 
-The four data sets contained in this demo are from either human or mouse species annotated with either gene symbol or ensembl IDs, we provide a wrapper function sjdwrap to help users preprocess and align datasets to be ready for decomposition.
+Here we input the list of datasets (expression matrices) and wrap them to be ready for SJD analysis. sjdWrap identifies the shared genes among all datasets regardless of species and output a new list of datasets with uniformed gene names
+
+-	dataset_list: expression matrices to be analyzed
+-	species_vetor: the species information for each input dataset
+-	geneType_vetor: the gene type information for each input dataset
+-	geneType_out: the desired gene type for all datasets
+-	species_out: the desired species to refer when uniform the genes for all datasets
 
 ```{r}
 SJDdataIN = sjdWrap(

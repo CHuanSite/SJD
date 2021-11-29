@@ -1,5 +1,5 @@
 ---
-title: "Get start on the SJD package"
+title: "Demo"
 author: 
 - Huan Chen
 - Jinrui Liu
@@ -7,7 +7,7 @@ author:
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Get start on the SJD package}
+  %\VignetteIndexEntry{Demo}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+Below is a demo of installing and running SJD package on simulated datasets. For analytical vignette using real data, please refer to Real Data Analysis [here](https://chuansite.github.io/SJD/articles/StructralJointDecomposition.html).
 
 # Install and load `SJD` package
 
@@ -76,7 +78,7 @@ str(concatPCA_res$score_list)
 
 # Weighting data sets by different weights
 
-Sometimes it is interesting to weigh data sets differently, to incorporate user's different views on it. The SJD package also has this option.
+SJD package also allows users to specify weights for datasets during the analysis
 
 ```{r}
 # Simulation the dataset

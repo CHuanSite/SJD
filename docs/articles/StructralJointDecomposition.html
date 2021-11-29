@@ -94,7 +94,7 @@
                         <h4 class="author">Jinrui Liu</h4>
                         <h4 class="author">Carlo Colantuoni</h4>
             
-            <h4 class="date">19 November, 2021</h4>
+            <h4 class="date">28 November, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/CHuanSite/SJD/blob/master/vignettes/StructralJointDecomposition.Rmd"><code>vignettes/StructralJointDecomposition.Rmd</code></a></small>
       <div class="hidden name"><code>StructralJointDecomposition.Rmd</code></div>
@@ -103,6 +103,7 @@
 
     
     
+<p>We are using a list of neurogenesis datasets of both human and mouse model from different studies to demonstrate the use of SJD package. Here we have a list of datasets NeuroGenesis4, and one dataframe NeuroGenesis.info containing meta informationtot helps visualize the results. Users are suggested to make the dataframe including information prior to visualization.</p>
 <div id="install-and-load-sjd-package" class="section level1">
 <h1 class="hasAnchor">
 <a href="#install-and-load-sjd-package" class="anchor"></a>Install and load <code>SJD</code> package</h1>
@@ -119,23 +120,15 @@
 <div id="load-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-data" class="anchor"></a>Load data</h2>
-<p>We load the structured neuro genesis data <code>NeuroGenesis4</code> and its information data <code>NeuroGenesis.info</code> contained in the package <code>SJD</code> into the environment.</p>
-<p>There are four separate data sets in the <code>NeuroGenesis4</code> list:</p>
-<ul>
-<li>Meissner.inVitro.bulk.Hs</li>
-<li>LIBD.AZ.inVitro.bulk.Hs</li>
-<li>Geschwind.inVivo.sc.Hs</li>
-<li>Jabaudon.inVivo.sc.Mm</li>
-</ul>
-<p>Note that the four data sets in <code>NeuroGenesis4</code> are sampled from the original large list of data sets, which is a very small subset of the real data. Exact the same process can be applied to the original data, please download the original data sets at <a href="https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing">data</a> and <a href="https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing">info</a></p>
+<p>The whole structured NeuroGenesis4 and its meta information NeuroGenesis.info are deposited to googledrive and the downsized subsets are built in the SJD package. Please follow the below commands to download the real <a href="https://drive.google.com/file/d/1jf4f_dxps47yT89m8Tkpviyci_XoOtGk/view?usp=sharing">data</a> and <a href="https://drive.google.com/file/d/1aGYAxZDYJKOLLO1LmFk9vPYUmtmS1TjZ/view?usp=sharing">info</a> For users who wants to save time by using the subset data, please skip downloading from google drive and follow the commands below.</p>
 <p>We download the full data sets from the google drive, and load it into <code>R</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"googledrive"</span><span class="op">)</span>
-<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpyTdi8F/temp_libpath16d5c3a41c331'</span>
+<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpzAwuaC/temp_libpathebfa3ed99772'</span>
 <span class="co">#&gt; (as 'lib' is unspecified)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmp97Wk1m/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmpp2w5qU/downloaded_packages</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org">googledrive</a></span><span class="op">)</span>
 
@@ -147,6 +140,7 @@
 <span class="co">#&gt;   See gargle's "Non-interactive auth" vignette for more details:</span>
 <span class="co">#&gt;   &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</span>
 <span class="co">#&gt; ℹ The googledrive package is using a cached token for 'hzchenhuan@gmail.com'.</span>
+<span class="co">#&gt; Auto-refreshing stale OAuth token.</span>
 <span class="co">#&gt; File downloaded:</span>
 <span class="co">#&gt; • 'NeuroGenesis4_full_data.RData' &lt;id: 1jf4f_dxps47yT89m8Tkpviyci_XoOtGk&gt;</span>
 <span class="co">#&gt; Saved locally as:</span>
@@ -171,7 +165,14 @@
 <div id="preprocess-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#preprocess-data" class="anchor"></a>Preprocess data</h2>
-<p>The four data sets contained in this demo are from either human or mouse species annotated with either gene symbol or ensembl IDs, we provide a wrapper function sjdwrap to help users preprocess and align datasets to be ready for decomposition.</p>
+<p>Here we input the list of datasets (expression matrices) and wrap them to be ready for SJD analysis. sjdWrap identifies the shared genes among all datasets regardless of species and output a new list of datasets with uniformed gene names</p>
+<ul>
+<li>dataset_list: expression matrices to be analyzed</li>
+<li>species_vetor: the species information for each input dataset</li>
+<li>geneType_vetor: the gene type information for each input dataset</li>
+<li>geneType_out: the desired gene type for all datasets</li>
+<li>species_out: the desired species to refer when uniform the genes for all datasets</li>
+</ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SJDdataIN</span> <span class="op">=</span> <span class="fu"><a href="../reference/sjdWrap.html">sjdWrap</a></span><span class="op">(</span>
   data.list <span class="op">=</span> <span class="va">NeuroGenesis4</span>,
@@ -189,13 +190,11 @@
 <span class="co">#&gt; You have input  63677  genes</span>
 <span class="co">#&gt; We found  54502  matches</span>
 <span class="co">#&gt; 17111  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 3</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying useast mirror</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 3 </span>
 <span class="co">#&gt; You have input  35543  genes</span>
 <span class="co">#&gt; We found  25683  matches</span>
 <span class="co">#&gt; 2288  of those are duplicates and only keeping the 1st of each</span>
-<span class="co">#&gt; Getting biomaRt IDs for dataset 4</span>
-<span class="co">#&gt; Ensembl site unresponsive, trying uswest mirror</span>
+<span class="co">#&gt; Getting biomaRt IDs for dataset 4 </span>
 <span class="co">#&gt; You have input  16441  genes</span>
 <span class="co">#&gt; We found  12301  matches</span>
 <span class="co">#&gt; 668  of those are duplicates and only keeping the 1st of each</span>
