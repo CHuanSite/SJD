@@ -138,7 +138,8 @@ SampleMetaNamesTable = data.frame(
     XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
     YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
     COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
-    PCHColumn = c("","","","")
+    PCHColumn = c("","","",""),
+    cexx=c(1,1,2,2)
 )
 ```
 

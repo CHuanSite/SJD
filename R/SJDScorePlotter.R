@@ -121,6 +121,12 @@ SJDScorePlotter <- function(
             # sepICA, sepPCA，sepNMF different structures happens below here
             score_dimension = dim(scores[[dataset_name]])[1] # dim(sepPCA$score_list[['Hs.AZ']])=2
 
+            if(SampleMetaNamesTable[dataset_name, 'cexx'] == "" | is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+                cexx = 1
+            }else{
+                cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+            }
+
             ### PREPARE SJD SCORE
             for(k in 1:score_dimension){#rank loop
                 print(k)
@@ -147,7 +153,7 @@ SJDScorePlotter <- function(
                         point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
                     ) %>%
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
-                        geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 1, pch = pchh) +
+                        geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = cexx, pch = pchh) +
                         xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                         ylab(rownames(scores[[dataset_name]])[k]) +
                         theme_bw() +
@@ -228,6 +234,12 @@ SJDScorePlotter <- function(
             print("*******************************")
             print(paste("dataset: ",dataset_name, sep=""))
 
+            if(SampleMetaNamesTable[dataset_name, 'cexx'] == "" | is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+                cexx = 1
+            }else{
+                cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+            }
+
             for (j in 1 : length(scores[[dataset_name]])) {
 
                 print(paste("grouping: ", names(scores[[dataset_name]])[j], sep=""))
@@ -266,7 +278,7 @@ SJDScorePlotter <- function(
                             point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
                             ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
-                            geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = 3, pch = pchh) +
+                            geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = cexx, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                             ylab(rownames(scores[[dataset_name]][[j]])[k]) +
                             theme_bw() +
@@ -299,16 +311,16 @@ SJDScorePlotter <- function(
 
                         ## Edit size of points
                         if(length(clr) <= 100){
-                            cexx = 1
+                            cexx = cexx * 1
                         }
                         if(length(clr) > 100 & length(clr) <= 1000){
-                            cexx = .5
+                            cexx = cexx * .5
                         }
                         if(length(clr) > 1000 & length(clr) <= 10000){
-                            cexx = .25
+                            cexx = cexx * .25
                         }
                         if(length(clr) > 10000){
-                            cexx=.2
+                            cexx = cexx * .2
                         }
 
                         ## Edit point type

@@ -94,7 +94,7 @@
                         <h4 class="author">Jinrui Liu</h4>
                         <h4 class="author">Carlo Colantuoni</h4>
             
-            <h4 class="date">28 November, 2021</h4>
+            <h4 class="date">08 December, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/CHuanSite/SJD/blob/master/vignettes/StructralJointDecomposition.Rmd"><code>vignettes/StructralJointDecomposition.Rmd</code></a></small>
       <div class="hidden name"><code>StructralJointDecomposition.Rmd</code></div>
@@ -110,7 +110,7 @@
 <p>To install this package in R, run the following commands:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
-<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CHuanSite/SJD"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"CHuanSite/SJD"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/CHuanSite/SJD">SJD</a></span><span class="op">)</span></code></pre></div>
 </div>
@@ -124,11 +124,11 @@
 <p>We download the full data sets from the google drive, and load it into <code>R</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"googledrive"</span><span class="op">)</span>
-<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpzAwuaC/temp_libpathebfa3ed99772'</span>
+<span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/RtmpsekR5W/temp_libpath162152b39b670'</span>
 <span class="co">#&gt; (as 'lib' is unspecified)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; The downloaded binary packages are in</span>
-<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmpp2w5qU/downloaded_packages</span>
+<span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//RtmpkeonC8/downloaded_packages</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org">googledrive</a></span><span class="op">)</span>
 
@@ -140,7 +140,6 @@
 <span class="co">#&gt;   See gargle's "Non-interactive auth" vignette for more details:</span>
 <span class="co">#&gt;   &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</span>
 <span class="co">#&gt; ℹ The googledrive package is using a cached token for 'hzchenhuan@gmail.com'.</span>
-<span class="co">#&gt; Auto-refreshing stale OAuth token.</span>
 <span class="co">#&gt; File downloaded:</span>
 <span class="co">#&gt; • 'NeuroGenesis4_full_data.RData' &lt;id: 1jf4f_dxps47yT89m8Tkpviyci_XoOtGk&gt;</span>
 <span class="co">#&gt; Saved locally as:</span>
@@ -262,7 +261,8 @@
     XaxisColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"X"</span>,<span class="st">"DAYx"</span>,<span class="st">"tSNE_1"</span>,<span class="st">"tsne1:ch1"</span><span class="op">)</span>,
     YaxisColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PJDscores"</span>,<span class="st">"PJDscores"</span>,<span class="st">"tSNE_2"</span>,<span class="st">"tsne2:ch1"</span><span class="op">)</span>,
     COLaxisColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"color"</span>,<span class="st">"colorBYlabelsX"</span>,<span class="st">"PJDscores"</span>,<span class="st">"PJDscores"</span><span class="op">)</span>,
-    PCHColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span><span class="op">)</span>
+    PCHColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span><span class="op">)</span>,
+    cexx<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SJDScorePlotter.obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/SJDScorePlotter.html">SJDScorePlotter</a></span><span class="op">(</span>
