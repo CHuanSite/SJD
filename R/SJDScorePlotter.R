@@ -216,10 +216,11 @@ SJDScorePlotter <- function(
                     ) %>%
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
                         geom_point(color = clr, cex = cexx, pch = pchh) +
-                        # xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
-                        # ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
-                        xlab(rownames(scores[[dataset_name]])[1]) +
-                        ylab(rownames(scores[[dataset_name]])[2]) +
+                        xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                        ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
+                        # xlab(rownames(scores[[dataset_name]])[1]) +
+                        # ylab(rownames(scores[[dataset_name]])[2]) +
+                        ggtitle(rownames(scores[[dataset_name]])[1], ", ", rownames(scores[[dataset_name]])[2]) +
                         theme_bw() +
                         theme(axis.text=element_text(size = 15),
                               axis.title=element_text(size = 15, face="bold")
@@ -349,10 +350,11 @@ SJDScorePlotter <- function(
                         ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
                             geom_point(color = clr, cex = cexx, pch = pchh) +
-                            # xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
-                            # ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
-                            xlab(rownames(scores[[dataset_name]][[j]])[1]) +
-                            ylab(rownames(scores[[dataset_name]][[j]])[2]) +
+                            xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
+                            ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
+                            # xlab(rownames(scores[[dataset_name]][[j]])[1]) +
+                            # ylab(rownames(scores[[dataset_name]][[j]])[2]) +
+                            ggtitle(paste0(rownames(scores[[dataset_name]][[j]])[1], ", ", rownames(scores[[dataset_name]][[j]])[2])) +
                             theme_bw() +
                             theme(axis.text=element_text(size = 15),
                                   axis.title=element_text(size = 15, face="bold")
