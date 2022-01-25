@@ -220,7 +220,7 @@ SJDScorePlotter <- function(
                         ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                         # xlab(rownames(scores[[dataset_name]])[1]) +
                         # ylab(rownames(scores[[dataset_name]])[2]) +
-                        ggtitle(rownames(scores[[dataset_name]])[1], ", ", rownames(scores[[dataset_name]])[2]) +
+                        ggtitle(rownames(scores[[dataset_name]])[k]) +
                         theme_bw() +
                         theme(axis.text=element_text(size = 15),
                               axis.title=element_text(size = 15, face="bold")
@@ -354,7 +354,7 @@ SJDScorePlotter <- function(
                             ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                             # xlab(rownames(scores[[dataset_name]][[j]])[1]) +
                             # ylab(rownames(scores[[dataset_name]][[j]])[2]) +
-                            ggtitle(paste0(rownames(scores[[dataset_name]][[j]])[1], ", ", rownames(scores[[dataset_name]][[j]])[2])) +
+                            ggtitle(rownames(scores[[dataset_name]][[j]])[k]) +
                             theme_bw() +
                             theme(axis.text=element_text(size = 15),
                                   axis.title=element_text(size = 15, face="bold")
