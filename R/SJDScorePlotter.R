@@ -31,10 +31,8 @@
 #'    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
 #'    PCHColumn = c("","","",""),
 #'    inset = c(TRUE, TRUE, TRUE, TRUE),
-#'    insetLOC.xmin=c(3, 3, 3, 3),
-#'    insetLOC.xmax = c(7, 7, 7, 7),
-#'    insetLOC.ymin = c(0, 0, 0, 0),
-#'    insetLOC.ymax = c(4, 4, 4, 4),
+#'    insetLOC = c("topright", "topright", "topright", "topright"),
+#'    insetZoom = c(0.3, 0.3, 0.3, 0.3),
 #'    ordDECREASE=c(FALSE, FALSE, FALSE, FALSE),
 #'    CLRfoldPRB=c(0.5, 0.5, 0.5, 0.5)
 #' )
@@ -165,34 +163,53 @@ SJDScorePlotter <- function(
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
                         geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = cexx, pch = pchh) +
                         xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
-                        ylab(rownames(scores[[dataset_name]])[k]) +
+                        ylab(paste0(dataset_name, ",", rownames(scores[[dataset_name]])[k])) +
                         theme_bw() +
                         theme(axis.text=element_text(size = 15),
                               axis.title=element_text(size = 15, face="bold")
                         )
 
                     if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+                        insetLOC = SampleMetaNamesTable[dataset_name, "insetLOC"]
+                        insetZoom = SampleMetaNamesTable[dataset_name, "insetZoom"]
 
                         embed_fig = data.frame(SJDscores = SJDscores) %>%
                             ggplot(aes(x = SJDscores)) +
                             geom_density()
 
+                        if(insetLOC == "topleft"){
+                            Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) *min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = (1 - insetZoom) * max( as.numeric(SJDscores)) + insetZoom * min(as.numeric(SJDscores));
+                            Ymax0 = max(as.numeric(SJDscores));
+                        }
+                        if(insetLOC == "topright"){
+                            Xmin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = (1 - insetZoom) * max( as.numeric(SJDscores)) + insetZoom * min(as.numeric(SJDscores));
+                            Ymax0 = max(as.numeric(SJDscores));
+                        }
+                        if(insetLOC == "bottomleft"){
+                            Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = min( as.numeric(SJDscores));
+                            Ymax0 = (1 - insetZoom) * min( as.numeric(SJDscores)) + insetZoom * max(as.numeric(SJDscores));
+                        }
+                        if(insetLOC == "bottomright"){
+                            Xmin0 = insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = min( as.numeric(SJDscores));
+                            Ymax0 = (1 - insetZoom) * min(as.numeric(SJDscores)) + insetZoom * max(as.numeric(SJDscores));
+                        }
+
                         image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
                             annotation_custom(
                                 ggplotGrob(embed_fig),
-                                xmin = SampleMetaNamesTable$insetLOC.xmin[i],
-                                xmax = SampleMetaNamesTable$insetLOC.xmax[i],
-                                ymin = SampleMetaNamesTable$insetLOC.ymin[i],
-                                ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                xmin = Xmin0,
+                                xmax = Xmax0,
+                                ymin = Ymin0,
+                                ymax = Ymax0
                             )
-                        # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
-                        # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # p2inset=
-                        # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
-                        # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
                     }
                 }
 
@@ -271,33 +288,52 @@ SJDScorePlotter <- function(
                         ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                         # xlab(rownames(scores[[dataset_name]])[1]) +
                         # ylab(rownames(scores[[dataset_name]])[2]) +
-                        ggtitle(rownames(scores[[dataset_name]])[k]) +
+                        ggtitle(paste0(dataset_name, ",",  rownames(scores[[dataset_name]])[k])) +
                         theme_bw() +
                         theme(axis.text=element_text(size = 15),
                               axis.title=element_text(size = 15, face="bold"))
 
                     if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+                        insetLOC = SampleMetaNamesTable[dataset_name, "insetLOC"]
+                        insetZoom = SampleMetaNamesTable[dataset_name, "insetZoom"]
 
                         embed_fig = data.frame(SJDscores = SJDscores) %>%
                             ggplot(aes(x = SJDscores)) +
                             geom_density()
 
+                        if(insetLOC == "topleft"){
+                            Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) *min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            Ymax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                        }
+                        if(insetLOC == "topright"){
+                            Xmin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            Ymax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                        }
+                        if(insetLOC == "bottomleft"){
+                            Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            Ymax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                        }
+                        if(insetLOC == "bottomright"){
+                            Xmin0 = insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                            Ymin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            Ymax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                        }
+
                         image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
                             annotation_custom(
                                 ggplotGrob(embed_fig),
-                                xmin = SampleMetaNamesTable$insetLOC.xmin[i],
-                                xmax = SampleMetaNamesTable$insetLOC.xmax[i],
-                                ymin = SampleMetaNamesTable$insetLOC.ymin[i],
-                                ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                xmin = Xmin0,
+                                xmax = Xmax0,
+                                ymin = Ymin0,
+                                ymax = Ymax0
                             )
-                        # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
-                        # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                        # p2inset=
-                        # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
-                        # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
                     }
 
                 }
@@ -359,34 +395,53 @@ SJDScorePlotter <- function(
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
                             geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = cexx, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
-                            ylab(rownames(scores[[dataset_name]][[j]])[k]) +
+                            ylab(paste0(dataset_name, ",", rownames(scores[[dataset_name]][[j]])[k])) +
                             theme_bw() +
                             theme(axis.text=element_text(size = 15),
                                   axis.title=element_text(size = 15, face="bold")
                             )
 
                         if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+                            insetLOC = SampleMetaNamesTable[dataset_name, "insetLOC"]
+                            insetZoom = SampleMetaNamesTable[dataset_name, "insetZoom"]
 
                             embed_fig = data.frame(SJDscores = SJDscores) %>%
                                 ggplot(aes(x = SJDscores)) +
                                 geom_density()
 
+                            if(insetLOC == "topleft"){
+                                Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) *min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = (1 - insetZoom) * max( as.numeric(SJDscores)) + insetZoom * min(as.numeric(SJDscores));
+                                Ymax0 = max(as.numeric(SJDscores));
+                            }
+                            if(insetLOC == "topright"){
+                                Xmin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = (1 - insetZoom) * max( as.numeric(SJDscores)) + insetZoom * min(as.numeric(SJDscores));
+                                Ymax0 = max(as.numeric(SJDscores));
+                            }
+                            if(insetLOC == "bottomleft"){
+                                Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = min( as.numeric(SJDscores));
+                                Ymax0 = (1 - insetZoom) * min( as.numeric(SJDscores)) + insetZoom * max(as.numeric(SJDscores));
+                            }
+                            if(insetLOC == "bottomright"){
+                                Xmin0 = insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = min( as.numeric(SJDscores));
+                                Ymax0 = (1 - insetZoom) * min(as.numeric(SJDscores)) + insetZoom * max(as.numeric(SJDscores));
+                            }
+
                             image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
                                 annotation_custom(
                                     ggplotGrob(embed_fig),
-                                    xmin = SampleMetaNamesTable$insetLOC.xmin[i],
-                                    xmax = SampleMetaNamesTable$insetLOC.xmax[i],
-                                    ymin = SampleMetaNamesTable$insetLOC.ymin[i],
-                                    ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                    xmin = Xmin0,
+                                    xmax = Xmax0,
+                                    ymin = Ymin0,
+                                    ymax = Ymax0
                                 )
-                            # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
-                            # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # p2inset=
-                            # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
-                            # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
                         }
                     }
 
@@ -470,7 +525,7 @@ SJDScorePlotter <- function(
                             ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                             # xlab(rownames(scores[[dataset_name]][[j]])[1]) +
                             # ylab(rownames(scores[[dataset_name]][[j]])[2]) +
-                            ggtitle(rownames(scores[[dataset_name]][[j]])[k]) +
+                            ggtitle(paste0(dataset_name, ",", rownames(scores[[dataset_name]][[j]])[k])) +
                             theme_bw() +
                             theme(axis.text=element_text(size = 15),
                                   axis.title=element_text(size = 15, face="bold"))#+
@@ -478,25 +533,48 @@ SJDScorePlotter <- function(
                         # + annotation_custom(ggplotGrob(p2inset), xmin = Xmin0, xmax = Xmax0, ymin = Ymin0, ymax = Ymax0)
 
                         if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+                            insetLOC = SampleMetaNamesTable[dataset_name, "insetLOC"]
+                            insetZoom = SampleMetaNamesTable[dataset_name, "insetZoom"]
 
                             embed_fig = data.frame(SJDscores = SJDscores) %>%
                                 ggplot(aes(x = SJDscores)) +
                                 geom_density()
 
+                            if(insetLOC == "topleft"){
+                                Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) *min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                                Ymax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            }
+                            if(insetLOC == "topright"){
+                                Xmin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                                Ymax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            }
+                            if(insetLOC == "bottomleft"){
+                                Xmin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                                Ymax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            }
+                            if(insetLOC == "bottomright"){
+                                Xmin0 = insetZoom * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord])) + (1 - insetZoom) * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Xmax0 = max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]));
+                                Ymin0 = min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                                Ymax0 = (1 - insetZoom) * min(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord])) + insetZoom * max(as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]));
+                            }
+
                             image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
                                 annotation_custom(
                                     ggplotGrob(embed_fig),
-                                    xmin = SampleMetaNamesTable$insetLOC.xmin[i],
-                                    xmax = SampleMetaNamesTable$insetLOC.xmax[i],
-                                    ymin = SampleMetaNamesTable$insetLOC.ymin[i],
-                                    ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                    xmin = Xmin0,
+                                    xmax = Xmax0,
+                                    ymin = Ymin0,
+                                    ymax = Ymax0
                                 )
 
                             # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
-                            # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
-                            # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
                             # p2inset=
                             # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
                             # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
