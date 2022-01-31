@@ -1,11 +1,11 @@
 #' Plot SJD score
 #'
-#' plot dimensionality reduction weight components for each SJD algorithm for dataset analyzed by SJD
+#' plot dimensionality reduction scores for each SJD algorithm for dataset analyzed by SJD
 #'
 #' @param SJDalg SJD algorithm to plot i.e 'twoStageLCA'
 #' @param scores score list of the SJD algorithm i.e twoStageLCA$score_list
 #' @param lbb dataset label i.e 'NeuroGenesis4'
-#' @param info names of sample meta data matrices
+#' @param info list of sample meta data matrices
 #' @param SampleMetaNamesTable dataframe containing column information of each sample meta data matrices
 #' @param clrs2end color scale for result scores from other algorithms. Default: c("plum","purple","blue","blue4","black","darkred","red","orange","yellow")
 #' @param clrs1end color scale for result scores from sepNMF, concatNMF and jointNMF algorithms. Default: c("black","black","black","darkred","red","orange","yellow")
@@ -22,14 +22,23 @@
 #'
 #' data(NeuroGenesis4.afterWrap)
 #' data(NeuroGenesis4.info)
-#'    SampleMetaNamesTable = data.frame(
+#'
+#' SampleMetaNamesTable = data.frame(
 #'    row.names = names(NeuroGenesis4),
 #'    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
 #'    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
 #'    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
 #'    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
-#'    PCHColumn = c("","","","")
+#'    PCHColumn = c("","","",""),
+#'    inset = c(TRUE, TRUE, TRUE, TRUE),
+#'    insetLOC.xmin=c(3, 3, 3, 3),
+#'    insetLOC.xmax = c(7, 7, 7, 7),
+#'    insetLOC.ymin = c(0, 0, 0, 0),
+#'    insetLOC.ymax = c(4, 4, 4, 4),
+#'    ordDECREASE=c(FALSE, FALSE, FALSE, FALSE),
+#'    CLRfoldPRB=c(0.5, 0.5, 0.5, 0.5)
 #' )
+#'
 #' grp = list(
 #' Shared.All.4 = c(1 : 4),
 #' Shared.bulk.2 = c(1, 2),
@@ -61,7 +70,7 @@ SJDScorePlotter <- function(
     SampleMetaNamesTable,
     clrs2end = c("plum","purple","blue","blue4","black","darkred","red","orange","yellow"),
     clrs1end = c("black","black","black","darkred","red","orange","yellow")
-    ){
+){
 
     ######################################
     ##
@@ -112,7 +121,7 @@ SJDScorePlotter <- function(
     # "separate" SJD analyses have differently structured output from other SJD algorithms:
     if(SJDsep){# BEGIN if(SJDsep)loop
 
-        for(i in 1:length(dataset_names)){
+        for(i in 1 : length(dataset_names)){
 
             dataset_name=dataset_names[i]
             print("*******************************")
@@ -121,14 +130,15 @@ SJDScorePlotter <- function(
             # sepICA, sepPCA，sepNMF different structures happens below here
             score_dimension = dim(scores[[dataset_name]])[1] # dim(sepPCA$score_list[['Hs.AZ']])=2
 
-            if(SampleMetaNamesTable[dataset_name, 'cexx'] == "" | is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+            if(is.null(SampleMetaNamesTable[dataset_name, 'cexx']) || SampleMetaNamesTable[dataset_name, 'cexx'] == "" || is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
                 cexx = 1
             }else{
-                cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                # cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                cexx = as.numeric(SampleMetaNamesTable[dataset_name, 'cexx'])
             }
 
             ### PREPARE SJD SCORE
-            for(k in 1:score_dimension){#rank loop
+            for(k in 1 : score_dimension){#rank loop
                 print(k)
                 SJDscores = scores[[dataset_name]][k,]
                 cpntNM = rownames(scores[[dataset_name]])[k]
@@ -136,12 +146,12 @@ SJDScorePlotter <- function(
                 ### PREPARE X Y AXIS
                 if(SampleMetaNamesTable[dataset_name,"Type"] == "Yaxis")
                 {
-                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"] == "" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"] == "" || is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
                         pchh = 19
                     }
                     if(SampleMetaNamesTable[dataset_name,"PCHColumn"] != "" & !is.na(SampleMetaNamesTable[dataset_name, "PCHColumn"])){
                         if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))<=5 & length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))!=1){pchh0=info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])];pchh=c(21:25)[as.numeric(as.factor(pchh0))]}
-                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))==1){pchh=19}
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 || length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))==1){pchh=19}
                     }
 
                     ## generate image
@@ -160,40 +170,81 @@ SJDScorePlotter <- function(
                         theme(axis.text=element_text(size = 15),
                               axis.title=element_text(size = 15, face="bold")
                         )
+
+                    if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+
+                        embed_fig = data.frame(SJDscores = SJDscores) %>%
+                            ggplot(aes(x = SJDscores)) +
+                            geom_density()
+
+                        image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
+                            annotation_custom(
+                                ggplotGrob(embed_fig),
+                                xmin = SampleMetaNamesTable$insetLOC.xmin[i],
+                                xmax = SampleMetaNamesTable$insetLOC.xmax[i],
+                                ymin = SampleMetaNamesTable$insetLOC.ymin[i],
+                                ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                            )
+                        # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
+                        # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # p2inset=
+                        # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
+                        # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
+                    }
                 }
+
                 ### PREPARE X Y AXIS
-                if(SampleMetaNamesTable[dataset_name,"Type"]=="2Dscatter")
+                if(SampleMetaNamesTable[dataset_name,"Type"] == "2Dscatter")
                 {
-                    ord = order(SJDscores,decreasing=FALSE)
-                    if(SJDalg == "sepNMF" | SJDalg == "concatNMF" | SJDalg == "jointNMF"){
-                        clr = color.scale(SJDscores,extremes=clrs1end)[ord];
+                    if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                        ord = order(SJDscores,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                    }else{
+                        ord = order(SJDscores,decreasing = FALSE)
+                    }
+                    if(SJDalg == "sepNMF" || SJDalg == "concatNMF" || SJDalg == "jointNMF"){
+                        clr = color.scale(SJDscores,extremes=clrs1end)
                         CLRfold = FALSE
                     }
-                    if(SJDalg!="sepNMF"&SJDalg!="concatNMF"&SJDalg!="jointNMF"){
-                        clr = color.scale(SJDscores,extremes=clrs2end)[ord];
+                    if(SJDalg!="sepNMF" && SJDalg!="concatNMF" && SJDalg != "jointNMF"){
+                        clr = color.scale(SJDscores,extremes=clrs2end)
                         CLRfold = TRUE
                     }
                     if(CLRfold){
                         range(SJDscores)#
-                        prb = .5#.7#.5#.8
-                        mid = quantile(SJDscores,probs=prb)
-                        SJDscores00 = SJDscores-mid
-                        ord = order(abs(SJDscores00),decreasing=FALSE)
+                        prb = SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]#.5#.7#.5#.8
+                        if(!is.null(SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]) && (SampleMetaNamesTable[dataset_name, "CLRfoldPRB"] != 0 || SampleMetaNamesTable[dataset_name, "CLRfoldPRB"] != 1)){
+                            mid = quantile(SJDscores,probs=prb)
+                            SJDscores00 = SJDscores-mid
+                            if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                                ord = order(SJDscores00,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                            }else{
+                                ord = order(SJDscores00,decreasing = FALSE)
+                            }
+                        }
                     }
 
-                    if(length(clr) <= 100){
-                        cexx = 1
+                    ## Edit size of points
+                    if(is.null(SampleMetaNamesTable[dataset_name, 'cexx']) || SampleMetaNamesTable[dataset_name, 'cexx'] == "" || is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+                        if(length(clr) <= 100){
+                            cexx = 2
+                        }
+                        if(length(clr) > 100 & length(clr) <= 1000){
+                            cexx = 1
+                        }
+                        if(length(clr) > 1000 & length(clr) <= 10000){
+                            cexx = .75
+                        }
+                        if(length(clr) > 10000){
+                            cexx = .5
+                        }
+                    }else{
+                        # cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                        cexx = as.numeric(SampleMetaNamesTable[dataset_name, 'cexx'])
                     }
-                    if(length(clr) > 100 & length(clr) <= 1000){
-                        cexx = .5
-                    }
-                    if(length(clr) > 1000 & length(clr) <= 10000){
-                        cexx = .25
-                    }
-                    if(length(clr) > 10000){
-                        cexx = .2
-                    }
-                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                    if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" || is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
                         pchh = 19
                     }
                     if(SampleMetaNamesTable[dataset_name,"PCHColumn"]!="" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
@@ -201,7 +252,7 @@ SJDScorePlotter <- function(
                             pchh0 = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])];
                             pchh = c(21:25)[as.numeric(as.factor(pchh0))][ord]
                         }
-                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
+                        if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 || length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
                             pchh = 19
                         }
                     }
@@ -212,10 +263,10 @@ SJDScorePlotter <- function(
                     image_out_list[[image_out_name]] = data.frame(
                         x_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]),
                         y_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]),
-                        point_clr = clr
+                        point_clr = clr[ord]
                     ) %>%
                         ggplot(aes(x = x_axis_value, y = y_axis_value)) +
-                        geom_point(color = clr, cex = cexx, pch = pchh) +
+                        geom_point(color = clr[ord], cex = cexx, pch = pchh) +
                         xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                         ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                         # xlab(rownames(scores[[dataset_name]])[1]) +
@@ -223,8 +274,32 @@ SJDScorePlotter <- function(
                         ggtitle(rownames(scores[[dataset_name]])[k]) +
                         theme_bw() +
                         theme(axis.text=element_text(size = 15),
-                              axis.title=element_text(size = 15, face="bold")
-                        )
+                              axis.title=element_text(size = 15, face="bold"))
+
+                    if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+
+                        embed_fig = data.frame(SJDscores = SJDscores) %>%
+                            ggplot(aes(x = SJDscores)) +
+                            geom_density()
+
+                        image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
+                            annotation_custom(
+                                ggplotGrob(embed_fig),
+                                xmin = SampleMetaNamesTable$insetLOC.xmin[i],
+                                xmax = SampleMetaNamesTable$insetLOC.xmax[i],
+                                ymin = SampleMetaNamesTable$insetLOC.ymin[i],
+                                ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                            )
+                        # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
+                        # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                        # p2inset=
+                        # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
+                        # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
+                    }
+
                 }
             }
         }
@@ -237,10 +312,11 @@ SJDScorePlotter <- function(
             print("*******************************")
             print(paste("dataset: ",dataset_name, sep=""))
 
-            if(SampleMetaNamesTable[dataset_name, 'cexx'] == "" | is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+            if(is.null(SampleMetaNamesTable[dataset_name, 'cexx']) || SampleMetaNamesTable[dataset_name, 'cexx'] == "" || is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
                 cexx = 1
             }else{
-                cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                # cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                cexx = as.numeric(SampleMetaNamesTable[dataset_name, 'cexx'])
             }
 
             for (j in 1 : length(scores[[dataset_name]])) {
@@ -279,7 +355,7 @@ SJDScorePlotter <- function(
                             x_axis_value = as.numeric(info[[dataset_name]][, as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])]),
                             y_axis_value = as.numeric(scores[[dataset_name]][[j]][k, ]),
                             point_clr = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])]
-                            ) %>%
+                        ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
                             geom_point(color = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"COLaxisColumn"])], cex = cexx, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
@@ -288,46 +364,85 @@ SJDScorePlotter <- function(
                             theme(axis.text=element_text(size = 15),
                                   axis.title=element_text(size = 15, face="bold")
                             )
+
+                        if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+
+                            embed_fig = data.frame(SJDscores = SJDscores) %>%
+                                ggplot(aes(x = SJDscores)) +
+                                geom_density()
+
+                            image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
+                                annotation_custom(
+                                    ggplotGrob(embed_fig),
+                                    xmin = SampleMetaNamesTable$insetLOC.xmin[i],
+                                    xmax = SampleMetaNamesTable$insetLOC.xmax[i],
+                                    ymin = SampleMetaNamesTable$insetLOC.ymin[i],
+                                    ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                )
+                            # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
+                            # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # p2inset=
+                            # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
+                            # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
+                        }
                     }
 
                     ### PREPARE X Y AXIS
                     if(SampleMetaNamesTable[dataset_name,"Type"] == "2Dscatter")
                     {
-                        ord = order(SJDscores,decreasing=FALSE)
-                        if(SJDalg == "sepNMF" | SJDalg == "concatNMF" | SJDalg == "jointNMF"){
-                            clr = color.scale(SJDscores,extremes=clrs1end)[ord]
+                        if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                            ord = order(SJDscores,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                        }else{
+                            ord = order(SJDscores,decreasing = FALSE)
+                        }
+                        if(SJDalg == "sepNMF" || SJDalg == "concatNMF" || SJDalg == "jointNMF"){
+                            clr = color.scale(SJDscores,extremes=clrs1end)
                             CLRfold = FALSE
                         }
 
                         if(SJDalg!="sepNMF" & SJDalg != "concatNMF" & SJDalg!="jointNMF")
                         {
-                            clr = color.scale(SJDscores,extremes = clrs2end)[ord];
+                            clr = color.scale(SJDscores,extremes = clrs2end)
                             CLRfold = TRUE
                         }
                         if(CLRfold){
                             range(SJDscores)#
-                            prb = .5#.7#.5#.8
-                            mid = quantile(SJDscores,probs=prb)
-                            SJDscores00 = SJDscores-mid
-                            ord = order(abs(SJDscores00),decreasing=FALSE)
+                            prb = SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]#.5#.7#.5#.8
+                            if(!is.null(SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]) && (SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]!=0 || SampleMetaNamesTable[dataset_name, "CLRfoldPRB"]!=1)){
+                                mid = quantile(SJDscores,probs=prb)
+                                SJDscores00 = SJDscores-mid
+                                if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                                    ord = order(SJDscores00,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                                }else{
+                                    ord = order(SJDscores00,decreasing = FALSE)
+                                }
+                            }
                         }
 
                         ## Edit size of points
-                        if(length(clr) <= 100){
-                            cexx = cexx * 1
-                        }
-                        if(length(clr) > 100 & length(clr) <= 1000){
-                            cexx = cexx * .5
-                        }
-                        if(length(clr) > 1000 & length(clr) <= 10000){
-                            cexx = cexx * .25
-                        }
-                        if(length(clr) > 10000){
-                            cexx = cexx * .2
+                        if(is.null(SampleMetaNamesTable[dataset_name, 'cexx']) || SampleMetaNamesTable[dataset_name, 'cexx'] == "" || is.na(SampleMetaNamesTable[dataset_name, 'cexx'])){
+                            if(length(clr) <= 100){
+                                cexx = 2
+                            }
+                            if(length(clr) > 100 & length(clr) <= 1000){
+                                cexx = 1
+                            }
+                            if(length(clr) > 1000 & length(clr) <= 10000){
+                                cexx = .75
+                            }
+                            if(length(clr) > 10000){
+                                cexx = .5
+                            }
+                        }else{
+                            # cexx = strtoi(SampleMetaNamesTable[dataset_name, 'cexx'])
+                            cexx = as.numeric(SampleMetaNamesTable[dataset_name, 'cexx'])
                         }
 
                         ## Edit point type
-                        if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" | is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
+                        if(SampleMetaNamesTable[dataset_name,"PCHColumn"]=="" || is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
                             pchh = 19
                         }
                         if(SampleMetaNamesTable[dataset_name,"PCHColumn"]!="" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
@@ -335,21 +450,22 @@ SJDScorePlotter <- function(
                                 pchh0 = info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]
                                 pchh = c(21:25)[as.numeric(as.factor(pchh0))][ord]}
 
-                            if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 | length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
+                            if(length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])]))>5 || length(unique(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"PCHColumn"])])) == 1){
                                 pchh = 19
                             }
                         }
 
                         ## Save plotted images
+
                         image_out_name = paste("SJDout_",lbb,".SJDalg_",SJDalg,".grp_",names(scores[[dataset_name]])[j],".data_",dataset_name,".comp",k,"of",dim(scores[[dataset_name]][[j]])[1],sep="")
 
                         image_out_list[[image_out_name]] = data.frame(
                             x_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])][ord]),
                             y_axis_value = as.numeric(info[[dataset_name]][,as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])][ord]),
-                            point_clr = clr
+                            point_clr = clr[ord]
                         ) %>%
                             ggplot(aes(x = x_axis_value, y = y_axis_value)) +
-                            geom_point(color = clr, cex = cexx, pch = pchh) +
+                            geom_point(color = clr[ord], cex = cexx, pch = pchh) +
                             xlab(as.character(SampleMetaNamesTable[dataset_name,"XaxisColumn"])) +
                             ylab(as.character(SampleMetaNamesTable[dataset_name,"YaxisColumn"])) +
                             # xlab(rownames(scores[[dataset_name]][[j]])[1]) +
@@ -357,8 +473,35 @@ SJDScorePlotter <- function(
                             ggtitle(rownames(scores[[dataset_name]][[j]])[k]) +
                             theme_bw() +
                             theme(axis.text=element_text(size = 15),
-                                  axis.title=element_text(size = 15, face="bold")
-                            )
+                                  axis.title=element_text(size = 15, face="bold"))#+
+                        # inset color legend:
+                        # + annotation_custom(ggplotGrob(p2inset), xmin = Xmin0, xmax = Xmax0, ymin = Ymin0, ymax = Ymax0)
+
+                        if(!is.null(SampleMetaNamesTable[dataset_name, "inset"]) && SampleMetaNamesTable[dataset_name, "inset"] != "" && !is.na(SampleMetaNamesTable[dataset_name, "inset"]) &&  SampleMetaNamesTable[dataset_name, "inset"] == TRUE){
+
+                            embed_fig = data.frame(SJDscores = SJDscores) %>%
+                                ggplot(aes(x = SJDscores)) +
+                                geom_density()
+
+                            image_out_list[[image_out_name]] = image_out_list[[image_out_name]] +
+                                annotation_custom(
+                                    ggplotGrob(embed_fig),
+                                    xmin = SampleMetaNamesTable$insetLOC.xmin[i],
+                                    xmax = SampleMetaNamesTable$insetLOC.xmax[i],
+                                    ymin = SampleMetaNamesTable$insetLOC.ymin[i],
+                                    ymax = SampleMetaNamesTable$insetLOC.ymax[i]
+                                )
+
+                            # Xrng=abs(par('usr')[1]-par('usr')[2]);Yrng=abs(par('usr')[3]-par('usr')[4])
+                            # if(insetLOC=="topleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="topright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="bottomleft"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # if(insetLOC=="bottomright"){Xmin0=par('usr')[1];Xmax0=par('usr')[2];Ymin0=par('usr')[3];Ymax0=par('usr')[4]}
+                            # p2inset=
+                            # plot(density(SJDscores),xlab="",ylab="",main="",xaxt="n",yaxt="n")
+                            # plot(x=SJDscores,y=rep(0,length(SJDscores)),col=clr,pch="|",xlab="",ylab="",main="",xaxt="n",yaxt="n",bty="n");par(plt=plt0)
+                        }
+
                     }
                 }
             }
