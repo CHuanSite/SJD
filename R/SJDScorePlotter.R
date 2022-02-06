@@ -46,6 +46,7 @@
 #' Gesch.1 = c(3),
 #' Telley.1 = c(4)
 #' )
+#'
 #' dims = c(2, 2, 2, 2, 2, 2, 2)
 #'
 #' twoStageLCA.out = twoStageLCA(dataset = NeuroGenesis4.afterWrap, group = grp, comp_num = dims)
@@ -144,6 +145,12 @@ SJDScorePlotter <- function(
                 ### PREPARE X Y AXIS
                 if(SampleMetaNamesTable[dataset_name,"Type"] == "Yaxis")
                 {
+                    if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                        ord = order(SJDscores,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                    }else{
+                        ord = order(SJDscores,decreasing = FALSE)
+                    }
+
                     if(SampleMetaNamesTable[dataset_name,"PCHColumn"] == "" || is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){
                         pchh = 19
                     }
@@ -375,6 +382,12 @@ SJDScorePlotter <- function(
                     ### PREPARE X Y AXIS
                     if(SampleMetaNamesTable[dataset_name,"Type"] == "Yaxis")
                     {
+                        if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
+                            ord = order(SJDscores,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                        }else{
+                            ord = order(SJDscores,decreasing = FALSE)
+                        }
+
                         ## change the size of points
                         pchh = 19
                         if(SampleMetaNamesTable[dataset_name,"PCHColumn"] != "" & !is.na(SampleMetaNamesTable[dataset_name,"PCHColumn"])){

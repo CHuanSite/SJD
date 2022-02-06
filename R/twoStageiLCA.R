@@ -73,10 +73,22 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
     ## Conduct ICA on the extracted Scores
     for(i in 1 : K){
         list_component[[i]] = twoStageLCA_out$linked_component_list[[i]]
+        score_concat  = c()
         for(j in 1 : N){
             if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
-                ica_temp = fastICA(t(twoStageLCA_out$score_list[[j]][[i]]), n.comp = nrow(twoStageLCA_out$score_list[[j]][[i]]))
-                list_score[[j]][[i]] = t(ica_temp$S)
+                score_concat = cbind(score_concat, twoStageLCA_out$score_list[[j]][[i]])
+                # print(dim(twoStageLCA_out$score_list[[j]][[i]]))
+                # ica_temp = fastICA(t(twoStageLCA_out$score_list[[j]][[i]]), n.comp = nrow(twoStageLCA_out$score_list[[j]][[i]]))
+                # list_score[[j]][[i]] = t(ica_temp$S)
+            }
+        }
+        ica_temp = fastICA(t(score_concat), n.comp = nrow(score_concat))
+        start_index = 0
+
+        for(j in 1 : N){
+            if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
+                list_score[[j]][[i]] = t(ica_temp$S[(start_index + 1) : (start_index + N_dataset[j]), ])
+                start_index = start_index + N_dataset[j]
             }
         }
     }

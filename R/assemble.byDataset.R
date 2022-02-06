@@ -65,14 +65,14 @@ assemble.byDataset <- function(SJDScorePlotter.obj, dataset_name, SJD_algorithm,
     names_plotter_obj = names(SJDScorePlotter.obj)
 
     ## Filter name based on dataset_name
-    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, dataset_name))]
+    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", dataset_name, "(?![:alpha:])")))]
 
     ## Filter name based on SJD_algorithm
-    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, SJD_algorithm))]
+    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", SJD_algorithm, "(?![:alpha:])")))]
 
     ## Filter name based on group
     if(!is.na(group)){
-        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, group))]
+        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", group, "(?![:alpha:])")))]
     }
 
     ## Filtered list of obj
