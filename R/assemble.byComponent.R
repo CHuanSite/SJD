@@ -68,14 +68,14 @@ assemblePNG.byComponent <- function(SJDScorePlotter.obj, component, SJD_algorith
         ## Extract names of SJDScorePlotter.obj
         names_plotter_obj = names(SJDScorePlotter.obj)
 
-        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", "comp", comp, "of", "(?![:alpha:])")))]
+        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("comp", comp, "of")))]
 
         ## Filter name based on SJD_algorithm
-        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])",SJD_algorithm, "(?![:alpha:])")))]
+        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, SJD_algorithm))]
 
         ## Filter name based on group
         if(!is.na(group)){
-            names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])",group, "(?![:alpha:])")))]
+            names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, group))]
         }
 
         for(name in names_plotter_obj){

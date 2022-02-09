@@ -21,7 +21,7 @@
 #' data(NeuroGenesis4.info)
 #'
 #' SampleMetaNamesTable = data.frame(
-#'    row.names = names(NeuroGenesis4),
+#'    row.names = names(NeuroGenesis4.afterWrap),
 #'    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
 #'    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
 #'    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
@@ -65,14 +65,14 @@ assemble.byDataset <- function(SJDScorePlotter.obj, dataset_name, SJD_algorithm,
     names_plotter_obj = names(SJDScorePlotter.obj)
 
     ## Filter name based on dataset_name
-    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", dataset_name, "(?![:alpha:])")))]
+    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("\\.data_", dataset_name, "\\.")))]
 
     ## Filter name based on SJD_algorithm
-    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", SJD_algorithm, "(?![:alpha:])")))]
+    names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, SJD_algorithm))]
 
     ## Filter name based on group
     if(!is.na(group)){
-        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, paste0("(?<![:alpha:])", group, "(?![:alpha:])")))]
+        names_plotter_obj = names_plotter_obj[which(str_detect(names_plotter_obj, group))]
     }
 
     ## Filtered list of obj
