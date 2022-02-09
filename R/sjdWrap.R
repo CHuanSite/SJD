@@ -39,8 +39,24 @@ sjdWrap <- function(data.list, species.vector, geneType.vector, geneType.out="sy
         return(NULL)
     }
 
+
     genes.tbl.list = list()
     new.data.list = list()
+
+    ## Special case that all species and genes are the same
+    if(length(unique(species.vector)) == 1 && length(unique(geneType.vector)) == 1){
+        gene_names = rownames(data.list[[1]])
+        for(i in 1 : N){
+            gene_names = intersect(gene_names, rownames(data.list[[i]]))
+        }
+        for(i in 1 : N){
+            new.data.list[[i]] = as.data.frame(data.list[[i]][gene_names, ])
+            rownames(new.data.list[[i]]) = gene_names
+        }
+        names(new.data.list) = names(data.list)
+        return(new.data.list)
+    }
+
 
     cat('Using biomaRt to connect gene IDs across', N, 'datasets:\n')
 
