@@ -4,7 +4,13 @@
 \alias{sepNMF}
 \title{Single Data Set Decomposition with Nonnegative Matrix Factorization}
 \usage{
-sepNMF(dataset, comp_num, weighting = NULL, perturbation = 1e-04)
+sepNMF(
+  dataset,
+  comp_num,
+  weighting = NULL,
+  perturbation = 1e-04,
+  screen_prob = NULL
+)
 }
 \arguments{
 \item{dataset}{A dataframe/matrix to be decomposed}
@@ -14,6 +20,8 @@ sepNMF(dataset, comp_num, weighting = NULL, perturbation = 1e-04)
 \item{weighting}{Weighting of each dataset, initialized to be NULL}
 
 \item{perturbation}{A small perturbation to ensure nmf works well}
+
+\item{screen_prob}{A vector of probabilies for genes to be chosen}
 }
 \value{
 A list of scores and component

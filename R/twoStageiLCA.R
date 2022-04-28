@@ -10,6 +10,7 @@
 #' @param plotting A boolean value to determine whether to plot the scree plot or not, default to be False
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom RSpectra svds
 #' @importFrom fastICA fastICA
@@ -37,7 +38,7 @@
 #'
 #' @export
 
-twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL){
+twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
     twoStageLCA_out = twoStageLCA(dataset, group, comp_num, weighting, backup)
 
     ## Obtain names for dataset, gene and samples
@@ -47,6 +48,10 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
     group_name = groupNameExtractor(group)
 
     dataset = frameToMatrix(dataset)
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = normalizeData(dataset)
 
     ## Parameters to be initialized

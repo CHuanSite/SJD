@@ -5,6 +5,7 @@
 #' @param dataset A dataframe/matrix to be decomposed
 #' @param comp_num Number of ICs to be extracted
 #' @param weighting Weighting of each dataset, initialized to be NULL
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom fastICA fastICA
 #'
@@ -19,7 +20,7 @@
 #'
 #' @export
 
-sepICA <- function(dataset, comp_num, weighting = NULL){
+sepICA <- function(dataset, comp_num, weighting = NULL, screen_prob = NULL){
     sepPCA_res = sepPCA(dataset, comp_num)
 
     ## Obtain names for dataset, gene and samples
@@ -28,6 +29,11 @@ sepICA <- function(dataset, comp_num, weighting = NULL){
     sample_name = sampleNameExtractor(dataset)
 
     dataset = frameToMatrix(dataset)
+
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = normalizeData(dataset)
     dataset = weightData(dataset, weighting)
 

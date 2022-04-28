@@ -8,6 +8,7 @@
 #' @param weighting Weighting of each dataset, initialized to be NULL
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom fastICA fastICA
 #'
@@ -33,7 +34,7 @@
 #'
 #' @export
 
-concatICA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset = NULL, proj_group = NULL){
+concatICA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
     concatPCA_out = concatPCA(dataset, group, comp_num, weighting)
 
     ## Obtain names for dataset, gene and samples
@@ -43,6 +44,10 @@ concatICA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset =
     group_name = groupNameExtractor(group)
 
     dataset = frameToMatrix(dataset)
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = normalizeData(dataset)
     dataset = balanceData(dataset)
     dataset = weightData(dataset, weighting)

@@ -12,6 +12,7 @@
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom RSpectra svds
 #'
@@ -33,7 +34,7 @@
 #'
 #' @export
 
-twoStageLCA.rank <- function(dataset, group, weighting = NULL, total_number = NULL, threshold, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE){
+twoStageLCA.rank <- function(dataset, group, weighting = NULL, total_number = NULL, threshold, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -42,6 +43,10 @@ twoStageLCA.rank <- function(dataset, group, weighting = NULL, total_number = NU
     group_name = groupNameExtractor(group)
 
     dataset = frameToMatrix(dataset)
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = normalizeData(dataset, enable_normalization)
 
     ## Parameters to be initialized

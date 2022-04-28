@@ -9,6 +9,7 @@
 #' @param perturbation the perturbation of the 0 element in the analysis
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom NMF nmf
 #'
@@ -34,7 +35,7 @@
 #'
 #' @export
 
-concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation = 0.0001, proj_dataset = NULL, proj_group = NULL){
+concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation = 0.0001, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -43,6 +44,10 @@ concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation =
     group_name = groupNameExtractor(group)
 
     dataset = frameToMatrix(dataset)
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = balanceData(dataset)
     dataset = weightData(dataset, weighting)
 

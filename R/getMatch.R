@@ -52,8 +52,11 @@ getMatch <- function(genes, inSpecies, inType, newSpecies, moreAttrIn = NA, more
     mart.in = species[inSpecies, ]$ensembl.nms
     mart.new = species[newSpecies, ]$ensembl.nms
     # print('d2')
-    df.in = useMart(biomart='ensembl', dataset=mart.in)
-    df.new = useMart(biomart='ensembl', dataset=mart.new)
+    df.in = useMart(biomart = 'ensembl', dataset = mart.in, host="https://aug2020.archive.ensembl.org")
+    df.new = useMart(biomart = 'ensembl', dataset = mart.new, host="https://aug2020.archive.ensembl.org")
+    # df.in = useEnsembl(biomart='ensembl', dataset=mart.in, mirror = "useast")
+    # df.new = useEnsembl(biomart='ensembl', dataset=mart.new, mirror = "useast")
+
     symbol.in = as.character(species[inSpecies,'genesymbol.attr'])
     symbol.new = as.character(species[newSpecies,'genesymbol.attr'])
     # print('d3')
@@ -72,10 +75,14 @@ getMatch <- function(genes, inSpecies, inType, newSpecies, moreAttrIn = NA, more
     # print(species)
     # print(symbol.in)
     # print(atb.in)
+
     tbl.match = getLDS(
-        mart=df.in, attributes=atb.in, # input genes
-        filters=filter, values=genes,
-        martL=df.new, attributesL=atb.new
+        attributes=atb.in, # input genes
+        mart=df.in,
+        filters=filter,
+        values=genes,
+        martL=df.new,
+        attributesL=atb.new
     )
     # print('d5')
 

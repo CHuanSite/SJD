@@ -6,6 +6,7 @@
 #' @param comp_num Number of NMFs to be extracted
 #' @param weighting Weighting of each dataset, initialized to be NULL
 #' @param perturbation A small perturbation to ensure nmf works well
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom NMF nmf
 #'
@@ -20,7 +21,7 @@
 #'
 #' @export
 
-sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001){
+sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -28,6 +29,11 @@ sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001){
     sample_name = sampleNameExtractor(dataset)
 
     dataset = frameToMatrix(dataset)
+
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = weightData(dataset, weighting)
 
     N = length(dataset)

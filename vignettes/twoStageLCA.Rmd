@@ -5,6 +5,7 @@ author:
 - Jinrui Liu
 - Carlo Colantuoni
 date: "`r format(Sys.time(), '%d %B, %Y')`"
+geometry: "left=1cm,right=1cm,top=1cm,bottom=1cm"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to twoStageLCA (Two Stage Linked Component Analysis)}
@@ -37,7 +38,7 @@ library(SJD)
 First, install the 'googleDrive' package
 
 ```{r}
-install.packages('googledrive')
+install.packages('googledrive', repos = "http://cran.us.r-project.org")
 ```
 
 Download RNA and explaination data from Google Drive,
@@ -95,16 +96,16 @@ twoStageLCA_res = twoStageLCA(dataset, group, comp_num)
 Visualize the result
 
 ```{r}
-par(mfrow = c(2,2))
+# par(mfrow = c(2,2)) #, mai=c(0.6,0.6,0.6,0))
 
-## common component
+# common component
 plot(t(twoStageLCA_res$score_list[[1]][[1]]), col = inVitro_bulk_exp$color, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVitro_bulk", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
 plot(t(twoStageLCA_res$score_list[[2]][[1]]), col = inVitro_sc_exp$COLORby.DCX, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVitro_sc", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
 plot(t(twoStageLCA_res$score_list[[3]][[1]]), col = inVivo_bulk_exp$color, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVivo_bulk", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
 plot(t(twoStageLCA_res$score_list[[4]][[1]]), col = inVivo_sc_exp$COLORby.DCX, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVivo_sc", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
 
 
-par(mfrow = c(1,2))
+# par(mfrow = c(1,2)) #, mai=c(0.6,0.6,0.6,0))
 ## in vitro component
 plot(t(twoStageLCA_res$score_list[[1]][[2]]), col = inVitro_bulk_exp$color, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVitro_bulk", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
 plot(t(twoStageLCA_res$score_list[[2]][[2]]), col = inVitro_sc_exp$COLORby.DCX, pch = 16, xlab = "PC1", ylab = "PC2", main = "common: inVitro_sc", cex = 1, cex.axis = 1, cex.lab = 1, cex.main = 1)
@@ -124,5 +125,5 @@ plot(t(twoStageLCA_res$score_list[[4]][[5]]), col = inVivo_sc_exp$COLORby.DCX, p
 
 # Reference 
 
-- Chen, H., Caffo, B., Stein-O'Brien, G., Liu, J., Langmead, B., Colantuoni, C., & Xiao, L. (2021). Two-stage Linked Component Analysis for Joint Decomposition of Multiple Biologically Related Data Sets. bioRxiv.
+- Huan Chen, Brian Caffo, Genevieve Stein-O’Brien, Jinrui Liu, Ben Langmead, Carlo Colantuoni, Luo Xiao, Two-stage linked component analysis for joint decomposition of multiple biologically related data sets, Biostatistics, 2022;, kxac005, https://doi.org/10.1093/biostatistics/kxac005
 

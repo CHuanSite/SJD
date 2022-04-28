@@ -12,7 +12,8 @@ jointNMF(
   max_ite = 100,
   max_err = 1e-04,
   proj_dataset = NULL,
-  proj_group = NULL
+  proj_group = NULL,
+  screen_prob = NULL
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ jointNMF(
 \item{proj_dataset}{The datasets to be projected on}
 
 \item{proj_group}{The grouping of projected data sets}
+
+\item{screen_prob}{A vector of probabilies for genes to be chosen}
 }
 \value{
 A list contains the component and the score of each dataset on every component after jointNMF algorithm

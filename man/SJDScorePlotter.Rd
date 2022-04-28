@@ -22,7 +22,7 @@ SJDScorePlotter(
 
 \item{lbb}{dataset label i.e 'NeuroGenesis4'}
 
-\item{info}{names of sample meta data matrices}
+\item{info}{list of sample meta data matrices}
 
 \item{SampleMetaNamesTable}{dataframe containing column information of each sample meta data matrices}
 
@@ -34,7 +34,7 @@ SJDScorePlotter(
 A list containing ggplot object
 }
 \description{
-plot dimensionality reduction weight components for each SJD algorithm for dataset analyzed by SJD
+plot dimensionality reduction scores for each SJD algorithm for dataset analyzed by SJD
 }
 \examples{
 
@@ -42,14 +42,21 @@ library(ggplot2)
 
 data(NeuroGenesis4.afterWrap)
 data(NeuroGenesis4.info)
-   SampleMetaNamesTable = data.frame(
+
+SampleMetaNamesTable = data.frame(
    row.names = names(NeuroGenesis4),
    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),
    COLaxisColumn = c("color","colorBYlabelsX","PJDscores","PJDscores"),
-   PCHColumn = c("","","","")
+   PCHColumn = c("","","",""),
+   inset = c(TRUE, TRUE, TRUE, TRUE),
+   insetLOC = c("topright", "topright", "topright", "topright"),
+   insetZoom = c(0.3, 0.3, 0.3, 0.3),
+   ordDECREASE=c(FALSE, FALSE, FALSE, FALSE),
+   CLRfoldPRB=c(0.5, 0.5, 0.5, 0.5)
 )
+
 grp = list(
 Shared.All.4 = c(1 : 4),
 Shared.bulk.2 = c(1, 2),
@@ -59,6 +66,7 @@ Hs.AZ.1 = c(2),
 Gesch.1 = c(3),
 Telley.1 = c(4)
 )
+
 dims = c(2, 2, 2, 2, 2, 2, 2)
 
 twoStageLCA.out = twoStageLCA(dataset = NeuroGenesis4.afterWrap, group = grp, comp_num = dims)

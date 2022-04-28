@@ -13,7 +13,8 @@ twoStageLCA(
   plotting = FALSE,
   proj_dataset = NULL,
   proj_group = NULL,
-  enable_normalization = TRUE
+  enable_normalization = TRUE,
+  screen_prob = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ twoStageLCA(
 \item{proj_group}{The grouping of projected data sets}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
+
+\item{screen_prob}{A vector of probabilies for genes to be chosen}
 }
 \value{
 A list contains the component and the score of each dataset on every component after 2sLCA algorithm

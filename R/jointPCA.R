@@ -10,6 +10,7 @@
 #' @param max_err The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.001
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom stats runif
 #'
@@ -35,7 +36,7 @@
 #'
 #' @export
 
-jointPCA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL){
+jointPCA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -45,6 +46,10 @@ jointPCA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, 
 
     ## Preprocess datasets
     dataset = frameToMatrix(dataset)
+    if(!is.null(screen_prob)){
+        dataset = geneScreen(dataset, screen_prob)
+    }
+
     dataset = normalizeData(dataset)
     dataset = balanceData(dataset)
     dataset = weightData(dataset, weighting)

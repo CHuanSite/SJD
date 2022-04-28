@@ -34,7 +34,7 @@ data(NeuroGenesis4.afterWrap)
 data(NeuroGenesis4.info)
 
 SampleMetaNamesTable = data.frame(
-   row.names = names(NeuroGenesis4),
+   row.names = names(NeuroGenesis4.afterWrap),
    Type = c('Yaxis','Yaxis','2Dscatter','2Dscatter'),
    XaxisColumn = c("X","DAYx","tSNE_1","tsne1:ch1"),
    YaxisColumn = c("PJDscores","PJDscores","tSNE_2","tsne2:ch1"),

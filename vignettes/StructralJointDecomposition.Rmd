@@ -42,7 +42,7 @@ The whole structured NeuroGenesis4 and its meta information NeuroGenesis.info ar
 
 We download the full data sets from the google drive, and load it into `R` 
 ```{r}
-install.packages("googledrive")
+install.packages("googledrive", repos = "http://cran.us.r-project.org")
 
 library(googledrive)
 
