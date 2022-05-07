@@ -9,28 +9,31 @@ getMatch(
   inSpecies,
   inType,
   newSpecies,
+  useNewestVersion = FALSE,
   moreAttrIn = NA,
   moreAttrNew = NA
 )
 }
 \arguments{
-\item{genes}{vector of gene names in either ensembl or symbol format}
+\item{genes}{character vector of gene identifiers in either ensembl gene identifier or gene symbol format.}
 
-\item{inSpecies}{character of species name of input genes i.e 'human'}
+\item{inSpecies}{a character indicating the species from which 'genes' come; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")}
 
-\item{inType}{character of type of input genes i.e 'ensembl'}
+\item{inType}{inType: single character of type of input genes, must be one of c("symbol",'ensembl'")}
 
-\item{newSpecies}{character of target species for the new vector of genes i.e 'mouse'}
+\item{newSpecies}{a character indicating the species for which orthologous gene identifiers are desired; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")}
 
-\item{moreAttrIn}{character of other gene attributes i.e 'species latin'}
+\item{useNewestVersion}{logical indicating if the function should attempt to use the latest version of ensembl, or to use the Aug 2020 archive version that is more stable. default is FALSE.}
 
-\item{moreAttrNew}{character of other gene attributes i.e 'ensembl.nms'}
+\item{moreAttrIn}{character vector of other gene attributes that you want returned for the input species from biomaRt - to add this argument you must know the names of the fields in the species-specific biomaRt that you are requesting. default is NA.}
+
+\item{moreAttrNew}{character vector of other gene attributes that you want returned for the output species from biomaRt - to add this argument you must know the names of the fields in the species-specific biomaRt that you are requesting. default is NA.}
 }
 \value{
-vector of matched genes from the target species
+A matrix whose first column contains the exact gene identifiers (and in the same order) that were sent to the function in the "genes" argument, followed by 3 columns of gene identifiers that were retrieved from biomaRt from both the "inSpecies" and the "newSpecies" (for each species, these 3 identifiers are: gene symbol, ensembl gene ID, and text description).
 }
 \description{
-matching genes from one species (i.e human) to another species (i.e mouse) and output genes
+Use biomaRt to retrieve additional gene identifiers for a vector of gene identifiers in one species (e.g. 'human'), or gene identifiers for orthologous genes in a second species (e.g. 'mouse')
 }
 \examples{
 
