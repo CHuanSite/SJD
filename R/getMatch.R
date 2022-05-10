@@ -2,10 +2,10 @@
 #'
 #' Use biomaRt to retrieve additional gene identifiers for a vector of gene identifiers in one species (e.g. 'human'), or gene identifiers for orthologous genes in a second species (e.g. 'mouse')
 #'
-#' @param genes character vector of gene identifiers in either ensembl gene identifier or gene symbol format.
-#' @param inSpecies a character indicating the species from which 'genes' come; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")
-#' @param inType inType: single character of type of input genes, must be one of c("symbol",'ensembl'")
-#' @param newSpecies a character indicating the species for which orthologous gene identifiers are desired; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")
+#' @param genes character vector of gene identifiers in either ensembl gene identifier or gene symbol format
+#' @param inSpecies a character vector indicating the species from which 'genes' come; must be one of: "human", "mouse", "roundworm", "fruitfly", "zebrafish", "chicken", "rat", "guinea pig", "golden hamster", "rabbit","pig", "sheep", "cow", "dog", "cat", "macaque", "bonobo", "chimpanzee"
+#' @param inType a single character value indicating the type of gene identifiers being passed in the "genes" argument; must be one of: "symbol", "ensembl"
+#' @param newSpecies a character vector indicating the species for which orthologous gene identifiers are desired; must be one of: "human", "mouse", "roundworm", "fruitfly", "zebrafish", "chicken", "rat", "guinea pig", "golden hamster", "rabbit", "pig", "sheep", "cow", "dog", "cat", "macaque", "bonobo", "chimpanzee"
 #' @param moreAttrIn character vector of other gene attributes that you want returned for the input species from biomaRt - to add this argument you must know the names of the fields in the species-specific biomaRt that you are requesting. default is NA.
 #' @param moreAttrNew character vector of other gene attributes that you want returned for the output species from biomaRt - to add this argument you must know the names of the fields in the species-specific biomaRt that you are requesting. default is NA.
 #' @param useNewestVersion logical indicating if the function should attempt to use the latest version of ensembl, or to use the Aug 2020 archive version that is more stable. default is FALSE.

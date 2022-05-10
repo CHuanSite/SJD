@@ -15,13 +15,13 @@ getMatch(
 )
 }
 \arguments{
-\item{genes}{character vector of gene identifiers in either ensembl gene identifier or gene symbol format.}
+\item{genes}{character vector of gene identifiers in either ensembl gene identifier or gene symbol format}
 
-\item{inSpecies}{a character indicating the species from which 'genes' come; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")}
+\item{inSpecies}{a character vector indicating the species from which 'genes' come; must be one of: "human", "mouse", "roundworm", "fruitfly", "zebrafish", "chicken", "rat", "guinea pig", "golden hamster", "rabbit","pig", "sheep", "cow", "dog", "cat", "macaque", "bonobo", "chimpanzee"}
 
-\item{inType}{inType: single character of type of input genes, must be one of c("symbol",'ensembl'")}
+\item{inType}{a single character value indicating the type of gene identifiers being passed in the "genes" argument; must be one of: "symbol", "ensembl"}
 
-\item{newSpecies}{a character indicating the species for which orthologous gene identifiers are desired; must be one of c("human","mouse","roundworm","fruitfly","zebrafish","chicken","rat","guinea pig","golden hamster","rabbit","pig","sheep","cow","dog","cat","macaque","bonobo","chimpanzee")}
+\item{newSpecies}{a character vector indicating the species for which orthologous gene identifiers are desired; must be one of: "human", "mouse", "roundworm", "fruitfly", "zebrafish", "chicken", "rat", "guinea pig", "golden hamster", "rabbit", "pig", "sheep", "cow", "dog", "cat", "macaque", "bonobo", "chimpanzee"}
 
 \item{useNewestVersion}{logical indicating if the function should attempt to use the latest version of ensembl, or to use the Aug 2020 archive version that is more stable. default is FALSE.}
 
