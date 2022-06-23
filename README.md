@@ -1,9 +1,9 @@
 # SJD: R package for Structured Joint Decomposition
 
-<!-- badges: start -->
+<!--
 [![Travis build status](https://travis-ci.com/CHuanSite/SJD.svg?branch=main)](https://travis-ci.com/CHuanSite/SJD)
 [![R-CMD-check](https://github.com/CHuanSite/SJD/workflows/R-CMD-check/badge.svg)](https://github.com/CHuanSite/SJD/actions)
-<!-- badges: end -->
+-->
 
 ## Overview:
 

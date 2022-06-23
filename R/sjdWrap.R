@@ -10,7 +10,7 @@
 #'
 #' @importFrom dplyr inner_join
 #'
-#' @return a list of expression matrices (of different species) with only shared genes and
+#' @return A list of expression matrices (of different species) with only shared genes
 #'
 #' @keywords shared gene expression
 #'
@@ -88,18 +88,18 @@ sjdWrap <- function(data.list, species.vector, geneType.vector, geneType.out="sy
 
     cat('constructed', length(genes.tbl.list), 'tables of cross-species matching genes\n')
 
-    genes.tbl = inner_join(genes.tbl.list[[1]], genes.tbl.list[[2]], by = 'genes', na_matches = "never")#geneType.out
+    genes.tbl = inner_join(genes.tbl.list[[1]], genes.tbl.list[[2]], by = 'genes', na_matches = "never") #geneType.out
 
     if(N >= 3){
         for(i in 3 : N){
-            genes.tbl = inner_join(genes.tbl, genes.tbl.list[[i]], by = 'genes', na_matches = "never")#geneType.out
+            genes.tbl = inner_join(genes.tbl, genes.tbl.list[[i]], by = 'genes', na_matches = "never") #geneType.out
         }
     }
 
     cat('we found', dim(genes.tbl)[1], 'shared genes in', length(genes.tbl.list), 'datasets\n')
 
     for (i in 1 : N) {
-        indxR = match(genes.tbl[,i+1], rownames(data.list[[i]]))#ORIGid
+        indxR = match(genes.tbl[, i + 1], rownames(data.list[[i]])) #ORIGid
         data = data.list[[i]][indxR, ]
         rownames(data) = genes.tbl[, "genes"]
         new.data.list[[i]] = as.data.frame(data)

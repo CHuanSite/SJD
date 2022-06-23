@@ -24,7 +24,7 @@ sjdWrap(
 \item{species.out}{character of output species type for gene/rowname}
 }
 \value{
-a list of expression matrices (of different species) with only shared genes and
+A list of expression matrices (of different species) with only shared genes
 }
 \description{
 wrapping up expression matrices (of different species) with only shared genes as SJD input
