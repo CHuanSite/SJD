@@ -15,6 +15,7 @@ twoStageLCA.rank(
   proj_dataset = NULL,
   proj_group = NULL,
   enable_normalization = TRUE,
+  column_sum_normalization = TRUE,
   screen_prob = NULL
 )
 }
@@ -38,6 +39,8 @@ twoStageLCA.rank(
 \item{proj_group}{The grouping of projected data sets}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
+
+\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it TRUE}
 
 \item{screen_prob}{A vector of probabilies for genes to be chosen}
 }

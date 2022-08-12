@@ -4,7 +4,14 @@
 \alias{sepPCA}
 \title{Single Data Set Decomposition with Principal Component Analysis}
 \usage{
-sepPCA(dataset, comp_num, weighting = NULL, screen_prob = NULL)
+sepPCA(
+  dataset,
+  comp_num,
+  weighting = NULL,
+  enable_normalization = TRUE,
+  column_sum_normalization = TRUE,
+  screen_prob = NULL
+)
 }
 \arguments{
 \item{dataset}{A dataframe/matrix to be decomposed}
@@ -12,6 +19,10 @@ sepPCA(dataset, comp_num, weighting = NULL, screen_prob = NULL)
 \item{comp_num}{Number of PCs to be extracted}
 
 \item{weighting}{Weighting of each dataset, initialized to be NULL}
+
+\item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
+
+\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it TRUE}
 
 \item{screen_prob}{A vector of probabilies for genes to be chosen}
 }

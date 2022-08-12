@@ -8,6 +8,8 @@
 #' @param weighting Weighting of each dataset, initialized to be NULL
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom RSpectra svds
@@ -35,7 +37,7 @@
 #'
 #' @export
 
-concatPCA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
+concatPCA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -50,7 +52,7 @@ concatPCA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset =
         dataset = geneScreen(dataset, screen_prob)
     }
 
-    dataset = normalizeData(dataset)
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization)
     dataset = balanceData(dataset)
     unweighted_dataset = dataset
     dataset = weightData(dataset, weighting)

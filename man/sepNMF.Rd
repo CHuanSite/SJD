@@ -9,6 +9,8 @@ sepNMF(
   comp_num,
   weighting = NULL,
   perturbation = 1e-04,
+  enable_normalization = TRUE,
+  column_sum_normalization = TRUE,
   screen_prob = NULL
 )
 }
@@ -20,6 +22,10 @@ sepNMF(
 \item{weighting}{Weighting of each dataset, initialized to be NULL}
 
 \item{perturbation}{A small perturbation to ensure nmf works well}
+
+\item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
+
+\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it TRUE}
 
 \item{screen_prob}{A vector of probabilies for genes to be chosen}
 }

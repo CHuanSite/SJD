@@ -10,6 +10,8 @@
 #' @param plotting A boolean value to determine whether to plot the scree plot or not, default to be False
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom RSpectra svds
@@ -38,7 +40,7 @@
 #'
 #' @export
 
-twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
+twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0, plotting = FALSE, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
     twoStageLCA_out = twoStageLCA(dataset, group, comp_num, weighting, backup)
 
     ## Obtain names for dataset, gene and samples
@@ -52,7 +54,7 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
         dataset = geneScreen(dataset, screen_prob)
     }
 
-    dataset = normalizeData(dataset)
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization)
 
     ## Parameters to be initialized
     N = length(dataset)

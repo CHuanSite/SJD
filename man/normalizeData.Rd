@@ -4,12 +4,21 @@
 \alias{normalizeData}
 \title{Data Normalization}
 \usage{
-normalizeData(dataset, enable_normalization = TRUE)
+normalizeData(
+  dataset,
+  enable_normalization = TRUE,
+  column_sum_normalization = TRUE,
+  nonnegative_normalization = FALSE
+)
 }
 \arguments{
 \item{dataset}{The input list of data sets matrix}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
+
+\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it TRUE}
+
+\item{nonnegative_normalization}{An argument to decide wehther it is nonnegative matrix factorization based or not, default is FALSE}
 }
 \description{
 Normalize data to have mean zero and std 1

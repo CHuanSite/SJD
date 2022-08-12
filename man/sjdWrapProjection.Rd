@@ -59,7 +59,9 @@ rownames(NeuroGenesis4.sample[[3]])[15] = paste0(rownames(NeuroGenesis4.sample[[
 NeuroGenesis4.sample[[4]] = NeuroGenesis4.sample[[4]][-20,]
 rownames(NeuroGenesis4.sample[[4]])[20] = paste0(rownames(NeuroGenesis4.sample[[4]])[20], ".test")
 
-SJDdataProjection = sjdWrapProjection(SJDdataIN, NeuroGenesis4.sample, "human", c("human","human","human","mouse"), "symbol", c("symbol","ensembl","symbol","symbol"))
+SJDdataProjection = sjdWrapProjection(
+SJDdataIN, NeuroGenesis4.sample, "human", c("human","human","human","mouse"),
+"symbol", c("symbol","ensembl","symbol","symbol"))
 
 }
 \keyword{expression}

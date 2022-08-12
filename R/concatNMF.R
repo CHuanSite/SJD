@@ -9,6 +9,8 @@
 #' @param perturbation the perturbation of the 0 element in the analysis
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom NMF nmf
@@ -35,7 +37,7 @@
 #'
 #' @export
 
-concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation = 0.0001, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
+concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -48,6 +50,7 @@ concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation =
         dataset = geneScreen(dataset, screen_prob)
     }
 
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)
     dataset = balanceData(dataset)
     dataset = weightData(dataset, weighting)
 

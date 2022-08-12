@@ -10,6 +10,8 @@
 #' @param max_err The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom fastICA fastICA
@@ -36,7 +38,7 @@
 #'
 #' @export
 
-jointICA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, screen_prob = NULL){
+jointICA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
     jointPCA_res = jointPCA(dataset, group, comp_num, weighting, max_ite, max_err)
 
     ## Obtain names for dataset, gene and samples
@@ -50,7 +52,7 @@ jointICA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, 
         dataset = geneScreen(dataset, screen_prob)
     }
 
-    dataset = normalizeData(dataset)
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization)
     dataset = balanceData(dataset)
     dataset = weightData(dataset, weighting)
 

@@ -6,6 +6,8 @@
 #' @param comp_num Number of NMFs to be extracted
 #' @param weighting Weighting of each dataset, initialized to be NULL
 #' @param perturbation A small perturbation to ensure nmf works well
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom NMF nmf
@@ -21,7 +23,7 @@
 #'
 #' @export
 
-sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001, screen_prob = NULL){
+sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -34,6 +36,7 @@ sepNMF <- function(dataset, comp_num, weighting = NULL, perturbation = 0.0001, s
         dataset = geneScreen(dataset, screen_prob)
     }
 
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)
     dataset = weightData(dataset, weighting)
 
     N = length(dataset)

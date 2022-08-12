@@ -5,6 +5,8 @@
 #' @param dataset A dataframe/matrix to be decomposed
 #' @param comp_num Number of PCs to be extracted
 #' @param weighting Weighting of each dataset, initialized to be NULL
+#' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom RSpectra svds
@@ -20,7 +22,7 @@
 #'
 #' @export
 
-sepPCA <- function(dataset, comp_num, weighting = NULL, screen_prob = NULL){
+sepPCA <- function(dataset, comp_num, weighting = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -33,7 +35,7 @@ sepPCA <- function(dataset, comp_num, weighting = NULL, screen_prob = NULL){
         dataset = geneScreen(dataset, screen_prob)
     }
 
-    dataset = normalizeData(dataset)
+    dataset = normalizeData(dataset, enable_normalization, column_sum_normalization)
     dataset = weightData(dataset, weighting)
 
     N = length(dataset)
