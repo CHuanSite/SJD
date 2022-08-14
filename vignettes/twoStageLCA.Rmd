@@ -68,11 +68,6 @@ inVitro_sc = read.table('2_inVitro_SingleCell_scESCdifBifurc.CelSeq_trimNord.txt
 inVivo_bulk = read.table('3_inVivo_Bulk_BrainSpan_RNAseq_Gene_DFC_noSVA_plog2_trimNord.txt', stringsAsFactors = FALSE, header = TRUE) %>% select(-1) %>% as.matrix
 inVivo_sc = read.table('4_inVivo_SingleCell_CtxDevoSC4kTopoTypoTempo_plog2_trimNord.txt', stringsAsFactors = FALSE, header = TRUE) %>% select(-1) %>% as.matrix
 
-inVitro_bulk_scale = scale(t(scale(t(inVitro_bulk), scale = FALSE)))
-inVitro_sc_scale = scale(t(scale(t(inVitro_sc), scale = FALSE)))
-inVivo_bulk_scale = scale(t(scale(t(inVivo_bulk), scale = FALSE)))
-inVivo_sc_scale= scale(t(scale(t(inVivo_sc), scale = FALSE)))
-
 ## legends for the 4 datasets
 inVitro_bulk_exp =  read.table("1_inVitro_Bulk_Cortecon.pd.txt",stringsAsFactors = FALSE, header = T)
 inVitro_sc_exp = read.table("2_inVitro_SingleCell_scESCdifBifurc.CelSeq.pd.txt", stringsAsFactors = FALSE, header = T)
@@ -85,7 +80,7 @@ Conduct Two-stage linked component analysis
 ```{r}
 library(SJD)
 ## List of datasets and group assignment and number of components
-dataset = list(inVitro_bulk_scale, inVitro_sc_scale, inVivo_bulk_scale, inVivo_sc_scale)
+dataset = list(inVitro_bulk, inVitro_sc, inVivo_bulk, inVivo_sc)
 group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
 comp_num = c(2,2,2,2,2,2,2,2,2)
 
