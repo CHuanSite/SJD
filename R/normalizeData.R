@@ -13,7 +13,7 @@
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50)
 #' )
-#' normalizeData(dataset, TRUE)
+#' normalizeData(dataset)
 #'
 #' @export
 
