@@ -36,17 +36,24 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="../articles/SJD.html">Get started</a>
+  <a class="nav-link" href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+    Home
+  </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+  <a class="nav-link" href="../articles/SJD.html">Demo</a>
 </li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-real-data-analysis">Real Data Analysis</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-real-data-analysis">
     <a class="dropdown-item" href="../articles/StructralJointDecomposition.html">Introduction to SJD (Structured Joint Decomposition)</a>
     <a class="dropdown-item" href="../articles/twoStageLCA.html">Introduction to twoStageLCA (Two Stage Linked Component Analysis)</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -58,7 +65,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -105,11 +112,11 @@ Colantuoni</h4>
 <p>First, install the ‘googleDrive’ package</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'googledrive'</span>, repos <span class="op">=</span> <span class="st">"http://cran.us.r-project.org"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/Rtmpns3FoA/temp_libpath1868e3644b703'</span></span>
+<span><span class="co">#&gt; Installing package into '/private/var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T/Rtmpns3FoA/temp_libpath1868e1766d05c'</span></span>
 <span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The downloaded binary packages are in</span></span>
-<span><span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//Rtmp2L3KSN/downloaded_packages</span></span></code></pre></div>
+<span><span class="co">#&gt;  /var/folders/hn/15_w90p96zn9px58h76x8sfr0000gn/T//RtmpXxdLvh/downloaded_packages</span></span></code></pre></div>
 <p>Download RNA and explaination data from Google Drive,</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org" class="external-link">googledrive</a></span><span class="op">)</span></span>
