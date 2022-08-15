@@ -1,18 +1,6 @@
-url: ~
-template:
-  bootstrap: 5
-  bootswatch: simplex
-  bslib:
-    pkgdown-nav-height: 100px
 navbar:
   structure:
-    left:
-    - home
-    - intro
-    - articles
-    - reference
-    - tutorials
-    - news
+    left: [home, intro, articles, reference, tutorials, news]
     right: github
   components:
     home:
