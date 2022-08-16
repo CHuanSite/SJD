@@ -4,6 +4,10 @@ template:
   bootswatch: lux
   bslib:
     pkgdown-nav-height: 100px
+
+development:
+  mode: auto
+
 navbar:
   structure:
     left: [home, intro, articles, reference, tutorials, news]

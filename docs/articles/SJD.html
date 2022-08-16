@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">SJD</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,39 +144,39 @@ Data Analysis <a href="https://chuansite.github.io/SJD/articles/StructralJointDe
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">concatPCA_res</span><span class="op">$</span><span class="va">linked_component_list</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 9</span></span>
-<span><span class="co">#&gt;  $ component_No.1: num [1:100, 1:2] 0.1038 -0.1452 -0.1155 -0.0164 -0.014 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.1: num [1:100, 1:2] 0.0328 -0.2029 -0.0373 0.1723 -0.0741 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.1_subcomp.1" "component_No.1_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.2: num [1:100, 1:2] -0.1222 0.0955 0.1321 0.0865 -0.0151 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.2: num [1:100, 1:2] -0.0847 -0.0298 0.043 0.1781 -0.176 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.2_subcomp.1" "component_No.2_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.3: num [1:100, 1:2] 0.07898 -0.14371 0.0016 0.00238 0.02315 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.3: num [1:100, 1:2] 0.0927 -0.1869 0.0254 0.0339 0.1661 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.3_subcomp.1" "component_No.3_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.4: num [1:100, 1:2] -0.00603 -0.15233 0.12662 -0.11447 0.14567 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.4: num [1:100, 1:2] 0.1506 -0.0475 0.1093 0.0412 0.0802 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.4_subcomp.1" "component_No.4_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.5: num [1:100, 1:2] -0.1798 0.1793 0.0237 0.0957 0.1337 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.5: num [1:100, 1:2] -0.1085 -0.083 -0.1063 -0.0154 -0.0961 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.5_subcomp.1" "component_No.5_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.6: num [1:100, 1:2] -0.1112 -0.0767 0.1072 -0.0499 0.1273 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.6: num [1:100, 1:2] 0.0786 0.0935 0.1376 0.1508 0.1004 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.6_subcomp.1" "component_No.6_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.7: num [1:100, 1:2] 0.2779 -0.1671 -0.0377 -0.1255 -0.1812 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.7: num [1:100, 1:2] 0.000577 0.000853 -0.017935 -0.048824 0.25308 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.7_subcomp.1" "component_No.7_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.8: num [1:100, 1:2] -0.0885 0.075 -0.0425 0.0401 0.0257 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.8: num [1:100, 1:2] 0.1486 -0.1624 0.0512 0.08 0.1485 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.8_subcomp.1" "component_No.8_subcomp.2"</span></span>
-<span><span class="co">#&gt;  $ component_No.9: num [1:100, 1:2] 0.1762 0.0211 0.1962 0.0236 0.0799 ...</span></span>
+<span><span class="co">#&gt;  $ component_No.9: num [1:100, 1:2] -0.00615 -0.00188 -0.02696 0.19313 -0.13931 ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "dimnames")=List of 2</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:100] "gene_No.1" "gene_No.2" "gene_No.3" "gene_No.4" ...</span></span>
 <span><span class="co">#&gt;   .. ..$ : chr [1:2] "component_No.9_subcomp.1" "component_No.9_subcomp.2"</span></span></code></pre></div>
@@ -185,92 +185,92 @@ Data Analysis <a href="https://chuansite.github.io/SJD/articles/StructralJointDe
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">concatPCA_res</span><span class="op">$</span><span class="va">score_list</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 4</span></span>
 <span><span class="co">#&gt;  $ dataset_No.1:List of 9</span></span>
-<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -0.001417 -0.000559 0.001503 0.00178 -0.000335 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -0.000716 0.001189 -0.001595 -0.001305 0.003849 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.021140" "component_No.1_subcomp.2, PVE: 0.034004"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.027793" "component_No.1_subcomp.2, PVE: 0.023048"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
-<span><span class="co">#&gt;   ..$ component_No.2: num [1:2, 1:50] -0.001898 0.006545 0.000402 -0.004608 0.002474 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.2: num [1:2, 1:50] -0.000766 -0.001182 -0.005818 -0.001646 0.004923 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.2_subcomp.1, PVE: 0.042522" "component_No.2_subcomp.2, PVE: 0.036869"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.2_subcomp.1, PVE: 0.037592" "component_No.2_subcomp.2, PVE: 0.045093"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.3: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.4: num [1:2, 1:50] 1.02e-03 4.13e-05 -1.62e-03 2.61e-03 3.93e-03 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.4: num [1:2, 1:50] -1.51e-03 -3.82e-03 -1.91e-04 5.37e-05 3.38e-03 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.4_subcomp.1, PVE: 0.045350" "component_No.4_subcomp.2, PVE: 0.036636"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.4_subcomp.1, PVE: 0.032850" "component_No.4_subcomp.2, PVE: 0.041949"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.5: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.6: num [1:2, 1:50] -0.001567 0.007995 0.000161 -0.00978 0.003731 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.6: num [1:2, 1:50] -0.003963 -0.000965 -0.005507 0.007292 0.004259 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.6_subcomp.1, PVE: 0.057997" "component_No.6_subcomp.2, PVE: 0.053449"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.6_subcomp.1, PVE: 0.056576" "component_No.6_subcomp.2, PVE: 0.052750"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.7: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.8: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.9: logi NA</span></span>
 <span><span class="co">#&gt;  $ dataset_No.2:List of 9</span></span>
-<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] 0.000321 0.005497 -0.008291 -0.002425 0.000852 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -0.0012 0.00272 -0.00255 0.00288 -0.00178 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.036089" "component_No.1_subcomp.2, PVE: 0.024031"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.027623" "component_No.1_subcomp.2, PVE: 0.031803"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
-<span><span class="co">#&gt;   ..$ component_No.2: num [1:2, 1:50] -0.000574 0.001501 0.004808 0.004054 0.003487 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.2: num [1:2, 1:50] -0.000658 0.001742 0.005077 0.004025 -0.005345 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.2_subcomp.1, PVE: 0.034887" "component_No.2_subcomp.2, PVE: 0.036560"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.2_subcomp.1, PVE: 0.041463" "component_No.2_subcomp.2, PVE: 0.025569"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.3: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.4: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.5: num [1:2, 1:50] 0.00586 -0.00237 0.00343 0.00427 -0.00134 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.5: num [1:2, 1:50] 0.00105 0.00312 0.00287 0.00122 -0.0063 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.5_subcomp.1, PVE: 0.048335" "component_No.5_subcomp.2, PVE: 0.038071"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.5_subcomp.1, PVE: 0.039385" "component_No.5_subcomp.2, PVE: 0.039008"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.6: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.7: num [1:2, 1:50] -0.00593 0.00088 -0.002118 -0.007859 -0.000384 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.7: num [1:2, 1:50] 0.00468 0.0006 -0.00417 0.00427 0.00192 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.7_subcomp.1, PVE: 0.056351" "component_No.7_subcomp.2, PVE: 0.052664"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.7_subcomp.1, PVE: 0.055550" "component_No.7_subcomp.2, PVE: 0.049728"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.8: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.9: logi NA</span></span>
 <span><span class="co">#&gt;  $ dataset_No.3:List of 9</span></span>
-<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -6.67e-03 -3.10e-03 -2.43e-05 1.83e-03 2.35e-03 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -0.000286 0.004282 0.003155 0.003718 -0.00249 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.031754" "component_No.1_subcomp.2, PVE: 0.029404"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.025088" "component_No.1_subcomp.2, PVE: 0.033820"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.2: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.3: num [1:2, 1:50] -0.004806 0.000441 -0.001759 0.000864 0.005491 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.3: num [1:2, 1:50] -0.00157 0.00756 -0.00117 0.0052 -0.00239 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.3_subcomp.1, PVE: 0.035867" "component_No.3_subcomp.2, PVE: 0.035836"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.3_subcomp.1, PVE: 0.036261" "component_No.3_subcomp.2, PVE: 0.040621"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
-<span><span class="co">#&gt;   ..$ component_No.4: num [1:2, 1:50] 0.00391 0.00266 -0.00303 0.00266 -0.00201 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.4: num [1:2, 1:50] -6.58e-03 -2.05e-03 -1.93e-03 1.06e-05 -4.83e-03 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.4_subcomp.1, PVE: 0.034227" "component_No.4_subcomp.2, PVE: 0.036366"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.4_subcomp.1, PVE: 0.040518" "component_No.4_subcomp.2, PVE: 0.029601"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.5: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.6: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.7: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.8: num [1:2, 1:50] 0.006299 0.003032 0.001883 -0.000071 -0.002536 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.8: num [1:2, 1:50] -0.00953 0.00265 -0.00437 0.00506 -0.00481 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.8_subcomp.1, PVE: 0.053143" "component_No.8_subcomp.2, PVE: 0.048398"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.8_subcomp.1, PVE: 0.057720" "component_No.8_subcomp.2, PVE: 0.049541"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.9: logi NA</span></span>
 <span><span class="co">#&gt;  $ dataset_No.4:List of 9</span></span>
-<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] 0.00456 0.00309 -0.00375 0.00329 -0.00128 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.1: num [1:2, 1:50] -0.001658 0.000964 0.002055 -0.000731 0.000361 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.022341" "component_No.1_subcomp.2, PVE: 0.021718"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.1_subcomp.1, PVE: 0.030313" "component_No.1_subcomp.2, PVE: 0.020180"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.2: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.3: num [1:2, 1:50] 0.00641 -0.00225 -0.00495 -0.00594 0.00161 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.3: num [1:2, 1:50] -0.003651 0.003341 0.001102 0.000872 -0.000329 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.3_subcomp.1, PVE: 0.036001" "component_No.3_subcomp.2, PVE: 0.033972"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.3_subcomp.1, PVE: 0.036851" "component_No.3_subcomp.2, PVE: 0.028949"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.4: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.5: num [1:2, 1:50] 4.10e-03 -3.78e-03 2.17e-03 2.84e-04 1.45e-05 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.5: num [1:2, 1:50] -0.002186 -0.001291 0.000622 -0.00289 0.004766 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.5_subcomp.1, PVE: 0.030491" "component_No.5_subcomp.2, PVE: 0.034410"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.5_subcomp.1, PVE: 0.037700" "component_No.5_subcomp.2, PVE: 0.035279"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span>
 <span><span class="co">#&gt;   ..$ component_No.6: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.7: logi NA</span></span>
 <span><span class="co">#&gt;   ..$ component_No.8: logi NA</span></span>
-<span><span class="co">#&gt;   ..$ component_No.9: num [1:2, 1:50] -0.000109 -0.001359 -0.00357 0.003268 0.00057 ...</span></span>
+<span><span class="co">#&gt;   ..$ component_No.9: num [1:2, 1:50] 4.54e-04 -7.83e-04 -1.25e-03 9.58e-05 -2.92e-03 ...</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "dimnames")=List of 2</span></span>
-<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.9_subcomp.1, PVE: 0.053292" "component_No.9_subcomp.2, PVE: 0.050951"</span></span>
+<span><span class="co">#&gt;   .. .. ..$ : chr [1:2] "component_No.9_subcomp.1, PVE: 0.052873" "component_No.9_subcomp.2, PVE: 0.050291"</span></span>
 <span><span class="co">#&gt;   .. .. ..$ : chr [1:50] "subject_No.1" "subject_No.2" "subject_No.3" "subject_No.4" ...</span></span></code></pre></div>
 </div>
 <div class="section level2">
