@@ -19,17 +19,24 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../articles/SJD.html">Get started</a>
+  <a class="nav-link" href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+    Home
+  </a>
 </li>
-<li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/SJD.html">Demo</a>
 </li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-real-data-analysis">Real Data Analysis</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-real-data-analysis">
     <a class="dropdown-item" href="../articles/StructralJointDecomposition.html">Introduction to SJD (Structured Joint Decomposition)</a>
     <a class="dropdown-item" href="../articles/twoStageLCA.html">Introduction to twoStageLCA (Two Stage Linked Component Analysis)</a>
   </div>
+</li>
+<li class="active nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -38,7 +45,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -93,140 +100,140 @@
 <span class="r-in"><span><span class="fu">pveSep</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">res_sepPCA</span><span class="op">$</span><span class="va">score_list</span>, <span class="va">res_sepPCA</span><span class="op">$</span><span class="va">linked_component_list</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $dataset_No.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.1 subject_No.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.005170197  0.003277219</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.000451882 -0.007273454</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.3 subject_No.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.003973102 0.0002117434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.006428405 0.0062501574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174 -0.003328291  0.001637634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  0.005895471  0.011104309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.3  subject_No.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.005354008  0.0061163104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  0.007347788 -0.0005548611</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.5  subject_No.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.001760661 -0.0014172771</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.005391612  0.0002074341</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.003047467 -0.0006000776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.002038949 -0.0062102478</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                       subject_No.7 subject_No.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0003876718  0.006638273</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0022856258 -0.002427173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174 -0.0002377363 0.0018828480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  0.0006400535 0.0003632946</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.9 subject_No.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 0.0039228912  -0.010978815</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 0.0001950275  -0.000447776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.001563414   0.007124862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.002532921  -0.005469364</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0005437079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0036800591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.007506413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.004889506</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0045395108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0002724696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.002653039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001055445</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0031847964</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0009354165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001000789</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.002331137</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0004282624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0078622096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.001509456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.003198024</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.002814451</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.001721630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.002954268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.003547815</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004115676</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.008044665</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174 -0.0031761234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.0003604353</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.002927328</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.009801242</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174 -0.0013415453</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.0005968003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0002524831</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0007927868</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001260152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.006825200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004444059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.003220107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.006006984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.003880804</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004078303</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.004036384</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.008236343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.002075164</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.006302836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.002085125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.001247889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.005359478</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004053028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.007484716</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.007921062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001410534</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.005875607</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.003669864</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.002988066</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.002215995</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004562340</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.006304561</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.004688390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001027427</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.003657365</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.001340592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.007399843</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.004282864</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.003345328</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.008809878</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.0055435060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.0003195842</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.007951284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.002447639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174 -0.0053809860</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.0008463669</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0001135516</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0001942014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.005175293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.004107678</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0069157940</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0009761249</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.004104925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.007689743</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0011715706</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0004507421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001114217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.003674191</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.005059233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.002073347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.003041121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.006025926</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.000982777</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.001001296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.008347782</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001534792</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.003839120</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.002813761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.001834988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.006872969</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.010880814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.005044448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.002248361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.002050168</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0006372848</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0071676972</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.003064286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.004294616</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.003297835</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.002251017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.007599815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.003138609</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.37</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.001355491</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.007027169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.002319395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001971029</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.005960817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.006080517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001205233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.010215037</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.005484740</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.000694527</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.007595254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.000968588</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0001871763</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121 -0.0005264952</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.003566083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.006118690</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.008362175</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.000189674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174   0.004464625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.005634366</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.002624562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.006576830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.0004239954</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  0.0004938730</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  0.0005270331</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0046117429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.004831121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.003858843</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.001578349</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.006457342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001748605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.005148402</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.002094095</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.004210145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.003022400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.003015066</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0053050775</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0001465597</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.007823090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483  -0.001212101</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.004207142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.001641287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.001645625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.005464428</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597   0.003279348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  -0.004937337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  0.0022809591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -0.0008739412</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597 -0.0027212857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121  0.0002992554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  -0.003088238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483   0.001389531</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      subject_No.50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.054465, PVE: 0.005597  -0.004569029</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.053681, PVE: 0.016121   0.002503756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.1, PVE: 0.051918, PVE: 0.053174  3.719042e-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dataset_No.1_subcomp.2, PVE: 0.050949, PVE: 0.008483 -1.790482e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

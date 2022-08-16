@@ -19,17 +19,24 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../articles/SJD.html">Get started</a>
+  <a class="nav-link" href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+    Home
+  </a>
 </li>
-<li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/SJD.html">Demo</a>
 </li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-real-data-analysis">Real Data Analysis</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-real-data-analysis">
     <a class="dropdown-item" href="../articles/StructralJointDecomposition.html">Introduction to SJD (Structured Joint Decomposition)</a>
     <a class="dropdown-item" href="../articles/twoStageLCA.html">Introduction to twoStageLCA (Two Stage Linked Component Analysis)</a>
   </div>
+</li>
+<li class="active nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -38,7 +45,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/CHuanSite/SJD/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -88,12 +95,12 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">score_generation</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]      [,3]       [,4]       [,5]       [,6]      [,7]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.5878769 -1.170209  1.042182 -0.6981431  0.3845486 -0.2469595 0.7580157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.5795179  2.561808 -1.740411  2.3733455 -0.2578423  0.8925226 0.5710330</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           [,8]       [,9]    [,10]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -2.179787 -0.8592645 2.386982</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -1.754901 -1.8709376 2.047942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]       [,2]       [,3]       [,4]      [,5]       [,6]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.06477567 -0.5000464 -0.6733611 -0.7147548 0.4328832 -0.7405922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.21670335 -0.7144460  2.6969637 -0.9493488 3.0134092 -1.7529631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             [,7]       [,8]        [,9]      [,10]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -1.22673731  0.6361101 -0.31551639 -0.3376625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.07204368 -0.8255926  0.07354229  0.6770718</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
