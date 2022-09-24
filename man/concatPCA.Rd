@@ -12,7 +12,7 @@ concatPCA(
   proj_dataset = NULL,
   proj_group = NULL,
   enable_normalization = TRUE,
-  column_sum_normalization = TRUE,
+  column_sum_normalization = FALSE,
   screen_prob = NULL
 )
 }
@@ -31,7 +31,7 @@ concatPCA(
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
 
-\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it TRUE}
+\item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it FALSE}
 
 \item{screen_prob}{A vector of probabilies for genes to be chosen}
 }

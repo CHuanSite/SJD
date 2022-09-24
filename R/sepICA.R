@@ -6,7 +6,7 @@
 #' @param comp_num Number of ICs to be extracted
 #' @param weighting Weighting of each dataset, initialized to be NULL
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
-#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom fastICA fastICA
@@ -22,7 +22,7 @@
 #'
 #' @export
 
-sepICA <- function(dataset, comp_num, weighting = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
+sepICA <- function(dataset, comp_num, weighting = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
     sepPCA_res = sepPCA(dataset, comp_num)
 
     ## Obtain names for dataset, gene and samples

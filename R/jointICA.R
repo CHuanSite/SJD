@@ -11,7 +11,7 @@
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
-#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @importFrom fastICA fastICA
@@ -38,7 +38,7 @@
 #'
 #' @export
 
-jointICA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
+jointICA <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
     jointPCA_res = jointPCA(dataset, group, comp_num, weighting, max_ite, max_err)
 
     ## Obtain names for dataset, gene and samples

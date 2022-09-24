@@ -12,7 +12,7 @@
 #' @param proj_dataset The datasets to be projected on
 #' @param proj_group The grouping of projected data sets
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
-#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it TRUE
+#' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' @param screen_prob A vector of probabilies for genes to be chosen
 #'
 #' @return A list contains the component and the score of each dataset on every component after jointNMF algorithm
@@ -37,7 +37,7 @@
 #'
 #' @export
 
-jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = TRUE, screen_prob = NULL){
+jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
