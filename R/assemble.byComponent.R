@@ -52,7 +52,7 @@
 #'     SampleMetaNamesTable = SampleMetaNamesTable
 #' )
 #'
-#' assemble.byComponent.obj = assemblePNG.byComponent(
+#' assemble.byComponent.obj = assemble.byComponent(
 #' SJDScorePlotter.obj = SJDScorePlotter.obj,
 #' component = c(1, 2),
 #' SJD_algorithm = "twoStageLCA",
@@ -61,7 +61,7 @@
 #' @export
 
 
-assemblePNG.byComponent <- function(SJDScorePlotter.obj, component, SJD_algorithm, group = NA){
+assemble.byComponent <- function(SJDScorePlotter.obj, component, SJD_algorithm, group = NA){
     out_obj_list = list()
 
     for(comp in component){
