@@ -3,6 +3,7 @@
 export(BEMA)
 export(Procrustes)
 export(SJDScorePlotter)
+export(addSJDtoSeurat)
 export(assemble.byComponent)
 export(assemble.byDataset)
 export(balanceData)
