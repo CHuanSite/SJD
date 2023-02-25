@@ -6,7 +6,7 @@
 -->
 
 ## Overview:
-
+test. test
 Structured Joint Decomposiiton (SJD) is a robust R package based on low rank models that provides novel decomposition methods for gene expression datasets that share similar biological progresses. It allows integrated dimensionality reduction for multiple datasets regardless of species, such as human and mouse datasets studying brain neuronal development. 
 
 SJD provides four decomposition algorithms: 1) separate decomposition; 2) concatenate decomposition; 3) joint decomposition; 4) two-stage sequential decomposition. 
