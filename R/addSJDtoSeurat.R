@@ -5,6 +5,7 @@
 #' @param Dataset The name of the Dataset of interests in the SJD score_list component
 #' @param SJDloading The name of the SJDloading of interests in the SJD score_list component under Dataset.
 #' @param SJDmethod The name of the SJD method used for the decomposition, e.g. "twoStageLCA". If NA, will use "SJD"
+#'
 #' @export
 
 addSJDtoSeurat = function(Seurat.obj,SJDoutput,Dataset,SJDloading,SJDmethod=NA){
