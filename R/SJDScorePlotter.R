@@ -243,7 +243,7 @@ SJDScorePlotter <- function(
                             mid = quantile(SJDscores,probs=prb)
                             SJDscores00 = SJDscores-mid
                             if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
-                                ord = order(SJDscores00,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                                ord = order(abs(SJDscores00),decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
                             }else{
                                 ord = order(SJDscores00,decreasing = FALSE)
                             }
@@ -483,7 +483,7 @@ SJDScorePlotter <- function(
                                 mid = quantile(SJDscores,probs=prb)
                                 SJDscores00 = SJDscores-mid
                                 if(!is.null(SampleMetaNamesTable[dataset_name, "ordDECREASE"])){
-                                    ord = order(SJDscores00,decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
+                                    ord = order(abs(SJDscores00),decreasing=SampleMetaNamesTable[dataset_name, "ordDECREASE"])
                                 }else{
                                     ord = order(SJDscores00,decreasing = FALSE)
                                 }
