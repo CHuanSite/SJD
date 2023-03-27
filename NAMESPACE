@@ -3,6 +3,7 @@
 export(BEMA)
 export(Procrustes)
 export(SJDScorePlotter)
+export(ScreePlot_LCvsPC)
 export(addSJDtoSeurat)
 export(assemble.byComponent)
 export(assemble.byDataset)

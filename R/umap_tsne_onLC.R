@@ -5,7 +5,6 @@
 #' @param n_comp number of components to make umaps and tsne, int
 #' @param add_to_meta adds tsne and umap coordinates to metadata, bool
 #' @param meta_list Meta.List that was passed into SJD run, str
-#'
 #' @export
 
 umap_tsne_onLC=function(twoStageLCAobj,group,n_comp,add_to_meta,meta_list){
