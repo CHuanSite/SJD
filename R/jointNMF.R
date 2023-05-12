@@ -37,7 +37,7 @@
 #'
 #' @export
 
-jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
+jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000, max_err = 0.0001, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
 
     ## Obtain names for dataset, gene and samples
     dataset_name = datasetNameExtractor(dataset)
@@ -103,11 +103,11 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 100, 
         error_out = c(error_out, sum((X - W %*% H)^2))
 
         ## Break when the error difference is small
-        if(length(error_out) >= 2 && abs(error_out[length(error_out)] - error_out[length(error_out) - 1]) <= max_err){
+        if(length(error_out) >= 2 && abs(error_out[length(error_out)] - error_out[length(error_out) - 1]) / abs(error_out[length(error_out) - 1]) <= max_err){
             break
         }
         # print(ite)
-        # print(abs(error_out[length(error_out)] - error_out[length(error_out) - 1]))
+        # print(abs(error_out[length(error_out)] - error_out[length(error_out) - 1]) / abs(error_out[length(error_out) - 1]))
     }
 
     ## Output component and scores

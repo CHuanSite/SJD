@@ -21,13 +21,13 @@ normalizeData <- function(dataset, enable_normalization = TRUE, column_sum_norma
     if(enable_normalization){
         if(nonnegative_normalization){
             dataset = lapply(dataset, FUN = function(x){
-                x / apply(x, 2, sum)
+                cs=colSums(x);cs=cs/min(cs);sweep(x,2,cs,"/")
             })
             return(dataset)
         }
         if(column_sum_normalization){
             dataset = lapply(dataset, FUN = function(x){
-                t(scale(t(x / apply(x, 2, sum)), scale = FALSE))
+                t(scale(t(cs=colSums(x);cs=cs/min(cs);sweep(x,2,cs,"/")), scale = FALSE))
             })
         }else{
             dataset = lapply(dataset, FUN = function(x){
