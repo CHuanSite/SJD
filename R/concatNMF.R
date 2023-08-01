@@ -106,7 +106,7 @@ concatNMF <- function(dataset, group, comp_num, weighting = NULL, perturbation =
         proj_dataset_name = datasetNameExtractor(proj_dataset)
 
         proj_dataset = frameToMatrix(proj_dataset)
-        proj_dataset = normalizeData(proj_dataset)
+        proj_dataset = normalizeData(proj_dataset, enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)
         proj_dataset = balanceData(proj_dataset)
 
         for(i in 1 : length(proj_dataset)){
