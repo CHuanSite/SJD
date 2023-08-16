@@ -13,8 +13,8 @@
 #' @param backup A backup variable, which permits the overselection of the components by BEMA
 #' @param total_number Total number of components will be extracted, if default value is set to NA, then BEMA will be used.
 #' @param plotting A boolean value to determine whether to plot the scree plot or not, default to be False
-#' @param proj_dataset The datasets to be projected on
-#' @param proj_group The grouping of projected data sets
+#' @param proj_dataset The dataset(s) to be projected on. 
+#' @param proj_group A listed of boolean combinations indicating which groupings should be used for each projected dataset.The length of proj_group should match the length of proj_dataset, and the length of each concatenated boolean combination should match the length of the parameter group.
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
 #' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' @param screen_prob A vector of probabilies for genes to be chosen

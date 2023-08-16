@@ -6,8 +6,8 @@
 #' @param group A list of grouping of the datasets, indicating the relationship between datasets
 #' @param comp_num A vector indicates the dimension of each compoent
 #' @param weighting Weighting of each dataset, initialized to be NULL
-#' @param proj_dataset The datasets to be projected on
-#' @param proj_group The grouping of projected data sets
+#' @param proj_dataset The dataset(s) to be projected on. 
+#' @param proj_group A listed of boolean combinations indicating which groupings should be used for each projected dataset.The length of proj_group should match the length of proj_dataset, and the length of each concatenated boolean combination should match the length of the parameter group.
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
 #' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' @param screen_prob A vector of probabilies for genes to be chosen
@@ -19,6 +19,7 @@
 #' @keywords pairwise, PCA
 #'
 #' @examples
+#' Example 1 (1 matrix in proj_dataset):
 #' dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
@@ -35,6 +36,25 @@
 #' proj_dataset = proj_dataset,
 #' proj_group = proj_group)
 #'
+#'
+#' Example 2 (multiple matrices in proj_dataset):
+#' dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+#' group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+#' comp_num = c(2,2,2,2,2,2,2,2,2)
+#' proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))   # length(proj_dataset should match length(proj_group))
+#' proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
+#' res_concatPCA = concatPCA(
+#' dataset,
+#' group,
+#' comp_num,
+#' weighting = NULL,
+#' proj_dataset = proj_dataset,
+#' proj_group = proj_group)
+#' 
 #' @export
 
 concatPCA <- function(dataset, group, comp_num, weighting = NULL, proj_dataset = NULL, proj_group = NULL, enable_normalization = TRUE, column_sum_normalization = FALSE, screen_prob = NULL){
