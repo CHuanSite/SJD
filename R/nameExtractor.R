@@ -21,8 +21,12 @@
 
 datasetNameExtractor <- function(dataset){
     out = names(dataset)
-    if(is.null(out)){
+    if(is.list(dataset)){
+      if(is.null(out)){
         out = rep("", length(dataset))
+      }
+    }else{
+      out = ""
     }
     index = 1
     for(i in 1 : length(out)){
@@ -128,18 +132,33 @@ geneNameExtractor <- function(dataset){
 
 sampleNameExtractor <- function(dataset){
     sample_name = list()
-    for(i in 1 : length(dataset)){
+    if(is.list(dataset)){
+      for(i in 1 : length(dataset)){
         temp_name = colnames(dataset[[i]])
         if(is.null(temp_name)){
-            sample_name[[i]] = rep("", ncol(dataset[[i]]))
+          sample_name[[i]] = rep("", ncol(dataset[[i]]))
         }else{
-            sample_name[[i]] = temp_name
+          sample_name[[i]] = temp_name
         }
         for(j in 1 : length(sample_name[[i]])){
-            if(sample_name[[i]][j] == ""){
-                sample_name[[i]][j] = paste0("subject_No.", j)
-            }
+          if(sample_name[[i]][j] == ""){
+            sample_name[[i]][j] = paste0("subject_No.", j)
+          }
         }
+      }
+    }else{
+      temp_name = colnames(dataset)
+      if(is.null(temp_name)){
+        sample_name = rep("", ncol(dataset))
+      }else{
+        sample_name = temp_name
+      }
+      for(j in 1 : length(sample_name)){
+        if(sample_name[j] == ""){
+          sample_name[j] = paste0("subject_No.", j)
+        }
+      }
     }
+
     return(sample_name)
 }

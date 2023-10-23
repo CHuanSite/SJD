@@ -97,6 +97,7 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
 
     ## Conduct ICA on the extracted Scores
     for(i in 1 : K){
+        # GENE MATRICES ARE JUST TAKEN FROM LCA?
         list_component[[i]] = twoStageLCA_out$linked_component_list[[i]]
         score_concat  = c()
         for(j in 1 : N){
@@ -107,16 +108,20 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
                 # list_score[[j]][[i]] = t(ica_temp$S)
             }
         }
+        # SCORES ENTER ICA?? WHY DO WE WANT TO DECOMPOSE THE SCORES from LCA?
+        # The fundamental goal of ICA is to uncover hidden source signals that are mixed in the observed data.
         ica_temp = fastICA(t(score_concat), n.comp = nrow(score_concat))
         start_index = 0
 
         for(j in 1 : N){
             if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
+                # NEW SCORES (SAMPLE SCORES) ARE ESTIMATED SOURCE MATRICES X = AS
                 list_score[[j]][[i]] = t(ica_temp$S[(start_index + 1) : (start_index + N_dataset[j]), ])
                 start_index = start_index + N_dataset[j]
             }
         }
     }
+    
 
     ## Assign name for components
     list_component = compNameAssign(list_component, group_name)

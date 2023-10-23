@@ -17,19 +17,29 @@
 #'
 #' @export
 
+## NEED TO MODIFY FOR MATRIX TYPES
 normalizeData <- function(dataset, enable_normalization = TRUE, column_sum_normalization = TRUE, nonnegative_normalization = FALSE){
     if(enable_normalization){
         if(nonnegative_normalization){
+          if(is.list(dataset)){
             dataset = lapply(dataset, FUN = function(x){
-                cs=colSums(x);cs=cs/min(cs);sweep(x,2,cs,"/")
+              cs=colSums(x);cs=cs/min(cs);sweep(x,2,cs,"/")
             })
-            return(dataset)
+          }else{
+            cs=colSums(dataset);cs=cs/min(cs);sweep(dataset,2,cs,"/")
+          }
+          return(dataset)
         }
         if(column_sum_normalization){
+          if(is.list(dataset)){
             dataset = lapply(dataset, FUN = function(x){
                 cs=colSums(x);cs=cs/min(cs)
                 t(scale(t(sweep(x,2,cs,"/")),scale = FALSE))
             })
+          }else{
+            cs=colSums(dataset);cs=cs/min(cs)
+            t(scale(t(sweep(dataset,2,cs,"/")),scale = FALSE))
+          }
         }else{
             dataset = lapply(dataset, FUN = function(x){
                 scale(t(scale(t(x), scale = FALSE)))
