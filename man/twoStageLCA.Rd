@@ -31,9 +31,9 @@ twoStageLCA(
 
 \item{plotting}{A boolean value to determine whether to plot the scree plot or not, default to be False}
 
-\item{proj_dataset}{The datasets to be projected on}
+\item{proj_dataset}{The dataset(s) to be projected on.}
 
-\item{proj_group}{The grouping of projected data sets}
+\item{proj_group}{A listed of boolean combinations indicating which groupings should be used for each projected dataset.The length of proj_group should match the length of proj_dataset, and the length of each concatenated boolean combination should match the length of the parameter group.}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
 
@@ -48,12 +48,13 @@ A list contains the component and the score of each dataset on every component a
 Two-staged Linked Component Analysis
 }
 \examples{
+Example 1 (1 matrix in proj_dataset):
 dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-group = list(c(1, 2, 3, 4), c(1, 2), c(3, 4), c(1, 3), c(2, 4), c(1), c(2), c(3), c(4))
-comp_num = c(2, 2, 2, 2, 2, 2, 2, 2, 2)
+group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+comp_num = c(2,2,2,2,2,2,2,2,2)
 proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
 proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
 res_twoStageLCA = twoStageLCA(
@@ -63,6 +64,23 @@ comp_num,
 proj_dataset = proj_dataset,
 proj_group = proj_group)
 
+
+Example 2 (multiple matrices in proj_dataset):
+dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
+group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
+comp_num = c(2,2,2,2,2,2,2,2,2)
+proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
+matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))   # length(proj_dataset should match length(proj_group))
+proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
+res_twoStageLCA = twoStageLCA(
+dataset,
+group,
+comp_num,
+proj_dataset = proj_dataset,
+proj_group = proj_group)
 }
 \keyword{LCA}
 \keyword{two-staged,}
