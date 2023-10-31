@@ -1,11 +1,12 @@
+#' Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.
 #' Projection function for Joint Decomposition with Nonnegative Matrix Factorization
 #' Purpose: finding out the common development patterns between new data and datasets used in the joint decomposition.
 #' If you have new dataset(s) and Gene scores produced by JointNMF, this function can produce estimated sample scores for the new datasets.
 
 #' @param proj_dataset The dataset(s) to be projected on. 
-#' @param proj_group A listed of boolean combinations indicating which groupings should be used for each projected dataset.The length of proj_group should match the length of proj_dataset, and the length of each concatenated boolean combination should match the length of the parameter group.
-#' @param list_component list_component produced from JointNMF decomposition.  
-#' @param max_ite The maximum number of iterations for the jointNMF algorithms to run, default value is set to 100
+#' @param proj_group: A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.
+#' @param list_component: a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.
+#' @param max_ite The maximum number of iterations for the jointNMF algorithms to run, default value is set to 1000
 #' @param max_err The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
 #' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
@@ -16,7 +17,7 @@
 #'
 #' @examples
 #' proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-#' proj_group = list(c(TRUE, TRUE)) # which groupings in the joint decomposition you want to project on.
+#' proj_group = c(TRUE, TRUE) # which groupings in the joint decomposition you want to project on.
 #' list_component = jointNMF$linked_component_list # from jointNMF result
 #' res_projNMF = projectNMF(
 #' proj_dataset = proj_dataset,
@@ -32,9 +33,12 @@
 
 projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000, max_err = 0.0001, enable_normalization = TRUE, column_sum_normalization = FALSE){
   if(!is.null(proj_dataset)){
-    if (length(proj_group[[1]]) != length(list_component)){
-      stop("Error:length of each element in proj_group should equal to length of list_component.")
+    if (length(proj_group) != length(list_component)){
+      stop("Error:length of proj_group should equal to length of list_component.")
     }
+    
+    proj_dataset = as.matrix(proj_dataset)
+      
     if(!is.null(rownames(proj_dataset))){
       CMNgenes=rownames(proj_dataset)[rownames(proj_dataset)%in%rownames(list_component[[1]])]
       common_genes.DATA = match(CMNgenes,rownames(proj_dataset))
@@ -47,12 +51,13 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
       print(paste("Input", orig_gene_length, "genes in proj_dataset, found", nrow(proj_dataset), "genes in common."))
     }
     
+    
     p = nrow(proj_dataset)
     comp_num = unlist(lapply(list_component, function(x) if (length(x) > 0) ncol(x)))
     
     # Initialize the matrix W with zeros
     W <- matrix(0, nrow = p, ncol = sum(comp_num))
-    K = length(proj_group[[1]])
+    K = length(proj_group)
     # Reconstruct matrix W using list_component and comp_num
     start_col <- 1
     for (i in 1:K) {
@@ -63,7 +68,6 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
   
     
     proj_sample_name = sampleNameExtractor(proj_dataset)
-    proj_dataset_name = datasetNameExtractor(proj_dataset)
     group_name = names(list_component) 
     proj_dataset = normalizeData(proj_dataset, enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)
     
@@ -110,16 +114,16 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
     
     
     proj_list_score= list()
-    for(j in 1 : length(proj_group[[1]])){ # j goes from 1 to 3 since we have 3 groups
-      if(proj_group[[1]][j]){
+    for(j in 1 : length(proj_group)){ # j goes from 1 to 3 since we have 3 groups
+      if(proj_group[j]){
         proj_list_score[[j]] = H[ifelse(j == 1, 1, cumsum(comp_num)[j - 1] + 1) : cumsum(comp_num)[j],  1:col]
       }
     }
 
     proj_list_score = scoreNameAssignProj(proj_list_score, group_name)
     proj_list_score = sampleNameAssignProj(proj_list_score, proj_sample_name)
-    for(i in 1 : length(proj_group[[1]])){
-      if(proj_group[[1]][j]){
+    for(i in 1 : length(proj_group)){
+      if(proj_group[j]){
         proj_list_score[[i]] = proj_list_score[[i]] * sqrt(ncol(proj_dataset))
       }
     }
