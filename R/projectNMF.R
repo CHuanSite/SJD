@@ -1,7 +1,8 @@
-#' Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.
-#' Projection function for Joint Decomposition with Nonnegative Matrix Factorization
-#' Purpose: finding out the common development patterns between new data and datasets used in the joint decomposition.
-#' If you have new dataset(s) and Gene scores produced by JointNMF, this function can produce estimated sample scores for the new datasets.
+#' @description Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.
+#' 
+#' projectNMF estimates the embeddings for samples in a new dataset when given a gene loading matrix from an NMF decomposition of another single matrix, 
+#' or set of matrices (e.g. the "list_component" from a jointNMF output object)
+#'
 
 #' @param proj_dataset The dataset(s) to be projected on. 
 #' @param proj_group: A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.
@@ -11,7 +12,7 @@
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
 #' @param column_sum_normalization An argument to decide whether to use column sum normalization or not, default it FALSE
 #' 
-#' @return A list contains the projected scores of each dataset on every component.
+#' @return A list that contains the 1] projected scores of each dataset on every component. and 2] the log of errors as the NMF was iterated.
 #'
 #' @keywords projection, joint, NMF
 #'
