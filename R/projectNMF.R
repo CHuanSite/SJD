@@ -1,9 +1,9 @@
-#' @description Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.
+#' Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.
 #' 
 #' projectNMF estimates the embeddings for samples in a new dataset when given a gene loading matrix from an NMF decomposition of another single matrix, 
 #' or set of matrices (e.g. the "list_component" from a jointNMF output object)
 #'
-
+#' 
 #' @param proj_dataset The dataset(s) to be projected on. 
 #' @param proj_group: A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.
 #' @param list_component: a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.

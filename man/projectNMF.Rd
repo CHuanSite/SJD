@@ -2,9 +2,7 @@
 % Please edit documentation in R/projectNMF.R
 \name{projectNMF}
 \alias{projectNMF}
-\title{Projection function for Joint Decomposition with Nonnegative Matrix Factorization
-Purpose: finding out the common development patterns between new data and datasets used in the joint decomposition.
-If you have new dataset(s) and Gene scores produced by JointNMF, this function can produce estimated sample scores for the new datasets.}
+\title{Function to estimate sample embeddings for one dataset from a gene loading matrix derived from an NMF decomposition of another dataset.}
 \usage{
 projectNMF(
   proj_dataset,
@@ -19,29 +17,28 @@ projectNMF(
 \arguments{
 \item{proj_dataset}{The dataset(s) to be projected on.}
 
-\item{proj_group}{A listed of boolean combinations indicating which groupings should be used for each projected dataset.The length of proj_group should match the length of proj_dataset, and the length of each concatenated boolean combination should match the length of the parameter group.}
-
-\item{list_component}{list_component produced from JointNMF decomposition.}
-
-\item{max_ite}{The maximum number of iterations for the jointNMF algorithms to run, default value is set to 100}
+\item{max_ite}{The maximum number of iterations for the jointNMF algorithms to run, default value is set to 1000}
 
 \item{max_err}{The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
 
 \item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it FALSE}
+
+\item{proj_group:}{A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.}
+
+\item{list_component:}{a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.}
 }
 \value{
-A list contains the projected scores of each dataset on every component.
+A list that contains the 1] projected scores of each dataset on every component. and 2] the log of errors as the NMF was iterated.
 }
 \description{
-Projection function for Joint Decomposition with Nonnegative Matrix Factorization
-Purpose: finding out the common development patterns between new data and datasets used in the joint decomposition.
-If you have new dataset(s) and Gene scores produced by JointNMF, this function can produce estimated sample scores for the new datasets.
+projectNMF estimates the embeddings for samples in a new dataset when given a gene loading matrix from an NMF decomposition of another single matrix, 
+or set of matrices (e.g. the "list_component" from a jointNMF output object)
 }
 \examples{
 proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-proj_group = list(c(TRUE, TRUE)) # which groupings in the joint decomposition you want to project on.
+proj_group = c(TRUE, TRUE) # which groupings in the joint decomposition you want to project on.
 list_component = jointNMF$linked_component_list # from jointNMF result
 res_projNMF = projectNMF(
 proj_dataset = proj_dataset,

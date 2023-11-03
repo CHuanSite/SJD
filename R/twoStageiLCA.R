@@ -145,7 +145,7 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
             proj_list_score[[i]] = list()
             for(j in 1 : length(proj_group[[i]])){
                 if(proj_group[[i]][j]){
-                    proj_list_score[[i]][[j]] =  t(list_component[[j]]) %*% proj_dataset[[i]]
+                    proj_list_score[[i]][[j]] =  ginv(t(list_component[[j]]) %*% proj_dataset[[i]]) %*% ica_temp$A
                 }else{
                     proj_list_score[[i]][[j]] = NA
                 }
