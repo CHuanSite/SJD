@@ -70,7 +70,7 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
     
     proj_sample_name = sampleNameExtractor(proj_dataset)
     group_name = names(list_component) 
-    proj_dataset = normalizeData(proj_dataset, enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)
+    proj_dataset = normalizeData(list(proj_dataset), enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)[[1]]
     
     M = sum(comp_num) 
     p = nrow(proj_dataset)
