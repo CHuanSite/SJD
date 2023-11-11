@@ -17,13 +17,43 @@
 #' scoreNameAssignSep(score_list, dataset_name)
 #'
 #' @export
-
+#' 
 scoreNameAssignSep <- function(score_list, dataset_name){
     for(i in 1 : length(score_list)){
         names(score_list)[i] = dataset_name[i]
         rownames(score_list[[i]]) = sapply(1 : nrow(score_list[[i]]), FUN = function(x){paste0(dataset_name[i], "_", "subcomp.", x)} )
     }
     return(score_list)
+}
+
+#' Score Name Assignment for projectNMF
+#'
+#' Assign names to score lists based on group_name,
+#' the group_name
+#' is the output of the groupNameExtractor
+#'
+#' @param score_list A list of scores in the analysis
+#' @param group_name A vector of group names extracted by groupNameExtractor function
+#'
+#' @return A list of scores assigned with names
+#'
+#' @keywords score, name
+#'
+#' @examples
+#' score_list = list(
+#' list(matrix(c(1 : 4), nrow = 2), matrix(c(1 : 4), nrow = 2)),
+#' list(matrix(c(1 : 4), nrow = 2), matrix(c(1 : 4), nrow = 2)))
+#' group_name = c("comp1", "comp2")
+#' scoreNameAssignProj(score_list, group_name)
+#'
+#' @export
+
+scoreNameAssignProj <- function(score_list, group_name){
+  for(i in 1 : length(score_list)){
+    names(score_list)[i] = group_name[i]
+    rownames(score_list[[i]]) = sapply(1 : nrow(score_list[[i]]), FUN = function(x){paste0(group_name[i], "_", "subcomp.", x)} )
+  }
+  return(score_list)
 }
 
 #' Score Name Assignment for Concatenate, Joint and TwoStageLCA Analysis
@@ -141,6 +171,38 @@ geneNameAssign <- function(linked_component_list, gene_name){
         rownames(linked_component_list[[i]]) = gene_name
     }
     return(linked_component_list)
+}
+
+
+
+#' Sample Name Assignment for projectNMF
+#'
+#' Assign sample names to dataset,
+#' it takes two arguments, the first is the list of scores,
+#' the second is the list of sample names
+#'
+#' @param score_list List of score for each data.frame
+#' @param sample_name List of names for the samples in the list
+#'
+#' @return A list of scores for the samples
+#'
+#' @keywords sample, name
+#'
+#' @examples
+#' x = matrix(c(1:4), nrow = 2)
+#' y = matrix(c(1:4), nrow = 2)
+#' score_list = list(x, y)
+#' sample_name = list("x.sample.1", "x.sample.2")
+#' sampleNameAssignProj(score_list, sample_name)
+#'
+#' @export
+
+
+sampleNameAssignProj <- function(score_list, sample_name){
+  for(i in 1 : length(score_list)){
+    colnames(score_list[[i]]) = sample_name
+  }
+  return(score_list)
 }
 
 #' Sample Name Assignment for Seperate Analysis

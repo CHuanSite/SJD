@@ -6,12 +6,11 @@
 -->
 
 ## Overview:
+Structured Joint Decomposiiton (SJD) is a robust R package based on low rank models that provides novel decomposition methods for gene expression datasets that share similar biological progresses. It allows integrated dimensionality reduction for multiple datasets regardless of species, such as human and mouse datasets studying brain neuronal development.
 
-Structured Joint Decomposiiton (SJD) is a robust R package based on low rank models that provides novel decomposition methods for gene expression datasets that share similar biological progresses. It allows integrated dimensionality reduction for multiple datasets regardless of species, such as human and mouse datasets studying brain neuronal development. 
+SJD provides four decomposition algorithms: 1) separate decomposition; 2) concatenate decomposition; 3) joint decomposition; 4) two-stage sequential decomposition.
 
-SJD provides four decomposition algorithms: 1) separate decomposition; 2) concatenate decomposition; 3) joint decomposition; 4) two-stage sequential decomposition. 
-
-The first three algorithms allow three options of statistical computing process: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF). 
+The first three algorithms allow three options of statistical computing process: Principal Component Analysis (PCA), Independent Component Analysis (ICA) and Nonnegative Matrix Factorization (NMF).
 The last algorithm two-stage sequential decomposition is solely based on Principal Component Analysis (PCA).
 
 All SJD algorithms require the same input data format: dataset_list, group and comp_num
@@ -19,7 +18,7 @@ All SJD algorithms require the same input data format: dataset_list, group and c
 - dataset_list: expression matrices to be analyzed
 - group: the structure information of datasets to be analyzed
 - comp_num: desired number of dimensionality components after decomposition
-- weighting(optional): parameter specifying weights of dataset(s) 
+- weighting(optional): parameter specifying weights of dataset(s)
 
 To install this package in R, run the following commands:
 
@@ -42,6 +41,4 @@ The latest developer version is available in the [Github repository](https://git
 
 ## Contact
 
-For any improvements and issues that need to be addressed, please contact [Huan Chen](mailto:hchen130@jhu.edu).
-
-
+For any improvements and issues that need to be addressed, please contact [Huan Chen](mailto:hchen130@jhu.edu) or Shreyash Sonthalia (mailto:ssontha2@jh.edu).

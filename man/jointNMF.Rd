@@ -9,7 +9,7 @@ jointNMF(
   group,
   comp_num,
   weighting = NULL,
-  max_ite = 100,
+  max_ite = 1000,
   max_err = 1e-04,
   proj_dataset = NULL,
   proj_group = NULL,
@@ -31,9 +31,9 @@ jointNMF(
 
 \item{max_err}{The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001}
 
-\item{proj_dataset}{The datasets to be projected on}
+\item{proj_dataset}{The dataset to be projected on.}
 
-\item{proj_group}{The grouping of projected data sets}
+\item{proj_group}{A boolean combination indicating which groupings should be used for the projected dataset.}
 
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
 
@@ -55,14 +55,15 @@ matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
 group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
 comp_num = c(2,2,2,2,2,2,2,2,2)
-proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
+proj_dataset = matrix(runif(5000, 1, 2), nrow = 100, ncol = 50)
+proj_group = c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
 res_jointNMF = jointNMF(
 dataset,
 group,
 comp_num,
 proj_dataset = proj_dataset,
 proj_group = proj_group)
+
 
 }
 \keyword{NMF}
