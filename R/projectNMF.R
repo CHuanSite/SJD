@@ -124,7 +124,7 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
     proj_list_score = scoreNameAssignProj(proj_list_score, group_name)
     proj_list_score = sampleNameAssignProj(proj_list_score, proj_sample_name)
     for(i in 1 : length(proj_group)){
-      if(proj_group[j]){
+      if(proj_group[i]){
         proj_list_score[[i]] = proj_list_score[[i]] * sqrt(ncol(proj_dataset))
       }
     }
