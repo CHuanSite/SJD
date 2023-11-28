@@ -41,4 +41,4 @@ The latest developer version is available in the [Github repository](https://git
 
 ## Contact
 
-For any improvements and issues that need to be addressed, please contact [Huan Chen](mailto:hchen130@jhu.edu) or Shreyash Sonthalia (mailto:ssontha2@jh.edu).
+For any improvements and issues that need to be addressed, please contact [Huan Chen](mailto:hzchenhuan@gmail.com) or [Shreyash Sonthalia](mailto:shreyash.gradschool@gmail.com).
