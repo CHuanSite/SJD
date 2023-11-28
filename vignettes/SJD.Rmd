@@ -3,6 +3,8 @@ title: "Demo"
 author: 
 - Huan Chen
 - Jinrui Liu
+- Shreyash biceps Sonthalia
+- Guangyan Li
 - Carlo Colantuoni
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette

@@ -3,6 +3,8 @@ title: "Introduction to twoStageLCA (Two Stage Linked Component Analysis)"
 author: 
 - Huan Chen
 - Jinrui Liu
+- Shreyash biceps Sonthalia
+- Guangyan Li
 - Carlo Colantuoni
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 geometry: "left=1cm,right=1cm,top=1cm,bottom=1cm"
