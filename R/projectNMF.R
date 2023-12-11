@@ -47,7 +47,7 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
       orig_gene_length = nrow(proj_dataset)
       proj_dataset = proj_dataset[common_genes.DATA,]
       for (i in 1:length(list_component)) {
-        list_component[[i]] = list_component[[i]][common_genes.COMP,]
+        list_component[[i]] = list_component[[i]][common_genes.COMP,,drop=FALSE]
       }
       print(paste("Input", orig_gene_length, "genes in proj_dataset, found", nrow(proj_dataset), "genes in common."))
     }
@@ -70,6 +70,9 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
     
     proj_sample_name = sampleNameExtractor(proj_dataset)
     group_name = names(list_component) 
+    if (is.null(group_name)) {
+      group_name = paste0("group", 1:length(proj_group))
+    }
     proj_dataset = normalizeData(list(proj_dataset), enable_normalization, column_sum_normalization, nonnegative_normalization = TRUE)[[1]]
     
     M = sum(comp_num) 
@@ -113,11 +116,13 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
       }
     }
     
-    
     proj_list_score= list()
     for(j in 1 : length(proj_group)){ # j goes from 1 to 3 since we have 3 groups
       if(proj_group[j]){
         proj_list_score[[j]] = H[ifelse(j == 1, 1, cumsum(comp_num)[j - 1] + 1) : cumsum(comp_num)[j],  1:col]
+        if(comp_num[[j]] == 1) {
+          proj_list_score[[j]] = matrix(proj_list_score[[j]], nrow=1, ncol=col)
+        }
       }
     }
 
