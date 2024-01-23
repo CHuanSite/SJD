@@ -22,7 +22,6 @@
 #' @keywords two-staged, independent LCA
 #'
 #' @examples
-#' Example 1 (1 matrix in proj_dataset):
 #' dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
@@ -38,23 +37,6 @@
 #' proj_dataset = proj_dataset,
 #' proj_group = proj_group)
 #'
-#'
-#' Example 2 (multiple matrices in proj_dataset):
-#' dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
-#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
-#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
-#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-#' group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
-#' comp_num = c(2,2,2,2,2,2,2,2,2)
-#' proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50),
-#' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))   # length(proj_dataset should match length(proj_group))
-#' proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
-#' res_twoStageiLCA = twoStageiLCA(
-#' dataset,
-#' group,
-#' comp_num,
-#' proj_dataset = proj_dataset,
-#' proj_group = proj_group)
 #'
 #' @export
 
@@ -95,33 +77,22 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
         }
     }
 
-    ## Conduct ICA on the extracted Scores
-    for(i in 1 : K){
-        # GENE MATRICES ARE JUST TAKEN FROM LCA?
-        list_component[[i]] = twoStageLCA_out$linked_component_list[[i]]
-        score_concat  = c()
-        for(j in 1 : N){
-            if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
-                score_concat = cbind(score_concat, twoStageLCA_out$score_list[[j]][[i]])
-                # print(dim(twoStageLCA_out$score_list[[j]][[i]]))
-                # ica_temp = fastICA(t(twoStageLCA_out$score_list[[j]][[i]]), n.comp = nrow(twoStageLCA_out$score_list[[j]][[i]]))
-                # list_score[[j]][[i]] = t(ica_temp$S)
-            }
-        }
-        # SCORES ENTER ICA?? WHY DO WE WANT TO DECOMPOSE THE SCORES from LCA?
-        # The fundamental goal of ICA is to uncover hidden source signals that are mixed in the observed data.
-        ica_temp = fastICA(t(score_concat), n.comp = nrow(score_concat))
-        start_index = 0
 
+    ## Conduct ICA on the extracted Scores
+    ica_score = list()
+    for(i in 1 : K){
+        list_component[[i]] = twoStageLCA_out$linked_component_list[[i]]
+        ica_score[[i]] = list()
         for(j in 1 : N){
             if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
-                # NEW SCORES (SAMPLE SCORES) ARE ESTIMATED SOURCE MATRICES X = AS
-                list_score[[j]][[i]] = t(ica_temp$S[(start_index + 1) : (start_index + N_dataset[j]), ])
-                start_index = start_index + N_dataset[j]
+                score = twoStageLCA_out$score_list[[j]][[i]]
+                ica_temp = fastICA(t(score), n.comp = nrow(score))
+                list_score[[j]][[i]] = t(ica_temp$S)
+                ica_score[[i]][[j]] = ica_temp
             }
         }
     }
-    
+        
 
     ## Assign name for components
     list_component = compNameAssign(list_component, group_name)
@@ -136,25 +107,21 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
     if(!is.null(proj_dataset)){
         proj_sample_name = sampleNameExtractor(proj_dataset)
         proj_dataset_name = datasetNameExtractor(proj_dataset)
-
         proj_dataset = frameToMatrix(proj_dataset)
         proj_dataset = normalizeData(proj_dataset, enable_normalization, column_sum_normalization)
-        proj_dataset = balanceData(proj_dataset)
 
         for(i in 1 : length(proj_dataset)){
             proj_list_score[[i]] = list()
             for(j in 1 : length(proj_group[[i]])){
-                if(proj_group[[i]][j]){
-                    proj_list_score[[i]][[j]] =  ginv(t(list_component[[j]]) %*% proj_dataset[[i]]) %*% ica_temp$A
+                if(proj_group[[i]][[j]]){
+                    proj_list_score[[i]][[j]] = t(t((t(list_component[[j]]) %*% proj_dataset[[i]])) %*% ica_score[[j]][[i]]$K %*% ica_score[[j]][[i]]$W)
                 }else{
                     proj_list_score[[i]][[j]] = NA
                 }
             }
         }
 
-
         proj_list_score = scoreNameAssign(proj_list_score, proj_dataset_name, group_name)
-        proj_list_score = sampleNameAssign(proj_list_score, proj_sample_name)
     }
 
 
