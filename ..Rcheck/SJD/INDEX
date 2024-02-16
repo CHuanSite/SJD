@@ -1,0 +1,85 @@
+BEMA                    BEMA for the standard spiked covariance model
+NeuroGenesis4           NeuroGenesis4
+NeuroGenesis4.afterWrap
+                        NeuroGenesis4.afterWrap
+NeuroGenesis4.info      NeuroGenesis4.info
+Procrustes              Procrustes Projection
+SJDScorePlotter         Plot SJD score
+ScreePlot_LCvsPC        genetrate scree plot using tsLCA and sepPCA
+                        embeddings for each matrix
+addSJDtoSeurat          Add SJD loadings to a Seurat object
+assemble.byComponent    Assemble Files Based on Component
+assemble.byDataset      Assemble files based on Dataset
+balanceData             Balance Data
+compNameAssign          Components Name Assignment for concatenate,
+                        joint and twoStageLCA analysis
+compNameAssignSep       Components Name Assignment for Seperate
+                        Analysis
+concatICA               Concatenated decomposition with Independent
+                        Component Analysis
+concatNMF               Concatenated decomposition with Nonnegative
+                        Matrix Factorization
+concatPCA               Concatenated Decomposition with Principal
+                        Component Analysis
+configuration_setting_generation
+                        Configuration for simulated data generation
+datasetNameExtractor    Dataset Name Extractor
+filterNAValue           Filter NA Value
+frameToMatrix           Transform data.frame to matrix
+geneNameAssign          Gene name assignment
+geneNameExtractor       Gene Name Extractor
+geneScreen              Gene Screen
+getMatch                Species matching function
+groupNameExtractor      Group Name Extractor
+jointICA                Joint decomposition with Independent Component
+                        Analysis
+jointNMF                Joint Decomposition with Nonnegative Matrix
+                        Factorization
+jointPCA                Joint Decomposition with Principal Component
+                        Analysis
+linkedPCA               Linked Component Analysis
+marchenko_pastur_quantile
+                        Quantile for Marchenko Pastur Distribution
+mtx                     mtx sequence data
+normalizeData           Data Normalization
+projectNMF              Function to estimate sample embeddings for one
+                        dataset from a gene loading matrix derived from
+                        an NMF decomposition of another dataset.
+projectiLCA             Function to estimate sample embeddings for one
+                        dataset from a gene loading matrix derived from
+                        an iLCA analysis of another dataset.
+pveMultiple             Percentage of Variance Explained for Multiple
+                        Data sets
+pveSep                  Percentage of Variance Explained for separate
+                        data set
+rebalanceData           Rebalance Data
+rotate_component        Simulated Component Rotation
+sampleNameAssign        Sample Name Assignment for Concatenate, Joint
+                        and TwoStageLCA Analysis
+sampleNameAssignProj    Sample Name Assignment for projectNMF
+sampleNameAssignSep     Sample Name Assignment for Seperate Analysis
+sampleNameExtractor     Sample name extractor
+scoreNameAssign         Score Name Assignment for Concatenate, Joint
+                        and TwoStageLCA Analysis
+scoreNameAssignProj     Score Name Assignment for projectNMF
+scoreNameAssignSep      Score Name Assign for Seperate Analysis
+score_generation        Random Score Generation
+sepICA                  Single Data Set Decomposition with Independent
+                        Component Analysis
+sepNMF                  Single Data Set Decomposition with Nonnegative
+                        Matrix Factorization
+sepPCA                  Single Data Set Decomposition with Principal
+                        Component Analysis
+simulated_data_generation
+                        Simulated Data Generation
+sjdWrap                 SJD Wrap
+sjdWrapProjection       SJD Wrap for projection
+twoStageLCA             Two-staged Linked Component Analysis
+twoStageLCA.rank        Two-staged LCA and automatic rank selection
+twoStageiLCA            Two-staged Independent Linked Component
+                        Analysis
+twoStageiLCA.rank       Two-staged Independent LCA and automatic rank
+                        selection
+umap_tsne_onLC          genetrate new UMAP and TSNE coordinates given
+                        LCA object
+weightData              Weighting Data Set

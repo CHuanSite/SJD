@@ -17,6 +17,10 @@ projectNMF(
 \arguments{
 \item{proj_dataset}{The dataset(s) to be projected on.}
 
+\item{proj_group}{A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.}
+
+\item{list_component}{a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.}
+
 \item{max_ite}{The maximum number of iterations for the jointNMF algorithms to run, default value is set to 1000}
 
 \item{max_err}{The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001}
@@ -24,10 +28,6 @@ projectNMF(
 \item{enable_normalization}{An argument to decide whether to use normalizaiton or not,  default is TRUE}
 
 \item{column_sum_normalization}{An argument to decide whether to use column sum normalization or not, default it FALSE}
-
-\item{proj_group:}{A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.}
-
-\item{list_component:}{a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.}
 }
 \value{
 A list that contains the 1] projected scores of each dataset on every component. and 2] the log of errors as the NMF was iterated.

@@ -41,9 +41,13 @@ normalizeData <- function(dataset, enable_normalization = TRUE, column_sum_norma
             t(scale(t(sweep(dataset,2,cs,"/")),scale = FALSE))
           }
         }else{
+          if(is.list(dataset)){
             dataset = lapply(dataset, FUN = function(x){
-                scale(t(scale(t(x), scale = FALSE)))
+              scale(t(scale(t(x), scale = FALSE)))
             })
+          } else{
+            dataset = scale(t(scale(t(dataset), scale = FALSE)))
+          }
         }
     }else{
         dataset = lapply(dataset, FUN = function(x){

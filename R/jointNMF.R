@@ -222,6 +222,8 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
       for(j in 1 : length(proj_group)){ # j goes from 1 to 3 since we have 3 groups
         if(proj_group[j]){
           proj_list_score[[j]] = H[ifelse(j == 1, 1, cumsum(comp_num)[j - 1] + 1) : cumsum(comp_num)[j],  1:col]
+        } else {
+          proj_list_score[[j]] = matrix(0, nrow = comp_num[j], ncol = col)
         }
       }
       

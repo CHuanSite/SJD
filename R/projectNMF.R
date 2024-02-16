@@ -5,8 +5,8 @@
 #'
 #' 
 #' @param proj_dataset The dataset(s) to be projected on. 
-#' @param proj_group: A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.
-#' @param list_component: a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.
+#' @param proj_group A logical vector indicating which groupings, i. e. which elements of list_component should be used for each projected dataset. The length of proj_group should match the length of list_component.
+#' @param list_component a single matrix of gene loadings as a list element, or a list_component produced from a jointNMF() decomposition.
 #' @param max_ite The maximum number of iterations for the jointNMF algorithms to run, default value is set to 1000
 #' @param max_err The maximum error of loss between two iterations, or the program will terminate and return, default value is set to be 0.0001
 #' @param enable_normalization An argument to decide whether to use normalizaiton or not,  default is TRUE
@@ -123,6 +123,8 @@ projectNMF <- function(proj_dataset, proj_group, list_component, max_ite = 1000,
         if(comp_num[[j]] == 1) {
           proj_list_score[[j]] = matrix(proj_list_score[[j]], nrow=1, ncol=col)
         }
+      } else {
+        proj_list_score[[j]] = matrix(0, nrow = comp_num[j], ncol = col)
       }
     }
 

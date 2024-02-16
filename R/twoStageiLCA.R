@@ -28,8 +28,8 @@
 #' matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
 #' group = list(c(1,2,3,4), c(1,2), c(3,4), c(1,3), c(2,4), c(1), c(2), c(3), c(4))
 #' comp_num = c(2,2,2,2,2,2,2,2,2)
-#' proj_dataset = list(matrix(runif(5000, 1, 2), nrow = 100, ncol = 50))
-#' proj_group = list(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE))
+#' proj_dataset = matrix(runif(5000, 1, 2), nrow = 100, ncol = 50)
+#' proj_group = c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
 #' res_twoStageiLCA = twoStageiLCA(
 #' dataset,
 #' group,
@@ -82,13 +82,27 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
     ica_score = list()
     for(i in 1 : K){
         list_component[[i]] = twoStageLCA_out$linked_component_list[[i]]
-        ica_score[[i]] = list()
+        score_concat  = c()
+        for(j in 1 : N){
+          if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
+            score_concat = cbind(score_concat, twoStageLCA_out$score_list[[j]][[i]])
+            # print(dim(twoStageLCA_out$score_list[[j]][[i]]))
+            # ica_temp = fastICA(t(twoStageLCA_out$score_list[[j]][[i]]), n.comp = nrow(twoStageLCA_out$score_list[[j]][[i]]))
+            # list_score[[j]][[i]] = t(ica_temp$S)
+          }
+        }
+        # SCORES ENTER ICA?? WHY DO WE WANT TO DECOMPOSE THE SCORES from LCA?
+        # The fundamental goal of ICA is to uncover hidden source signals that are mixed in the observed data.
+        ica_temp = fastICA(t(score_concat), n.comp = nrow(score_concat))
+        ica_score[[i]] = ica_temp
+        start_index = 0
+        
         for(j in 1 : N){
             if(j %in% group[[i]] & nrow(list_score[[j]][[i]]) >= 2){
-                score = twoStageLCA_out$score_list[[j]][[i]]
-                ica_temp = fastICA(t(score), n.comp = nrow(score))
-                list_score[[j]][[i]] = t(ica_temp$S)
-                ica_score[[i]][[j]] = ica_temp
+              
+              # NEW SCORES (SAMPLE SCORES) ARE ESTIMATED SOURCE MATRICES X = AS
+              list_score[[j]][[i]] = t(ica_temp$S[(start_index + 1) : (start_index + N_dataset[j]), ]) #slice ica result
+              start_index = start_index + N_dataset[j]
             }
         }
     }
@@ -106,24 +120,21 @@ twoStageiLCA <- function(dataset, group, comp_num, weighting = NULL, backup = 0,
     proj_list_score = list()
     if(!is.null(proj_dataset)){
         proj_sample_name = sampleNameExtractor(proj_dataset)
-        proj_dataset_name = datasetNameExtractor(proj_dataset)
-        proj_dataset = frameToMatrix(proj_dataset)
+        group_name = names(list_component) 
         proj_dataset = normalizeData(proj_dataset, enable_normalization, column_sum_normalization)
 
-        for(i in 1 : length(proj_dataset)){
-            proj_list_score[[i]] = list()
-            for(j in 1 : length(proj_group[[i]])){
-                if(proj_group[[i]][[j]]){
-                    proj_list_score[[i]][[j]] = t(t((t(list_component[[j]]) %*% proj_dataset[[i]])) %*% ica_score[[j]][[i]]$K %*% ica_score[[j]][[i]]$W)
-                }else{
-                    proj_list_score[[i]][[j]] = NA
-                }
+        for(j in 1 : length(proj_group)){
+            if(proj_group[[j]]){
+                proj_list_score[[j]] = t(t((t(list_component[[j]]) %*% proj_dataset)) %*% ica_score[[j]]$K %*% ica_score[[j]]$W)
+            }else{
+                proj_list_score[[j]] = NA
             }
         }
 
-        proj_list_score = scoreNameAssign(proj_list_score, proj_dataset_name, group_name)
+        proj_list_score = scoreNameAssignProj(proj_list_score, group_name)
+        proj_list_score = sampleNameAssignProj(proj_list_score, proj_sample_name)
     }
 
 
-    return(list(linked_component_list = list_component, score_list = list_score, proj_score_list = proj_list_score))
+    return(list(linked_component_list = list_component, score_list = list_score, proj_score_list = proj_list_score, ica_score = ica_score))
 }
