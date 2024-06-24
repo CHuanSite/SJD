@@ -35,6 +35,9 @@ Please visit the vignette page [here](https://chuansite.github.io/SJD/)
 
 [Two Stage Linked Component Analysis (2s-LCA)](https://chuansite.github.io/SJD/articles/twoStageLCA.html)
 
+## Use SJD in Python
+
+SJD can be used in Python by using a Python package called rpy2. Once rpy2 is installed in Python, [this](pythonExamples/SJD_in_python_example.ipynb) example can be followed as a guide.  
 ## Source
 
 The latest developer version is available in the [Github repository](https://github.com/CHuanSite/SJD).
