@@ -56,3 +56,22 @@ normalizeData <- function(dataset, enable_normalization = TRUE, column_sum_norma
     }
     return(dataset)
 }
+
+#' Min-Max Normalization Function
+#'
+#' This function performs min-max normalization on a vector.
+#' 
+#' @param x A numeric vector to be normalized.
+#' @return A normalized version of the input vector with values scaled between 0 and 1.
+#' @examples
+#  for(i in 1 : K){
+#    for(j in 1 : N){
+#      list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
+#    }
+#  }
+#'
+#' @export
+
+min_max_normalization <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
