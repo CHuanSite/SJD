@@ -141,7 +141,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     for(i in 1 : K){
         for(j in 1 : N){
           # Extract the subset of H based on current i and j
-          list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
+          # list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
           H[ifelse(i == 1, 1, cumsum(comp_num)[i - 1] + 1) : cumsum(comp_num)[i],
             ifelse(j == 1, 1, cumsum(N_dataset)[j - 1] + 1) : cumsum(N_dataset)[j]] <- list_score[[j]][[i]]
         }
