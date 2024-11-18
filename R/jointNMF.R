@@ -94,7 +94,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     ## Iteratively estimate the NMF with Euclidean distance
     error_out = c()
 
-    for(ite in 1 : max_ite){
+    for(ite in 1 : 100){
         H = H * (t(W) %*% X) / (t(W) %*% W %*% H)
         W = W * (X %*% t(H)) / (W %*% H %*% t(H))
 
@@ -111,6 +111,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
         # print(abs(error_out[length(error_out)] - error_out[length(error_out) - 1]) / abs(error_out[length(error_out) - 1]))
     }
     
+
     # H <- t(scale(t(H), center = FALSE))
     # W = W * (X %*% t(H)) / (W %*% H %*% t(H))
     
@@ -121,32 +122,34 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     for(j in 1 : N){
         list_score[[j]] = list()
     }
-    
+
     for(i in 1 : K){
       list_component[[i]] = W[, ifelse(i == 1, 1, cumsum(comp_num)[i - 1] + 1) : cumsum(comp_num)[i]]
       for(j in 1 : N){
         list_score[[j]][[i]] = H[ifelse(i == 1, 1, cumsum(comp_num)[i - 1] + 1) : cumsum(comp_num)[i], ifelse(j == 1, 1, cumsum(N_dataset)[j - 1] + 1) : cumsum(N_dataset)[j]]
       }
     }
-
+    
+    
 
     ## Assign name for components
     list_component = compNameAssign(list_component, group_name)
     list_component = geneNameAssign(list_component, gene_name)
     list_score = scoreNameAssign(list_score, dataset_name, group_name)
     # list_score = sampleNameAssign(list_score, sample_name)
-    list_score = filterNAValue(list_score, dataset, group)
+    # list_score = filterNAValue(list_score, dataset, group)
     list_score = rebalanceData(list_score, group, dataset)
+
 
     for(i in 1 : K){
         for(j in 1 : N){
           # Extract the subset of H based on current i and j
-          # list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
+          list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
           H[ifelse(i == 1, 1, cumsum(comp_num)[i - 1] + 1) : cumsum(comp_num)[i],
             ifelse(j == 1, 1, cumsum(N_dataset)[j - 1] + 1) : cumsum(N_dataset)[j]] <- list_score[[j]][[i]]
         }
     }
-
+    View(list_score)
     #recalculate gene score
     W = W * (X %*% t(H)) / (W %*% H %*% t(H))
     for(i in 1 : K){
@@ -230,7 +233,6 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
         H[which(is.na(H))] = 0
         
         error_out = c(error_out, sum((X - W %*% H)^2))
-        
         ## Break when the error difference is small
         if(length(error_out) >= 2 && abs(error_out[length(error_out)] - error_out[length(error_out) - 1]) / abs(error_out[length(error_out) - 1]) <= max_err){
           break
@@ -257,6 +259,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     } else {
       proj_list_score = NULL
     }
+    
     return(list(linked_component_list = list_component, score_list = list_score, proj_score_list = proj_list_score, error_out=error_out))
 
 }

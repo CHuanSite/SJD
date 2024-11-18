@@ -64,14 +64,15 @@ normalizeData <- function(dataset, enable_normalization = TRUE, column_sum_norma
 #' @param x A numeric vector to be normalized.
 #' @return A normalized version of the input vector with values scaled between 0 and 1.
 #' @examples
-#  for(i in 1 : K){
-#    for(j in 1 : N){
-#      list_score[[j]][[i]] <- t(apply(t(list_score[[j]][[i]]), 2, min_max_normalization))
-#    }
-#  }
+#' 
+#' list_score = matrix(runif(5000, 1, 2), nrow = 100, ncol = 50)
+#  list_score <- t(apply(t(list_score), 2, min_max_normalization))
 #'
 #' @export
 
 min_max_normalization <- function(x) {
+  if (max(x) - min(x) == 0) {
+    return(x)  # Or return(rep(0, length(x))) if normalization to 0 is desired
+  }
   (x - min(x)) / (max(x) - min(x))
 }
