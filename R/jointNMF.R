@@ -94,7 +94,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     ## Iteratively estimate the NMF with Euclidean distance
     error_out = c()
 
-    for(ite in 1 : 100){
+    for(ite in 1 : max_ite){
         H = H * (t(W) %*% X) / (t(W) %*% W %*% H)
         W = W * (X %*% t(H)) / (W %*% H %*% t(H))
 
@@ -136,7 +136,7 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
     list_component = compNameAssign(list_component, group_name)
     list_component = geneNameAssign(list_component, gene_name)
     list_score = scoreNameAssign(list_score, dataset_name, group_name)
-    # list_score = sampleNameAssign(list_score, sample_name)
+    list_score = sampleNameAssign(list_score, sample_name)
     # list_score = filterNAValue(list_score, dataset, group)
     list_score = rebalanceData(list_score, group, dataset)
 
@@ -149,9 +149,12 @@ jointNMF <- function(dataset, group, comp_num, weighting = NULL, max_ite = 1000,
             ifelse(j == 1, 1, cumsum(N_dataset)[j - 1] + 1) : cumsum(N_dataset)[j]] <- list_score[[j]][[i]]
         }
     }
-    View(list_score)
+
     #recalculate gene score
     W = W * (X %*% t(H)) / (W %*% H %*% t(H))
+    
+    W[is.na(W)] = 0
+    
     for(i in 1 : K){
       list_component[[i]] = W[, ifelse(i == 1, 1, cumsum(comp_num)[i - 1] + 1) : cumsum(comp_num)[i]]
     }
